@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>stackGraph</title>
+		<script src="stack_graph.js"></script>
+		<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
+		<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"΢ɭ҅ۚ";}
+		</style>
+	</head>
+<body>
+	<svg id = "svg" width = "1000" height="1000"></svg>;
+	<script type="text/javascript">
+	function buildlayer(n) 
+	{
+		var a = [], i;
+		for (i = 0; i < n; ++i) a[i]=0;
+		return a.map(function(d, i) { return {x: i * (800 / n), y: Math.random() * 50 + 1}; });
+	}
+	//alert("!");
+	var n = 8;
+	var m = 20;
+	var layer = [];
+	for (var i=0;i<n;i++) layer[i] = buildlayer(m);
+	//alert(layer[0][0].y.toString())
+	var svg = document.getElementById("svg");
+	var graph = new stackGraph();
+	graph.makeStackGraph(svg,layer);
+</script>
+</body>
+</html>

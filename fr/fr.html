@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Force Directed Graphing in Javascript</title>
+		<script src="event.js"></script>
+		<script src="graph1.js"></script>
+		<script src="output.js"></script>
+		<script src="time1.js"></script>
+		<script src="control1.js"></script>
+		<style type="text/css">
+		  @import 'style.css';
+		</style>
+	</head>
+	
+	<body onload="timer.start()">
+		<div id="div:svg1" >
+			<svg id="svg1" width="1000" height="600"></svg>
+		</div>
+		<script language="Javascript">
+			var timer=new timecontrol(10);
+			var graphui=new graphui(document.getElementById("svg1"));
+	
+			var graph=new Graph(document.getElementById("svg1"));
+	
+			graph.setUI( graphui );
+			timer.subscribe( graph );
+			
+			var control=new usercontrol(timer,graph,graphui);
+			var node1 = control.addnode(6);
+			var node2 = control.addnode(6);
+			var node3 = control.addnode(6);
+			var node4 = control.addnode(6);
+			var node5 = control.addnode(6);
+			control.addedge( node1, node2, 5 );
+			control.addedge( node1, node3, 5 );
+			control.addedge( node1, node4, 5 );
+			control.addedge( node1, node5, 5 );
+		</script>
+	</body>
+</html>
