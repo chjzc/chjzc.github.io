@@ -2,8 +2,8 @@ var Treemap = function(){};
 Treemap.prototype={
 	Left:100,
 	Top:100,
-	Right:300,
-	Bottom:220,
+	Right:500,
+	Bottom:340,
 	squarify:function(svg,nodes,row,w)
 	{
 		if(nodes[0]){

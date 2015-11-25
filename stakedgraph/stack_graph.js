@@ -81,7 +81,7 @@ stackGraph.prototype = {
 				for (var pointX = data[i-1].x;pointX - data[i].x <= 0;pointX++)
 				{
 					var pointY = data[i-1].y+((data[i].y-data[i-1].y)/(data[i].x-data[i-1].x)-(m[i]/6+m[i-1]/3)*(data[i].x-data[i-1].x))*(pointX-data[i-1].x)+m[i-1]*(pointX-data[i-1].x)*(pointX-data[i-1].x)/2+((m[i]-m[i-1])/(data[i].x-data[i-1].x))*Math.pow(pointX-data[i-1].x,3)/6;
-					if (yList[pointX]) pointY = Math.min(pointY,yList[pointX]);
+					if (yList[pointX]) pointY = Math.max(pointY,yList[pointX]);
 					yList[pointX] = pointY;
 					tmp = "L" + pointX.toString() + "," + Math.ceil(pointY).toString() + " ";
 					name = name + tmp;
@@ -106,7 +106,7 @@ stackGraph.prototype = {
 				sum += data[j][i].y
 			}
 			g0[i].x=data[0][i].x;
-			g0[i].y=-sum/2.0+500;
+			g0[i].y=sum/2.0+300;
 		}
 		for(var i=0;i<data.length;i++)
 		{

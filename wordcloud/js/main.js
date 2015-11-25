@@ -83,7 +83,13 @@ function finalprocess(strings)
 			{"text":"force","size":20},
 			{"text":"233333","size":30},
 			{"text":"666","size":15},
-
+			{"text":"AAA","size":15},
+			{"text":"BBB","size":15},
+			{"text":"CCC","size":15},
+			{"text":"DDD","size":15},
+			{"text":"EEE","size":15},
+			{"text":"FFF","size":15},
+			{"text":"GGG","size":15},
 			]
     }
     var wd = wcld.init($("#wordcloud")[0]);
