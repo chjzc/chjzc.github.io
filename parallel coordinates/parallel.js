@@ -67,8 +67,8 @@ document.onmousemove = function(e){
 	if(stop.y>500) stop.y=500;
 	if(isstart==1){
 		var index=whichbar;
-		min[index]=Math.min(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min);
-		max[index]=Math.max(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min);
+		min[index]=Math.round(Math.min(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min));
+		max[index]=Math.round(Math.max(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min));
 		rects[index].setAttribute("y",500-450*(max[index]-define[index].min)/(define[index].len));
 		rects[index].setAttribute("height",450*(max[index]-min[index])/(define[index].len));
 		layout2();
@@ -117,25 +117,25 @@ function drawrect(){
 function layout(){
 	var n=cars.length;
 	for(var i=0;i<n;i++){
-		if(typeof(cars[i].cyl)==undefined){
+		if(cars[i].cyl==undefined){
 			cars[i].cyl=define[0].min;
 		}
-		if(typeof(cars[i].dsp)==undefined){
+		if(cars[i].dsp==undefined){
 			cars[i].dsp=define[1].min;
 		}
-		if(typeof(cars[i].lbs)==undefined){
+		if(cars[i].lbs==undefined){
 			cars[i].lbs=define[2].min;
 		}
-		if(typeof(cars[i].hp)==undefined){
+		if(cars[i].hp==undefined){
 			cars[i].hp=define[3].min;
 		}
-		if(typeof(cars[i].acc)==undefined){
+		if(cars[i].acc==undefined){
 			cars[i].acc=define[4].min;
 		}
-		if(typeof(cars[i].mpg)==undefined){
+		if(cars[i].mpg==undefined){
 			cars[i].mpg=define[5].min;
 		}
-		if(typeof(cars[i].year)==undefined){
+		if(cars[i].year==undefined){
 			cars[i].year=define[6].min;
 		}
 		if(cars[i].cyl>=min[0]&&cars[i].cyl<=max[0]&&cars[i].dsp>=min[1]&&cars[i].dsp<=max[1]&&cars[i].lbs>=min[2]&&cars[i].lbs<=max[2]&&cars[i].hp>=min[3]&&cars[i].hp<=max[3]&&cars[i].acc>=min[4]&&cars[i].acc<=max[4]&&cars[i].mpg>=min[5]&&cars[i].mpg<=max[5]&&cars[i].year>=min[6]&&cars[i].year<=max[6]){
@@ -146,7 +146,7 @@ function layout(){
 			str += 525+" "+(500-450*(cars[i].hp-define[3].min)/(define[3].len))+",";
 			str += 675+" "+(500-450*(cars[i].acc-define[4].min)/(define[4].len))+",";
 			str += 825+" "+(500-450*(cars[i].mpg-define[5].min)/(define[5].len))+",";
-			str += 975+" "+(500-450*(cars[i].year-define[6].min)/(define[6].len))+",";
+			str += 975+" "+(500-450*(cars[i].year-define[6].min)/(define[6].len));
 			path.setAttribute("points",str);
 			path.setAttribute("fill","none");
 			path.setAttribute("stroke","grey");
@@ -155,10 +155,14 @@ function layout(){
 			svg.appendChild(path);
 			paths.push(path);
 		}
+		else{
+			var k=0;
+			
+		}
 	}
 }
 function layout2(){
-	var n=cars.length;
+	var n=paths.length;
 	for(var i=0;i<n;i++){
 		if(cars[i].cyl>=min[0]&&cars[i].cyl<=max[0]&&cars[i].dsp>=min[1]&&cars[i].dsp<=max[1]&&cars[i].lbs>=min[2]&&cars[i].lbs<=max[2]&&cars[i].hp>=min[3]&&cars[i].hp<=max[3]&&cars[i].acc>=min[4]&&cars[i].acc<=max[4]&&cars[i].mpg>=min[5]&&cars[i].mpg<=max[5]&&cars[i].year>=min[6]&&cars[i].year<=max[6]){
 			paths[i].setAttribute("stroke","blue");
