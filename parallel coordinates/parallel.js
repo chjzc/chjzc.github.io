@@ -67,8 +67,8 @@ document.onmousemove = function(e){
 	if(stop.y>500) stop.y=500;
 	if(isstart==1){
 		var index=whichbar;
-		min[index]=Math.round(Math.min(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min));
-		max[index]=Math.round(Math.max(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min));
+		min[index]=Math.min(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min);
+		max[index]=Math.max(define[index].len*(500-start.y)/450+define[index].min,define[index].len*(500-stop.y)/450+define[index].min);
 		rects[index].setAttribute("y",500-450*(max[index]-define[index].min)/(define[index].len));
 		rects[index].setAttribute("height",450*(max[index]-min[index])/(define[index].len));
 		layout2();
