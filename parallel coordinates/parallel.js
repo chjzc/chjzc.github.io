@@ -43,6 +43,9 @@ var isstart=0;
 var rects=[];
 var paths=[];
 var whichbar;
+var already=0;
+var flag=[];
+var count=0;
 document.onmousedown = function(e){
 	start.y=e.pageY;
 	if(start.y<=515&&start.y>=495){
@@ -115,6 +118,7 @@ function drawrect(){
 	}
 }
 function layout(){
+	count=0;
 	var n=cars.length;
 	for(var i=0;i<n;i++){
 		if(cars[i].cyl==undefined){
@@ -152,6 +156,8 @@ function layout(){
 			path.setAttribute("stroke","grey");
 			path.setAttribute("stroke-opacity",0.2);
 			path.setAttribute("stroke-width",1);
+			flag[count]=0;
+			count=count+1;
 			svg.appendChild(path);
 			paths.push(path);
 		}
@@ -165,12 +171,31 @@ function layout2(){
 	var n=paths.length;
 	for(var i=0;i<n;i++){
 		if(cars[i].cyl>=min[0]&&cars[i].cyl<=max[0]&&cars[i].dsp>=min[1]&&cars[i].dsp<=max[1]&&cars[i].lbs>=min[2]&&cars[i].lbs<=max[2]&&cars[i].hp>=min[3]&&cars[i].hp<=max[3]&&cars[i].acc>=min[4]&&cars[i].acc<=max[4]&&cars[i].mpg>=min[5]&&cars[i].mpg<=max[5]&&cars[i].year>=min[6]&&cars[i].year<=max[6]){
-			paths[i].setAttribute("stroke","blue");
-			paths[i].setAttribute("stroke-opacity",1);
+				if(flag[i]==0)
+				{
+					flag[i]=1;
+					renderq1.add(paths[i]);	
+				}
+			
 		}
 		else{
-			paths[i].setAttribute("stroke","grey");
-			paths[i].setAttribute("stroke-opacity",0.2);
+			if(flag[i]==1)
+			{
+				flag[i]=0;
+				renderq2.add(paths[i]);					
+			}	
 		}
 	}
+}
+
+function update1(path)
+{
+	path.setAttribute("stroke","blue");
+	path.setAttribute("stroke-opacity",1);
+}
+
+function update2(path)
+{
+	path.setAttribute("stroke","grey");
+	path.setAttribute("stroke-opacity",0.2);
 }

@@ -4,9 +4,13 @@ stackGraph.prototype = {
 	yList:[],
 	Svg:Object(),
 	Data:[],
-	getPath: function(data,lowLimit)
+	getPath: function(data)
 	{
-		var n = data.length;
+        var name="M" + data[0].x.toString() + "," + Math.ceil(data[0].y).toString() + " "+ "C" + (data[0].x+20).toString() + "," + Math.ceil(data[0].y).toString() + " " + (data[1].x-20).toString() + "," + Math.ceil(data[1].y).toString() + " " + data[1].x.toString() + "," + Math.ceil(data[1].y).toString() + " ";
+        for(var i=1;i<n-1;i++){
+            name = name + "M" + data[0].x.toString() + "," + Math.ceil(data[0].y).toString() + " "+ "C" + (data[0].x+20).toString() + "," + Math.ceil(data[0].y).toString() + " " + (data[1].x-20).toString() + "," + Math.ceil(data[1].y).toString() + " " + data[1].x.toString() + "," + Math.ceil(data[1].y).toString() + " ";
+        }
+		/*var n = data.length;
 		var h = [];
 		var u = [];
 		var l = [];
@@ -90,8 +94,9 @@ stackGraph.prototype = {
 		
 			}
 		}
-		name+="L" + data[n-1].x.toString() + "," + lowLimit;
+		name+="L" + data[n-1].x.toString() + "," + lowLimit;*/
 		return name;
+
 	},
 	makeStackGraph: function(svg,data)
 	{
@@ -131,18 +136,23 @@ stackGraph.prototype = {
 	
 	build:function(svg,color,data,index)
 	{
-		var d = this.getPath(data,"500");
-		var shape = document.getElementById("path" + index.toString());
-		if (!shape) shape = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		shape.setAttributeNS(null, "d", d);
-		shape.setAttributeNS(null,"id","path" + index.toString());
-		shape.setAttributeNS(null, "fill", color);
-		shape.setAttributeNS(null, "stroke", "white");
-		shape.setAttributeNS(null, "stroke-width", 0.2);
-		if (color != "white") shape.setAttributeNS(null,"fill-opacity",0.8);
-		else shape.setAttributeNS(null,"fill-opacity",1);
-		svg.appendChild(shape);
-	},
+        var n = data.length;
+        var d="M"+"0"+",500 L"+data[0].x.toString() + "," + Math.ceil(data[0].y).toString() + " "+ "C" + (data[0].x+20).toString() + "," + Math.ceil(data[0].y).toString() + " " + (data[1].x-20).toString() + "," + Math.ceil(data[1].y).toString() + " " + data[1].x.toString() + "," + Math.ceil(data[1].y).toString() + " ";
+        for(var i=1;i<n-1;i++){
+            d +="L"+data[i].x.toString() + "," + Math.ceil(data[i].y).toString() + " "+ "C" + (data[i].x+20).toString() + "," + Math.ceil(data[i].y).toString() + " " + (data[i+1].x-20).toString() + "," + Math.ceil(data[i+1].y).toString() + " " + data[i+1].x.toString() + "," + Math.ceil(data[i+1].y).toString() + " ";
+        }
+        d+="L"+data[n-1].x.toString()+",500";
+        shape = document.getElementById("path" + (index).toString());
+        if (!shape) shape = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        shape.setAttributeNS(null, "d", d);
+        shape.setAttributeNS(null,"id","path" + (index).toString());
+        shape.setAttributeNS(null, "fill", color);
+        shape.setAttributeNS(null, "stroke", "white");
+        shape.setAttributeNS(null, "stroke-width", 0.2);
+        if (color != "white") shape.setAttributeNS(null,"fill-opacity",0.8);
+        else shape.setAttributeNS(null,"fill-opacity",1);
+        svg.appendChild(shape);
+	}
 	
 	
 }
