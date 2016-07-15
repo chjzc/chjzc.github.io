@@ -6,15 +6,10 @@
 	<svg id="display" width ="2000" height="600"></svg>
 	<script type="text/javascript" src="cars.js"></script>
 	<script type="text/javascript" src="parallel.js"></script>
-	<script type="text/javascript" src="render.js"></script>
 	<script type="text/javascript">
 		drawcoordinate();
 		drawrect();
 		layout();
-		var renderq1=renderQueue(update1);
-		var renderq2=renderQueue(update2);
-		renderq1.render();
-		renderq2.render();
 	</script>
 </body>
 </html>

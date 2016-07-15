@@ -43,9 +43,7 @@ var isstart=0;
 var rects=[];
 var paths=[];
 var whichbar;
-var already=0;
-var flag=[];
-var count=0;
+var delta=0;
 document.onmousedown = function(e){
 	start.y=e.pageY;
 	if(start.y<=515&&start.y>=495){
@@ -55,13 +53,21 @@ document.onmousedown = function(e){
 		start.y=50;
 	}
 	if(start.y<=500&&start.y>=50){
-		start.x=e.pageX;
-		isstart=1;
+		start.x=e.pageX-7;
 		whichbar=Math.floor((start.x)/150);
+		//if(isstart==0)
+		//{
+			console.log(start.x);
+			if((start.x<=75+whichbar*150+50&&start.x>=75+whichbar*150+8)||(start.x<=75+whichbar*150-8&&start.x>=75+whichbar*150-50))
+				isstart=1;
+			if(start.x<=75+whichbar*150+8&&start.x>=75+whichbar*150-8)
+				isstart=2;
+		//}	
 	}
 }
 document.onmouseup = function(e){
 	isstart=0;
+	delta=0;
 }
 document.onmousemove = function(e){
 	stop.x=e.pageX;
@@ -75,6 +81,18 @@ document.onmousemove = function(e){
 		rects[index].setAttribute("y",500-450*(max[index]-define[index].min)/(define[index].len));
 		rects[index].setAttribute("height",450*(max[index]-min[index])/(define[index].len));
 		layout2();
+	}
+	if(isstart==2)
+	{
+		var index=whichbar;
+		if(min[index]-(stop.y-start.y)*define[index].len/450+delta>=define[index].min&&max[index]-(stop.y-start.y)*define[index].len/450+delta<=define[index].max)
+		{
+			min[index]=min[index]-(stop.y-start.y)*define[index].len/450+delta;
+			max[index]=max[index]-(stop.y-start.y)*define[index].len/450+delta;
+			delta=(stop.y-start.y)*define[index].len/450;
+			rects[index].setAttribute("y",500-450*(max[index]-define[index].min)/(define[index].len));
+			layout2();
+		}
 	}
 }
 function drawcoordinate(){
@@ -107,18 +125,21 @@ function drawcoordinate(){
 function drawrect(){
 	for(var i=0;i<7;i++){
 		var rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
-		rect.setAttribute("x",71+i*150);
+		rect.setAttribute("x",68+i*150);
 		rect.setAttribute("y",500-450*(max[i]-define[i].min)/(define[i].len));
-		rect.setAttribute("width",8);
+		rect.setAttribute("width",14);
 		rect.setAttribute("height",450*(max[i]-min[i])/(define[i].len));
 		rect.setAttribute("fill","#778899");
 		rect.setAttribute("fill-opacity",0.5);
+		/*rect.onmousedown=function(){
+			isstart=2;
+			whichbar=(this.getAttribute("x")-68)/150;
+		}*/
 		svg.appendChild(rect);
 		rects.push(rect);
 	}
 }
 function layout(){
-	count=0;
 	var n=cars.length;
 	for(var i=0;i<n;i++){
 		if(cars[i].cyl==undefined){
@@ -156,14 +177,11 @@ function layout(){
 			path.setAttribute("stroke","grey");
 			path.setAttribute("stroke-opacity",0.2);
 			path.setAttribute("stroke-width",1);
-			flag[count]=0;
-			count=count+1;
 			svg.appendChild(path);
 			paths.push(path);
 		}
 		else{
 			var k=0;
-			
 		}
 	}
 }
@@ -171,31 +189,12 @@ function layout2(){
 	var n=paths.length;
 	for(var i=0;i<n;i++){
 		if(cars[i].cyl>=min[0]&&cars[i].cyl<=max[0]&&cars[i].dsp>=min[1]&&cars[i].dsp<=max[1]&&cars[i].lbs>=min[2]&&cars[i].lbs<=max[2]&&cars[i].hp>=min[3]&&cars[i].hp<=max[3]&&cars[i].acc>=min[4]&&cars[i].acc<=max[4]&&cars[i].mpg>=min[5]&&cars[i].mpg<=max[5]&&cars[i].year>=min[6]&&cars[i].year<=max[6]){
-				if(flag[i]==0)
-				{
-					flag[i]=1;
-					renderq1.add(paths[i]);	
-				}
-			
+			paths[i].setAttribute("stroke","blue");
+			paths[i].setAttribute("stroke-opacity",1);
 		}
 		else{
-			if(flag[i]==1)
-			{
-				flag[i]=0;
-				renderq2.add(paths[i]);					
-			}	
+			paths[i].setAttribute("stroke","grey");
+			paths[i].setAttribute("stroke-opacity",0.2);
 		}
 	}
-}
-
-function update1(path)
-{
-	path.setAttribute("stroke","blue");
-	path.setAttribute("stroke-opacity",1);
-}
-
-function update2(path)
-{
-	path.setAttribute("stroke","grey");
-	path.setAttribute("stroke-opacity",0.2);
 }
