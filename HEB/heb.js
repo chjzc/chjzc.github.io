@@ -10,7 +10,7 @@ var Paths = [];
 var mySvg = document.getElementById('mySvg');
 
 function layout(){
-	d3.json("flaredata.json", function (json) {
+	d3.json("http://127.0.0.1:8000/flaredata.json", function (json) {
 
         var group;
 
@@ -190,6 +190,14 @@ function LCA(tree,s1,s2){
 
 function FindNode(tree,s){
 	if(tree.name==s){
+		var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        //text.innerHTML = tree.name;
+        //text.setAttribute("font-size", 12);
+       // text.setAttribute("font-family", "Arial");
+        //text.setAttribute("x", tree.position.x);
+        //text.setAttribute("y", tree.position.y);
+        //text.setAttribute("transform", "rotate(" + angle + "," + tree.position.x + "," + tree.position.y + ")");
+        //mySvg.appendChild(text);
 		return tree.position;
 	}
 	for(var i=0;i<tree.children.length;i++){
@@ -274,6 +282,8 @@ function Draw() {
 				_path.push({ x: 0, y: 0 });
 				_path[i].x = (beta * arr[i].x) + (1 - beta) * (arr[0].x + (i / (n - 1)) * (arr[n - 1].x - arr[0].x));
 				_path[i].y = (beta * arr[i].y) + (1 - beta) * (arr[0].y + (i / (n - 1)) * (arr[n - 1].y - arr[0].y));
+				//_path[i].x = arr[i].x;
+				//_path[i].y = arr[i].y;
 			}
 			
 			

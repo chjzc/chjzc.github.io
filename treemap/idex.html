@@ -6,17 +6,78 @@
 		<style type="text/css">
 		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"΢ɭ҅ۚ";}
 		</style>
+		<script type="text/javascript" src="d3.js"></script>
 	</head>
 <body>
 	<svg id = "svg" width = "1000" height="1000"></svg>;
 	<script type="text/javascript">
-	var Notes=[2400*4,2400*4,2200*4,2200*4,1800*4,1600*4,1440*4,1400*4,1400*4,1320*4,1200*4,1000*4,960*4,800*4,800*4,720*4,360*4];
+	var tree={};
+	color=["#00ced1","#1e90ff","#3cb371","#6a5acd","#a0522d","#afeeee","#bc8f8f","#cd5c5c","#dc143c","#ffb6c1"];
+	function findsize(tree)
+	{
+		if(tree.children)
+		{
+			tree.size=0;
+			for(var i=0;i<tree.children.length;i++)
+			{
+				tree.size+=findsize(tree.children[i]);
+			}
+		}
+		return tree.size;
+	}
+	function operate(svg,treestack)
+	{
+		for(var i=0;i<treestack.length;i++)
+		{
+			var treemap=new Treemap();
+			treemap.Left=treestack[i].Left;
+			treemap.Right=treestack[i].Right;
+			treemap.Top=treestack[i].Top;
+			treemap.Bottom=treestack[i].Bottom;
+			treemap.result=[];
+			if(treestack[i].children)
+			{
+				for(var j=0;j<treestack[i].children.length;j++)
+				{
+					treestack[i].children[j].color=color[i];
+				}
+				treemap.squarify(svg,treestack[i].children,[]);
+				operate(svg,treemap.result);
+			}
+			else
+				return;
+		}
+	}
+	d3.json("http://127.0.0.1:8000//flare.json", function (json) {
+        var data = json;
+		var tree =data;
+		findsize(tree);
+		var treemap=new Treemap();
+		var svg = document.getElementById("svg");
+		var w=new Object();
+		treemap.Left=100;
+		treemap.Right=1360;
+		treemap.Top=100;
+		treemap.Bottom=900;
+		for(var i=0;i<tree.children.length;i++)
+		{
+			tree.children[i].color=color[i];
+			//tree.children[i].Left=0;
+			//tree.children[i].Right=0;
+			//tree.children[i].Top=0;
+			//tree.children[i].Bottom=0;
+		}
+		treemap.squarify(svg,tree.children,[]);
+		operate(svg,treemap.result);
+    });
+	
+	/*var Notes=[2400*4,2400*4,2200*4,2200*4,1800*4,1600*4,1440*4,1400*4,1400*4,1320*4,1200*4,1000*4,960*4,800*4,800*4,720*4,360*4];
 	var treemap=new Treemap();
 	var svg = document.getElementById("svg");
 	var w=new Object();
 	w.flag=0;
 	w.len=240;
-	treemap.squarify(svg,Notes,[],w);
+	treemap.squarify(svg,Notes,[],w);*/
 </script>
 </body>
 </html>
