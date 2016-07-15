@@ -10,7 +10,7 @@ var Paths = [];
 var mySvg = document.getElementById('mySvg');
 
 function layout(){
-	d3.json("http://127.0.0.1:8000/flaredata.json", function (json) {
+	d3.json("flaredata.json", function (json) {
 
         var group;
 
