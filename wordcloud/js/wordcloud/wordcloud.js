@@ -119,12 +119,14 @@ define(function (require) {
              
         
         draw:function(option){
+			color=["#00ced1","#1e90ff","#3cb371","#6a5acd","#a0522d","#afeeee","#bc8f8f","#cd5c5c","#dc143c","#ffb6c1","#DEB887"];
             var data=option.data;
             var ctx = this.ctx;
 			count=0;
             for (var i = 0; i < data.length; i++) { 
                 ctx.save();  
-                ctx.fillStyle = "#DEB887"; //color
+				var ra=Math.round(Math.random()*10)
+                ctx.fillStyle = color[ra]; //color
                 var fontsize ="Bold "+ data[i].size +"px 微软雅黑"; 
                 ctx.font = fontsize; //size
                 var text = data[i].text;               
@@ -135,7 +137,15 @@ define(function (require) {
                 var x,y;
                 while(true) {
                     x = Math.round(ra*Math.cos(angl) - tWidth/2+this.canvas.width/2);  
-                    y = Math.round(ra*Math.sin(angl) - tHeight/2+this.canvas.height/2);   
+					if(x<5)
+						x=5;
+					if(x>this.canvas.width-tWidth-5)
+						x=this.canvas.width-tWidth-5;
+                    y = Math.round(ra*Math.sin(angl) - tHeight/2+this.canvas.height/2); 
+					if(y<5)
+						y=5;
+					if(y>this.canvas.height-tHeight-5)
+						y=this.canvas.height-tHeight-5;
                     var isCollision =collision(x,y,tWidth+2,tHeight+2);
                     if (!isCollision)
 					{
