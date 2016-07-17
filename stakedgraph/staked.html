@@ -34,7 +34,6 @@
 				a[i] += x * Math.exp(-w * w);
 			}
 		}
-		//alert("1");
 		var a = [], i;
 		for (i = 0; i < n; ++i) a[i] = 0;
 		for (i = 0; i < 5; ++i) bump(a);
@@ -42,7 +41,6 @@
 	}
 	function resort(data)
 	{
-		//data.sort()
 		var result=[];
 		var total=0;
 		var half=0;
@@ -99,7 +97,6 @@
 			} 
 		} 
 	} 
-	//alert("!");
 	var n = 10;
 	var m = 20;
 	var layer = [];
@@ -138,7 +135,6 @@
 		layer2[i].start=start;
 	}
 	layer2.sort("start")
-	//alert(layer[0][0].y.toString())
 	var svg = document.getElementById("svg1");
 	var graph = new stackGraph();
 	graph.makeStackGraph(svg,resort(layer));

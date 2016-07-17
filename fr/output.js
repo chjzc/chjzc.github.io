@@ -14,8 +14,6 @@ function graphui (frame)
 		  this.drawNode( graph.nodes[i] );
 		}
 	}
-
-  // draw all edges
 	this.drawEdges=function() 
 	{
 		for( var i=0; i<graph.nodes.length; i++ )
@@ -31,9 +29,6 @@ function graphui (frame)
 			}
        }
     }
-
-
-  // draw the node at it's current position
 	this.drawNode=function( node ) 
 	{
 		try 
@@ -41,16 +36,12 @@ function graphui (frame)
 			var domNode = this.getNode(node.id);
 			domNode.setAttributeNS(null,"cx",node.position.x);
 			domNode.setAttributeNS(null,"cy",node.position.y);
-		  //this.getNode(node.id).style.left = (this['frame_left'] + node['position']['x']);
-		  //this.getNode(node.id).style.top = (this['frame_top'] + node['position']['y']);
 		} catch( e ) {
 		}
 	}
 	
 	this.drawEdge=function ( nodeI, nodeJ) 
 	{
-
-    // edges should appear between center of nodes
 		var i = new Object();
 		i.x = nodeI.position.x;
 		i.y = nodeI.position.y;
@@ -60,7 +51,6 @@ function graphui (frame)
 		j.x = nodeJ.position.x;
 		j.y = nodeJ.position.y;
 		j.r = nodeJ.mass;
-		// get a distance vector between nodes
 		
 		if (Math.abs(i.x - j.x) < 0.0001)
 		{
@@ -89,14 +79,11 @@ function graphui (frame)
 			y1 = k * (x1 - i.x) + i.y;
 			y2 = k * (x2 - i.x) + i.y;
 		}
-		
-		//draw line
 		edge = document.getElementById('edge'+nodeI.id+':'+nodeJ.id);
 		path = "M" + x1.toString() + "," + y1.toString() + " L" + x2.toString() + "," + y2.toString();
 		edge.setAttributeNS(null,"d",path);
 		
   }
-  // add an edge to the display
   this.addEdge=function( nodeI, nodeJ ) {
     var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
     edge.id = 'edge'+nodeI.id+':'+nodeJ.id;
@@ -109,7 +96,6 @@ function graphui (frame)
     this.frame.appendChild(edge);
   },
 
-  // add a node to the display
   this.addNode=function( node ) {
     var domNode=document.createElementNS("http://www.w3.org/2000/svg", "circle");
 	domNode.setAttributeNS(null,"cx",parseInt(node.position.x));
@@ -121,12 +107,9 @@ function graphui (frame)
     return domNode;
   },
 
-  // return the UI representation of the graph node
   this.getNode=function( nodeId )
   {
 	return document.getElementById( 'node' + nodeId );
   }
-
-  // render an edge
   
 }

@@ -17,13 +17,9 @@
 		this.stop = function() {
 			this.interupt=true;
 		}
-
-      // add observers to subscribers queue
 		this.subscribe = function( observer ) {
 			this.subscriber=observer ;
 		}
-
-      // notify observers wen an event has occured
 		this.notify = function() 
 		{
 			 this.subscriber.applyforce();

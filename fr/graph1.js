@@ -29,17 +29,9 @@ function Graph(frame)
 	this.origin = new Node( 'origin', 1, parseInt(this.frame_width/2), parseInt(this.frame_height/2));
     this.originWeight=15;
 	this.selectednode=-1;
-
-    // actually an _inverse_ gravity constant, used in calculating repulsive force
     this.gravity =30;
-
-    // the maximum repulsive force that can be aqpplied in an iteration
     this.max_repulsive_force_distance = 512;
-
-    // the UI that will listen to this graph
     this.ui;
-
-    // parallel arrays
     this.nodes = new Array();
     this.edges = new Array();
 	this.addnode=function(mass)
@@ -126,8 +118,6 @@ function Graph(frame)
 		{
 			alert( "Error Drawing Nodes: " + e );
 		}
-
-	// draw edges
 		try 
 		{
 			this.ui.drawEdges();
@@ -135,9 +125,6 @@ function Graph(frame)
 		{
 			alert( "Error Drawing Edges: " + e );
 		}
-	
-
-	// reposition nodes
 		for( var i=0; i<this.nodes.length; i++ ) 
 		{
 			var nodeI = this['nodes'][i];
@@ -148,13 +135,10 @@ function Graph(frame)
 				{
 
 					var nodeJ = this.nodes[j];
-
-          // attractive force applied across an edge
 					if ( this.edges[nodeI.id] && this.edges[nodeI.id][nodeJ.id] )
 					{
 						this.attractive(nodeI, nodeJ);
 					}
-          // repulsive force between any two nodes
 					if(nodeI!=this.selectednode)
 					{
 						this.repulsive(nodeI, nodeJ);
@@ -167,17 +151,13 @@ function Graph(frame)
 			var nodeI = this.nodes[i];
 			if (Math.abs(nodeI.force.x) < 1) nodeI.force.x = 0;
 			if (Math.abs(nodeI.force.y) < 1) nodeI.force.y = 0;
-		  // add forces to node position
 			nodeI.position.x += nodeI.speed.x + nodeI.force.x / 2;
 			nodeI.position.y += nodeI.speed.y + nodeI.force.y / 2;
 		
 			nodeI.speed.x += nodeI.force.x / 30;
 			nodeI.speed.y += nodeI.force.y / 30;
-		  // wipe forces for iteration
 			nodeI.force.x=0;
 			nodeI.force.y=0;
-
-		  // keep the node in our frame
 		  this.bounds(nodeI);
 		}
 	}

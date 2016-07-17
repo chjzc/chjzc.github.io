@@ -62,22 +62,10 @@
 		for(var i=0;i<tree.children.length;i++)
 		{
 			tree.children[i].color=color[i];
-			//tree.children[i].Left=0;
-			//tree.children[i].Right=0;
-			//tree.children[i].Top=0;
-			//tree.children[i].Bottom=0;
 		}
 		treemap.squarify(svg,tree.children,[]);
 		operate(svg,treemap.result);
     });
-	
-	/*var Notes=[2400*4,2400*4,2200*4,2200*4,1800*4,1600*4,1440*4,1400*4,1400*4,1320*4,1200*4,1000*4,960*4,800*4,800*4,720*4,360*4];
-	var treemap=new Treemap();
-	var svg = document.getElementById("svg");
-	var w=new Object();
-	w.flag=0;
-	w.len=240;
-	treemap.squarify(svg,Notes,[],w);*/
 </script>
 </body>
 </html>

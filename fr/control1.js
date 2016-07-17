@@ -47,7 +47,6 @@ function usercontrol(timer,graph,ui)
 		this.graph.clearSelected();
 	}
 
-  // handle mouse movement when a node is selected
 	this.moveselected=function( e ) 
 	{
 		if ( context.graph.selectednode!=-1) 
@@ -65,7 +64,6 @@ function usercontrol(timer,graph,ui)
 			X -= graphui.frame_left;
 			Y -= graphui.frame_top;
 
-      // set the node position
 			graph.nodes[selectedNode].position.x=X;
 			graph.nodes[selectedNode].position.y=Y;
             graph.nodes[selectedNode].speed.x=0;

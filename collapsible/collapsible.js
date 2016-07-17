@@ -126,9 +126,7 @@ function position(tree){
 }
 
 function ininode(tree) {
-    //var name = tree.name;
     tree.circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    //tree.circle.setAttribute("onmousedown", "selected("+name+")");
     tree.circle.setAttribute("onmousedown","num = "+ id +"")
     tree.circle.setAttribute("onmouseup", "change()");
     tree.id = id++;

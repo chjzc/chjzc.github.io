@@ -55,14 +55,12 @@ document.onmousedown = function(e){
 	if(start.y<=500&&start.y>=50){
 		start.x=e.pageX-7;
 		whichbar=Math.floor((start.x)/150);
-		//if(isstart==0)
-		//{
 			console.log(start.x);
+			//存在偏差
 			if((start.x<=75+whichbar*150+50&&start.x>=75+whichbar*150+8)||(start.x<=75+whichbar*150-8&&start.x>=75+whichbar*150-50))
 				isstart=1;
 			if(start.x<=75+whichbar*150+8&&start.x>=75+whichbar*150-8)
 				isstart=2;
-		//}	
 	}
 }
 document.onmouseup = function(e){
@@ -131,10 +129,6 @@ function drawrect(){
 		rect.setAttribute("height",450*(max[i]-min[i])/(define[i].len));
 		rect.setAttribute("fill","#778899");
 		rect.setAttribute("fill-opacity",0.5);
-		/*rect.onmousedown=function(){
-			isstart=2;
-			whichbar=(this.getAttribute("x")-68)/150;
-		}*/
 		svg.appendChild(rect);
 		rects.push(rect);
 	}
