@@ -11,7 +11,7 @@
 		right: 10px;
 		top: 10px;
 	}
-	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"Î¢ï¿½ï¿½ï¿½Åºï¿½";}
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"Î¢ÈíÑÅºÚ";}
 	</style>
 </head>
 <body>
@@ -39,7 +39,49 @@
 		for (i = 0; i < 5; ++i) bump(a);
 		return a.map(function(d, i) { return {x: i * (800 / n), y: Math.max(0,d)*10.0};});
 	}
-
+	function resort(data)
+	{
+		var result=[];
+		var total=0;
+		var half=0;
+		for(var i=0;i<data.length;i++)
+		{
+			if(i==0)
+			{
+				result.push(data[i]);
+				total += data[i].weight;
+				half += data[i].weight/2;
+			}
+			else
+			{
+				if(half>=total)
+				{
+					result.push(data[i]);
+					total += data[i].weight;
+					if((i+1)%2==0)
+						half += result[(i-1)/2].weight/2;
+					else
+						half += result[i/2].weight/2	
+				}
+				else
+				{
+					result.unshift(data[i])
+					total += data[i].weight;
+					if((i+1)%2==0)
+					{
+						half -= [(i+1)/2].weight/2;
+						half += result[0];
+					}
+					else
+					{
+						half -= [i/2].weight/2;
+						half += result[0];
+					}
+				}
+			}	
+		}
+		return result;
+	}
 	function compare(propertyName) { 
 		return function (object1, object2) { 
 			var value1 = object1[propertyName]; 
@@ -64,11 +106,17 @@
 		var resource = bumpLayer(m);
 		var weight=0;
 		var start=-1;
-
+		for(var j=0;j<resource.length;j++)
+		{
+			if(start<0&&resource[j].y>1)
+				start=j;
+			weight+=resource[j].y;
+		}
 		layer[i].resource=resource;
 		layer[i].weight=weight;
 		layer[i].start=start;
 	}
+	layer.sort("start")
 	var layer2 = [];
 	for (var i=0;i<n;i++) 
 	{
@@ -76,18 +124,24 @@
 		var resource = bumpLayer(m);
 		var weight=0;
 		var start=-1;
-
+		for(var j=0;j<resource.length;j++)
+		{
+			if(start<0&&resource[j].y>1)
+				start=j;
+			weight+=resource[j].y;
+		}
 		layer2[i].resource=resource;
 		layer2[i].weight=weight;
 		layer2[i].start=start;
 	}
+	layer2.sort("start")
 	var svg = document.getElementById("svg1");
 	var graph = new stackGraph();
-	graph.makeStackGraph(svg,layer);
+	graph.makeStackGraph(svg,resort(layer));
 	function myTranslate()
 	{
 		graph['Svg'] = svg;
-		graph['Data'] = layer2;
+		graph['Data'] = resort(layer2);
 		graph.Translate();
 		var tmp = layer;
 		layer = layer2;

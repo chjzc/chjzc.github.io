@@ -19,26 +19,43 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/staked.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="35" selection-start="390" selection-end="423" vertical-scroll-proportion="-7.464286">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/stack_graph.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="19" selection-start="3894" selection-end="3894" vertical-scroll-proportion="0.3275862">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5057915">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/staked.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="56" column="31" selection-start="1415" selection-end="1415" vertical-scroll-proportion="31.892857">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/stack_graph.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="49" column="17" selection-start="1551" selection-end="1551" vertical-scroll-proportion="1.4592477">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/operation.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="4" column="12" selection-start="86" selection-end="86" vertical-scroll-proportion="0.11912226">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -48,13 +65,14 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/operation.js" />
         <option value="$PROJECT_DIR$/stack_graph.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-95" />
-    <option name="y" value="9" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1552" />
     <option name="height" value="840" />
   </component>
@@ -132,13 +150,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-95" y="9" width="1552" height="840" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1552" height="840" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1440846" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1440846" sideWeight="0.99638337" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -206,6 +224,41 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/staked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="31" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="54" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="12" selection-start="667" selection-end="667" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/staked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="35" selection-start="390" selection-end="423" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="140" column="19" selection-start="3894" selection-end="3894" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="19" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
@@ -248,16 +301,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="12" selection-start="86" selection-end="86" vertical-scroll-proportion="0.11912226">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="35" selection-start="390" selection-end="423" vertical-scroll-proportion="-7.464286">
+        <state line="56" column="31" selection-start="1415" selection-end="1415" vertical-scroll-proportion="31.892857">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="19" selection-start="3894" selection-end="3894" vertical-scroll-proportion="0.3275862">
+        <state line="49" column="17" selection-start="1551" selection-end="1551" vertical-scroll-proportion="1.4592477">
           <folding />
         </state>
       </provider>

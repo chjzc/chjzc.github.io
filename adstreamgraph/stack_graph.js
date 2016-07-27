@@ -13,9 +13,11 @@ stackGraph.prototype = {
 		name+="L"+data[n-1].x.toString()+",500";
 		return name;
 	},
-	makeStackGraph: function(svg,data)
+	makeStackGraph: function(svg,input)
 	{
 		svg.data = new Array();
+        var data=input.data;
+        var dg=input.g;
 		var g0=[];
 		var len = data.length;
 		var DATA = new Array(len);
@@ -27,37 +29,33 @@ stackGraph.prototype = {
 				DATA[i][j]={x:0,y:0}
 			}
 		}
-		for(var i=0;i<data[0].resource.length;i++)
+        g0[0]={x:50,y:600};
+		for(var i=0;i<dg.length;i++)
 		{
-			g0[i] = {x:0,y:0};
+			g0[i+1] = {x:0,y:0};
 			var sum=0;
-			for(var j=0;j<data.length;j++)
-			{
-				sum += data[j].resource[i].y
-			}
-			g0[i].x=data[0].resource[i].x;
-			g0[i].y=sum/2.0+200;
+			g0[i+1].x=data[0].x;
+			g0[i+1].y=g0[i]-dg[i];
 		}
-		for(var i=data.length-1,k=0;i>=0;i--,k++)
+		for(var i=0;i<data,length;i++)
 		{
-			for(var j=0;j<data[0].resource.length;j++)
+			for(var j=0;j<data[0].length;j++)
 			{
-				if(i==data.length-1)
+				if(i==0)
 				{
-					DATA[k][j].y = g0[j].y-data[i].resource[j].y;
-					DATA[k][j].x = data[i].resource[j].x;
+					DATA[i][j].y = g0[j].y-data[i].y;
+					DATA[i][j].x = data[i].x;
 				}
 				else
 				{
-					DATA[k][j].y = DATA[k-1][j].y-data[i].resource[j].y;
-					DATA[k][j].x = data[i].resource[j].x;
+					DATA[i][j].y = DATA[i-1][j].y-data[i].y;
+					DATA[i][j].x = data[i].x;
 				}
 			}
 		}
 		for (var i=DATA.length-1;i>=0;i--){
-			if (i % 3 == 0)  this.build(svg,"#2894FF",DATA[i],i+1);
-            else if(i % 3 == 1) this.build(svg,"#82D900",DATA[i],i+1);
-			else this.build(svg,"#F75000",DATA[i],i+1);
+			if (i % 2 == 0)  this.build(svg,"#556",DATA[i],i+1);
+			else this.build(svg,"#aad",DATA[i],i+1);
 		}
 		this.build(svg,"white",g0,0);
 	},
