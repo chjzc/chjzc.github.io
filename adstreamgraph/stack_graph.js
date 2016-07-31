@@ -4,6 +4,7 @@ stackGraph.prototype = {
 	yList:[],
 	Svg:Object(),
 	Data:[],
+    Label:["layer1","layer2","layer3","layer4","layer5","layer6","layer7","layer8","layer9","layer10"],
 	getPath: function(data,index)
 	{
         var n=data[0].length;
@@ -64,7 +65,7 @@ stackGraph.prototype = {
             else this.build(svg,"#F75000",DATA,i);
 		}
         for (var i=1;i<DATA.length;i++){
-           this.labeling(DATA[i],DATA[i-1],1,2,"stream",0.05)
+           this.labeling(svg,DATA[i],DATA[i-1],2,10,this.Label[i-1]);
         }
 	},
 	
@@ -84,12 +85,13 @@ stackGraph.prototype = {
         svg.appendChild(shape);
 
 	},
-    labeling:function(t,b,minfont,maxfont,label,sigma)
+    labeling:function(svg,t,b,minfont,maxfont,label)
     {
         var w=Math.round(maxfont*label.length);
         var w_min=Math.round(minfont*label.length);
-        var step=2*Math.ceil((w/2)/40)+1;
+        var step=2*Math.round((w/2)/40)+1;
         var imax=0,hmax=0;
+        var flag=0;
         while(w>w_min)
         {
             imax=0;
@@ -105,18 +107,70 @@ stackGraph.prototype = {
                     imax=i;
                 }
             }
-            var center_x=imax*40;
-            var center_y=(B[imax]+T[imax])/2+w*sigma/2;
-            if(w*sigma<=hmax)
+            var center_x=(imax+(step-1)/2)*40-w/2;
+            var center_y=(B[imax]+T[imax])/2+Math.ceil(w/label.length)/2;
+            if(Math.ceil(w/label.length)<=hmax)
             {
                 var Text=document.createElementNS("http://www.w3.org/2000/svg","text");
                 Text.textContent=label;
                 Text.setAttribute("x",center_x.toString());
                 Text.setAttribute("y",center_y.toString());
+                Text.setAttribute("font-size",Math.ceil(w/label.length).toString());
+                Text.setAttribute("textLength", w.toString());
                 svg.appendChild(Text);
+                flag=1;
                 break;
             }
-            w=w-Math.max(0.5,Math.round(0.1*w));
+            w=w-Math.max(1,Math.round(0.1*w));
+        }
+        if(flag==0)
+        {
+            var w=Math.round(maxfont*label.length);
+            var w_min=Math.round(minfont*label.length);
+            var step=Math.round(w/40)+1;
+            var imax=0,hmax=0;
+            var flag=0;
+            while(w>w_min)
+            {
+                imax=0;
+                hmax=0;
+                var T=this.maxSlidingWindow(t, t.length,step);
+                var B =this.minSlidingWindow(b, b.length,step);
+                for(var i=0;i< T.length;i++)
+                {
+                    var temp=B[i]-T[i];
+                    if(temp>hmax)
+                    {
+                        hmax=temp
+                        imax=i;
+                    }
+                }
+                var center_x=imax*40;
+                var center_y=(B[imax]+T[imax])/2+1.5*Math.ceil(w/label.length)/2;
+                if(Math.ceil(w/label.length)<=hmax)
+                {
+                    var Text=document.createElementNS("http://www.w3.org/2000/svg","text");
+                    Text.textContent=label;
+                    Text.setAttribute("x",center_x.toString());
+                    Text.setAttribute("y",center_y.toString());
+                    Text.setAttribute("font-size",Math.ceil(w/label.length).toString());
+                    Text.setAttribute("textLength", w.toString());
+                    svg.appendChild(Text);
+                    flag=1;
+                    break;
+                }
+                w=w-Math.max(1,Math.round(0.1*w));
+            }
+        }
+        if(flag==0)
+        {
+            var Text=document.createElementNS("http://www.w3.org/2000/svg","text");
+            Text.textContent=label;
+            Text.setAttribute("x","0");
+            Text.setAttribute("y","0");
+            Text.setAttribute("font-size","0");
+            Text.setAttribute("textLength", "0");
+            svg.appendChild(Text);
         }
     },
     maxSlidingWindow:function(A,n,w)
@@ -228,8 +282,90 @@ stackGraph.prototype = {
 			path[i].appendChild(animate);
 			animate.beginElement();
 		}
-		var debug = 0;
-		debug++;
+        var TEXT = svg.getElementsByTagName("text");
+        for(var k=1;k<DATA.length;k++){
+            var t=DATA[k];
+            var b=DATA[k-1];
+            var maxfont=10;
+            var minfont=2;
+            var w=Math.round(maxfont*this.Label[k-1].length);
+            var w_min=Math.round(minfont*this.Label[k-1].length);
+            var step=2*Math.round((w/2)/40)+1;
+            var imax=0,hmax=0;
+            var flag=0;
+            while(w>w_min)
+            {
+                imax=0;
+                hmax=0;
+                var T=this.maxSlidingWindow(t, t.length,step);
+                var B =this.minSlidingWindow(b, b.length,step);
+                for(var i=0;i< T.length;i++)
+                {
+                    var temp=B[i]-T[i];
+                    if(temp>hmax)
+                    {
+                        hmax=temp
+                        imax=i;
+                    }
+                }
+                var center_x=(imax+(step-1)/2)*40-w/2;
+                var center_y=(B[imax]+T[imax])/2+Math.ceil(w/this.Label.length)/2;
+                if(Math.ceil(w/this.Label.length)<=hmax)
+                {
+                    TEXT[k-1].setAttribute("x",center_x.toString());
+                    TEXT[k-1].setAttribute("y",center_y.toString());
+                    TEXT[k-1].setAttribute("font-size",Math.ceil(w/this.Label.length).toString());
+                    TEXT[k-1].setAttribute("textLength", w.toString());
+                    flag=1;
+                    break;
+                }
+                w=w-Math.max(1,Math.round(0.1*w));
+            }
+            if(flag==0)
+            {
+                var w=Math.round(maxfont*this.Label[k-1].length);
+                var w_min=Math.round(minfont*this.Label[k-1].length);
+                var step=Math.round(w/40)+1;
+                var imax=0,hmax=0;
+                var flag=0;
+                while(w>w_min)
+                {
+                    imax=0;
+                    hmax=0;
+                    var T=this.maxSlidingWindow(t, t.length,step);
+                    var B =this.minSlidingWindow(b, b.length,step);
+                    for(var i=0;i< T.length;i++)
+                    {
+                        var temp=B[i]-T[i];
+                        if(temp>hmax)
+                        {
+                            hmax=temp
+                            imax=i;
+                        }
+                    }
+                    var center_x=imax*40;
+                    var center_y=(B[imax]+T[imax])/2+1.5*Math.ceil(w/this.Label.length)/2;
+                    if(Math.ceil(w/this.Label.length)<=hmax)
+                    {
+                        TEXT[k-1].setAttribute("x",center_x.toString());
+                        TEXT[k-1].setAttribute("y",center_y.toString());
+                        TEXT[k-1].setAttribute("font-size",Math.ceil(w/this.Label.length).toString());
+                        TEXT[k-1].setAttribute("textLength", w.toString());
+                        flag=1;
+                        break;
+                    }
+                    w=w-Math.max(1,Math.round(0.1*w));
+                }
+            }
+            if(flag==0)
+            {
+                TEXT[k-1].setAttribute("x","0");
+                TEXT[k-1].setAttribute("y","0");
+                TEXT[k-1].setAttribute("font-size","0");
+                TEXT[k-1].setAttribute("textLength", "0");
+            }
+        }
 	}
+
 }
 

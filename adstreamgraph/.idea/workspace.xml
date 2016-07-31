@@ -34,7 +34,7 @@
           <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.1570248">
+                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="-6.967742">
                   <folding />
                 </state>
               </provider>
@@ -47,7 +47,7 @@
           <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="108" column="54" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.78651685">
+                <state line="360" column="13" selection-start="12728" selection-end="12728" vertical-scroll-proportion="0.28539824">
                   <folding />
                 </state>
               </provider>
@@ -72,9 +72,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="506" />
-    <option name="width" value="1036" />
-    <option name="height" value="830" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1552" />
+    <option name="height" value="840" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -141,13 +142,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="506" y="0" width="1036" height="830" extended-state="0" />
+    <frame x="-8" y="-8" width="1552" height="840" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.055165496" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03635162" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -215,6 +216,34 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="115" column="24" selection-start="4302" selection-end="4302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/staked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="54" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/operation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
@@ -287,14 +316,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.1570248">
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="-6.967742">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="54" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.78651685">
+        <state line="360" column="13" selection-start="12728" selection-end="12728" vertical-scroll-proportion="0.28539824">
           <folding />
         </state>
       </provider>
