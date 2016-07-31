@@ -4,13 +4,19 @@ stackGraph.prototype = {
 	yList:[],
 	Svg:Object(),
 	Data:[],
-	getPath: function(data)
+	getPath: function(data,index)
 	{
-		var name="M"+"0"+",500 L"+data[0].x.toString() + "," + Math.ceil(data[0].y).toString() + " "+ "C" + (data[0].x+20).toString() + "," + Math.ceil(data[0].y).toString() + " " + (data[1].x-20).toString() + "," + Math.ceil(data[1].y).toString() + " " + data[1].x.toString() + "," + Math.ceil(data[1].y).toString() + " ";
-        for(var i=1;i<n-1;i++){
-            name +="L"+data[i].x.toString() + "," + Math.ceil(data[i].y).toString() + " "+ "C" + (data[i].x+20).toString() + "," + Math.ceil(data[i].y).toString() + " " + (data[i+1].x-20).toString() + "," + Math.ceil(data[i+1].y).toString() + " " + data[i+1].x.toString() + "," + Math.ceil(data[i+1].y).toString() + " ";
+        var n=data[0].length;
+		var name="M"+data[index][0].x.toString()+","+Math.ceil(data[index][0].y).toString();
+        for(var i=0;i<n-1;i++){
+            name +="L"+data[index][i].x.toString() + "," + Math.ceil(data[index][i].y).toString() + " "+ "C" + (data[index][i].x+20).toString() + "," + Math.ceil(data[index][i].y).toString() + " " + (data[index][i+1].x-20).toString() + "," + Math.ceil(data[index][i+1].y).toString() + " " + data[index][i+1].x.toString() + "," + Math.ceil(data[index][i+1].y).toString() + " ";
         }
-		name+="L"+data[n-1].x.toString()+",500";
+		name+="L"+data[index][n-1].x.toString()+","+Math.ceil(data[index][n-1].y).toString() + " ";
+        for(var i=n-1;i>=1;i--){
+            name +="L"+data[index-1][i].x.toString() + "," + Math.ceil(data[index-1][i].y).toString() + " "+ "C" + (data[index-1][i].x-20).toString() + "," + Math.ceil(data[index-1][i].y).toString() + " " + (data[index-1][i-1].x+20).toString() + "," + Math.ceil(data[index-1][i-1].y).toString() + " " + data[index-1][i-1].x.toString() + "," + Math.ceil(data[index-1][i-1].y).toString() + " ";
+        }
+        name+="L"+data[index-1][0].x.toString()+","+Math.ceil(data[index-1][0].y).toString() + " ";
+        name+="L"+data[index][0].x.toString()+","+Math.ceil(data[index][0].y).toString();
 		return name;
 	},
 	makeStackGraph: function(svg,input)
@@ -21,103 +27,183 @@ stackGraph.prototype = {
 		var g0=[];
 		var len = data.length;
 		var DATA = new Array(len);
-		for(var i=0;i<len;i++)
+		for(var i=0;i<=len;i++)
 		{
 			DATA[i]=new Array(data[0].length);
-			for(var j=0;j<data[0].resource.length;j++)
+			for(var j=0;j<data[0].length;j++)
 			{
 				DATA[i][j]={x:0,y:0}
 			}
 		}
-        g0[0]={x:50,y:600};
+        g0[0]={x:data[0][0].x,y:500};
 		for(var i=0;i<dg.length;i++)
 		{
 			g0[i+1] = {x:0,y:0};
-			var sum=0;
-			g0[i+1].x=data[0].x;
-			g0[i+1].y=g0[i]-dg[i];
+			g0[i+1].x=data[0][i+1].x;
+			g0[i+1].y=g0[i].y-dg[i];
 		}
-		for(var i=0;i<data,length;i++)
+		for(var i=0;i<=data.length;i++)
 		{
 			for(var j=0;j<data[0].length;j++)
 			{
 				if(i==0)
 				{
-					DATA[i][j].y = g0[j].y-data[i].y;
-					DATA[i][j].x = data[i].x;
+					DATA[i][j].y = g0[j].y
+					DATA[i][j].x = g0[j].x;
 				}
 				else
 				{
-					DATA[i][j].y = DATA[i-1][j].y-data[i].y;
-					DATA[i][j].x = data[i].x;
+					DATA[i][j].y = DATA[i-1][j].y-data[i-1][j].y;
+					DATA[i][j].x = data[i-1][j].x;
 				}
 			}
 		}
-		for (var i=DATA.length-1;i>=0;i--){
-			if (i % 2 == 0)  this.build(svg,"#556",DATA[i],i+1);
-			else this.build(svg,"#aad",DATA[i],i+1);
+		for (var i=1;i<DATA.length;i++){
+            if (i % 3 == 0)  this.build(svg,"#2894FF",DATA,i);
+            else if(i % 3 == 1) this.build(svg,"#82D900",DATA,i);
+            else this.build(svg,"#F75000",DATA,i);
 		}
-		this.build(svg,"white",g0,0);
+        for (var i=1;i<DATA.length;i++){
+           this.labeling(DATA[i],DATA[i-1],1,2,"stream",0.05)
+        }
 	},
 	
 	build:function(svg,color,data,index)
 	{
-        var n = data.length;
-        var d=this.getPath(data,"500");
-        shape = document.getElementById("path" + (index).toString());
+        var n = data[0].length;
+        var d=this.getPath(data,index);
+        shape = document.getElementById("path" + (index+1).toString());
         if (!shape) shape = document.createElementNS("http://www.w3.org/2000/svg", "path");
         shape.setAttributeNS(null, "d", d);
-        shape.setAttributeNS(null,"id","path" + (index).toString());
+        shape.setAttributeNS(null,"id","path" + (index+1).toString());
         shape.setAttributeNS(null, "fill", color);
         shape.setAttributeNS(null, "stroke", "white");
         shape.setAttributeNS(null, "stroke-width", 0.2);
         if (color != "white") shape.setAttributeNS(null,"fill-opacity",0.8);
         else shape.setAttributeNS(null,"fill-opacity",1);
         svg.appendChild(shape);
+
 	},
+    labeling:function(t,b,minfont,maxfont,label,sigma)
+    {
+        var w=Math.round(maxfont*label.length);
+        var w_min=Math.round(minfont*label.length);
+        var step=2*Math.ceil((w/2)/40)+1;
+        var imax=0,hmax=0;
+        while(w>w_min)
+        {
+            imax=0;
+            hmax=0;
+            var T=this.maxSlidingWindow(t, t.length,step);
+            var B =this.minSlidingWindow(b, b.length,step);
+            for(var i=0;i< T.length;i++)
+            {
+                var temp=B[i]-T[i];
+                if(temp>hmax)
+                {
+                    hmax=temp
+                    imax=i;
+                }
+            }
+            var center_x=imax*40;
+            var center_y=(B[imax]+T[imax])/2+w*sigma/2;
+            if(w*sigma<=hmax)
+            {
+                var Text=document.createElementNS("http://www.w3.org/2000/svg","text");
+                Text.textContent=label;
+                Text.setAttribute("x",center_x.toString());
+                Text.setAttribute("y",center_y.toString());
+                svg.appendChild(Text);
+                break;
+            }
+            w=w-Math.max(0.5,Math.round(0.1*w));
+        }
+    },
+    maxSlidingWindow:function(A,n,w)
+    {
+        var Q=[];
+        var B=[];
+        for(var i=0;i<w;i++)
+        {
+            while(Q.length>0&&A[i].y>=A[Q[Q.length-1]].y)
+                 Q.pop();
+            Q.push(i);
+        }
+        for(var i=w;i<n;i++)
+        {
+            B[i-w]=A[Q[0]].y;
+            while(Q.length>0&&A[i].y>=A[Q[Q.length-1]].y)
+                Q.pop();
+            while(Q.length>0&&Q[0]<=(i-w))
+                Q.shift();
+            Q.push(i);
+        }
+        B[n-w]=A[Q[0]].y;
+        return B;
+    },
+    minSlidingWindow:function(A,n,w)
+    {
+        var Q=[];
+        var B=[];
+        for(var i=0;i<w;i++)
+        {
+            while(Q.length>0&&A[i].y<=A[Q[Q.length-1]].y)
+                Q.pop();
+            Q.push(i);
+        }
+        for(var i=w;i<n;i++)
+        {
+            B[i-w]=A[Q[0]].y;
+            while(Q.length>0&&A[i].y<=A[Q[Q.length-1]].y)
+                Q.pop();
+            while(Q.length>0&&Q[0]<=(i-w))
+                Q.shift();
+            Q.push(i);
+        }
+        B[n-w]=A[Q[0]].y;
+        return B;
+    },
 	Translate: function()
 	{
-		var data = this['Data'];
+		var input = this['Data'];
 		var svg = this['Svg'];
+        var data=input.data;
+        var dg=input.g;
 		if (data == null) throw "translate error!";
 		var len = data.length;
 		var DATA = new Array(len);
-		for(var i=0;i<len;i++)
+		for(var i=0;i<=len;i++)
 		{
 			DATA[i]=new Array(data[0].length);
-			for(var j=0;j<data[0].resource.length;j++)
+			for(var j=0;j<data[0].length;j++)
 			{
 				DATA[i][j]={x:0,y:0}
 			}
 		}
 		var g0 = [];
-		for(var i=0;i<data[0].resource.length;i++)
-		{
-			g0[i] = {x:0,y:0};
-			var sum=0;
-			for(var j=0;j<data.length;j++)
-			{
-				sum += data[j].resource[i].y
-			}
-			g0[i].x=data[0].resource[i].x;
-			g0[i].y=sum/2.0+200;
-		}
-		for(var i=data.length-1,k=0;i>=0;i--,k++)
-		{
-			for(var j=0;j<data[0].resource.length;j++)
-			{
-				if(i==data.length-1)
-				{
-					DATA[k][j].y = g0[j].y-data[i].resource[j].y;
-					DATA[k][j].x = data[i].resource[j].x;
-				}
-				else
-				{
-					DATA[k][j].y = DATA[k-1][j].y-data[i].resource[j].y;
-					DATA[k][j].x = data[i].resource[j].x;
-				}
-			}
-		}
+        g0[0]={x:data[0][0].x,y:500};
+        for(var i=0;i<dg.length;i++)
+        {
+            g0[i+1] = {x:0,y:0};
+            g0[i+1].x=data[0][i+1].x;
+            g0[i+1].y=g0[i].y-dg[i];
+        }
+        for(var i=0;i<=data.length;i++)
+        {
+            for(var j=0;j<data[0].length;j++)
+            {
+                if(i==0)
+                {
+                    DATA[i][j].y = g0[j].y
+                    DATA[i][j].x = g0[j].x;
+                }
+                else
+                {
+                    DATA[i][j].y = DATA[i-1][j].y-data[i-1][j].y;
+                    DATA[i][j].x = data[i-1][j].x;
+                }
+            }
+        }
 		
 		var path = svg.getElementsByTagName("path");
 		for (var i=0;i<path.length;i++)
@@ -130,8 +216,7 @@ stackGraph.prototype = {
 				path[i].removeChild(animate);
 			}
 			var d;
-			if (i!=path.length-1) d = this.getPath(DATA[path.length-2-i]);
-			else d = this.getPath(g0);
+			d = this.getPath(DATA,i+1);
 			animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 			animate.id = "animate";
 			animate.setAttributeNS(null,"attributeName","d");

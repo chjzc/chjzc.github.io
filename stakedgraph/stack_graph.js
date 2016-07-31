@@ -6,6 +6,7 @@ stackGraph.prototype = {
 	Data:[],
 	getPath: function(data)
 	{
+		var n=data.length;
 		var name="M"+"0"+",500 L"+data[0].x.toString() + "," + Math.ceil(data[0].y).toString() + " "+ "C" + (data[0].x+20).toString() + "," + Math.ceil(data[0].y).toString() + " " + (data[1].x-20).toString() + "," + Math.ceil(data[1].y).toString() + " " + data[1].x.toString() + "," + Math.ceil(data[1].y).toString() + " ";
         for(var i=1;i<n-1;i++){
             name +="L"+data[i].x.toString() + "," + Math.ceil(data[i].y).toString() + " "+ "C" + (data[i].x+20).toString() + "," + Math.ceil(data[i].y).toString() + " " + (data[i+1].x-20).toString() + "," + Math.ceil(data[i+1].y).toString() + " " + data[i+1].x.toString() + "," + Math.ceil(data[i+1].y).toString() + " ";

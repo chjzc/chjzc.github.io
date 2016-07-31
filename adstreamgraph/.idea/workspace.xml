@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="929b2ea1-107a-4588-9df8-6e43d289ea31" name="Default" comment="" />
-    <ignored path="stakedgraph.iws" />
+    <list default="true" id="e33c2a31-5c32-4f9b-aba5-ab276909e970" name="Default" comment="" />
+    <ignored path="adstreamgraph.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,22 +19,22 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="vertical" split-proportion="0.26735598">
       <split-first>
         <leaf>
-          <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/stack_graph.js">
+          <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/operation.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="83" column="27" selection-start="2810" selection-end="2810" vertical-scroll-proportion="2.389394">
+                <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../adstreamgraph/staked.html">
+          <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="55" column="6" selection-start="1371" selection-end="1371" vertical-scroll-proportion="-0.6785714">
+                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.1570248">
                   <folding />
                 </state>
               </provider>
@@ -44,10 +44,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/../adstreamgraph/operation.js">
+          <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="169" column="1" selection-start="3684" selection-end="3684" vertical-scroll-proportion="0.02878788">
+                <state line="108" column="54" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.78651685">
                   <folding />
                 </state>
               </provider>
@@ -66,18 +66,15 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/operation.js" />
-        <option value="$PROJECT_DIR$/stack_graph.js" />
         <option value="$PROJECT_DIR$/staked.html" />
-        <option value="$PROJECT_DIR$/../adstreamgraph/operation.js" />
-        <option value="$PROJECT_DIR$/../adstreamgraph/staked.html" />
+        <option value="$PROJECT_DIR$/stack_graph.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="526" />
-    <option name="y" value="23" />
+    <option name="x" value="506" />
     <option name="width" value="1036" />
-    <option name="height" value="862" />
+    <option name="height" value="830" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -105,61 +102,52 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stakedgraph" />
+              <option name="myItemId" value="adstreamgraph" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adstreamgraph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adstreamgraph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="G:/database" />
   </component>
   <component name="RunManager">
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="mySSHConnectionTimeout" value="30000" />
-    <option name="mySSHReadTimeout" value="30000" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="DETECT_NESTED_COPIES" value="true" />
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <option name="FORCE_UPDATE" value="false" />
-    <option name="IGNORE_EXTERNALS" value="false" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="929b2ea1-107a-4588-9df8-6e43d289ea31" name="Default" comment="" />
-      <created>1459087447515</created>
-      <updated>1459087447515</updated>
+      <changelist id="e33c2a31-5c32-4f9b-aba5-ab276909e970" name="Default" comment="" />
+      <created>1469696431690</created>
+      <updated>1469696431690</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="526" y="23" width="1036" height="862" extended-state="0" />
+    <frame x="506" y="0" width="1036" height="830" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11735205" sideWeight="0.99638337" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.055165496" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -227,102 +215,86 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../adstreamgraph/staked.html">
+    <entry file="file://$PROJECT_DIR$/operation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="6" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../adstreamgraph/operation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="1" selection-start="3684" selection-end="3684" vertical-scroll-proportion="0.0">
+        <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="31" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0" />
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="54" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.0">
+        <state line="100" column="35" selection-start="3757" selection-end="3757" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="35" selection-start="390" selection-end="423" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stack_graph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="19" selection-start="3894" selection-end="3894" vertical-scroll-proportion="0.0">
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
+        <state line="66" column="65" selection-start="2500" selection-end="2500" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="9" selection-start="410" selection-end="410" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stack_graph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/staked.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stack_graph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/staked.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/staked.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="12" selection-start="538" selection-end="538" vertical-scroll-proportion="-1.4333868" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../adstreamgraph/operation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="1" selection-start="3684" selection-end="3684" vertical-scroll-proportion="0.02878788">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../adstreamgraph/staked.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="6" selection-start="1371" selection-end="1371" vertical-scroll-proportion="-0.6785714">
+        <state line="31" column="40" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="27" selection-start="2810" selection-end="2810" vertical-scroll-proportion="2.389394">
+        <state line="37" column="33" selection-start="1771" selection-end="1771" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/staked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.1570248">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="54" selection-start="3979" selection-end="3979" vertical-scroll-proportion="0.78651685">
           <folding />
         </state>
       </provider>
