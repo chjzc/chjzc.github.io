@@ -34,7 +34,7 @@
           <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="-6.967742">
+                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.15322581">
                   <folding />
                 </state>
               </provider>
@@ -47,7 +47,7 @@
           <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="360" column="13" selection-start="12728" selection-end="12728" vertical-scroll-proportion="0.28539824">
+                <state line="316" column="82" selection-start="11089" selection-end="11089" vertical-scroll-proportion="2.2190266">
                   <folding />
                 </state>
               </provider>
@@ -213,7 +213,9 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
@@ -316,14 +318,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="-6.967742">
+        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.15322581">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="360" column="13" selection-start="12728" selection-end="12728" vertical-scroll-proportion="0.28539824">
+        <state line="316" column="82" selection-start="11089" selection-end="11089" vertical-scroll-proportion="2.2190266">
           <folding />
         </state>
       </provider>
