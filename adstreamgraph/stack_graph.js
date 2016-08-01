@@ -4,7 +4,7 @@ stackGraph.prototype = {
 	yList:[],
 	Svg:Object(),
 	Data:[],
-    Label:["layer1","layer2","layer3","layer4","layer5","layer6","layer7","layer8","layer9","layer10"],
+    Label:["layer1","layer2","layer3","layer4","layer5","layer6","layer7","layer8","layer9","layer10","layer11","layer12"],
 	getPath: function(data,index)
 	{
         var n=data[0].length;

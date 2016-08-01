@@ -19,13 +19,13 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="vertical" split-proportion="0.26735598">
+    <splitter split-orientation="vertical" split-proportion="0.20508982">
       <split-first>
         <leaf>
           <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/operation.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
+                <state line="54" column="20" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -34,7 +34,7 @@
           <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.15322581">
+                <state line="43" column="14" selection-start="1217" selection-end="1230" vertical-scroll-proportion="0.43283582">
                   <folding />
                 </state>
               </provider>
@@ -47,7 +47,7 @@
           <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="316" column="82" selection-start="11089" selection-end="11089" vertical-scroll-proportion="2.2190266">
+                <state line="6" column="120" selection-start="219" selection-end="219" vertical-scroll-proportion="0.23408625">
                   <folding />
                 </state>
               </provider>
@@ -72,10 +72,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1552" />
-    <option name="height" value="840" />
+    <option name="x" value="761" />
+    <option name="width" value="782" />
+    <option name="height" value="831" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -103,7 +102,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -124,6 +122,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -142,13 +141,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1552" height="840" extended-state="6" />
+    <frame x="761" y="0" width="782" height="831" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03635162" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07402422" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -311,21 +310,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/operation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="9" selection-start="401" selection-end="411" vertical-scroll-proportion="0.0">
+        <state line="54" column="20" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="1230" selection-end="1243" vertical-scroll-proportion="0.15322581">
+        <state line="43" column="14" selection-start="1217" selection-end="1230" vertical-scroll-proportion="0.43283582">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="316" column="82" selection-start="11089" selection-end="11089" vertical-scroll-proportion="2.2190266">
+        <state line="6" column="120" selection-start="219" selection-end="219" vertical-scroll-proportion="0.23408625">
           <folding />
         </state>
       </provider>
