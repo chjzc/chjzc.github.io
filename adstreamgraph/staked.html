@@ -38,16 +38,30 @@
 		var a = [], i;
 		for (i = 0; i < n; ++i) a[i] = 0;
 		for (i = 0; i < 15; ++i) bump(a);
-		return a.map(function(d, i) { return {x: i * (800 / n), y: Math.max(0,d)*10.0};});
+		return a.map(function(d, i) { return {x: i * (800 / n), y: Math.ceil(Math.max(0,d)*10.0)};});
 	}
 
 	var n = 12;
 	var m = 20;
 	var layer = [];
-	for (var i=0;i<n;i++) 
+	for (var i=0;i<n;i++)
 	{
 		layer[i] = bumpLayer(m);
 	}
+    //the first case
+    /*layer[0]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10}];
+    layer[1]=[{x:0,y:0},{x:40,y:0},{x:80,y:40},{x:120,y:40},{x:160,y:40}];
+    layer[2]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10}];
+    layer[3]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10}];
+    */
+    // the second case
+    /*layer[0]=[{x:0,y:0},{x:40,y:0},{x:80,y:0},{x:120,y:10},{x:160,y:10},{x:200,y:10}];
+    layer[1]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10},{x:200,y:10}];
+    layer[2]=[{x:0,y:0},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10},{x:200,y:0}];
+    layer[3]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10},{x:200,y:10}];
+    layer[4]=[{x:0,y:0},{x:40,y:0},{x:80,y:10},{x:120,y:10},{x:160,y:10},{x:200,y:10}];
+    layer[5]=[{x:0,y:10},{x:40,y:10},{x:80,y:10},{x:120,y:10},{x:160,y:10},{x:200,y:10}];
+    layer[6]=[{x:0,y:0},{x:40,y:0},{x:80,y:0},{x:120,y:0},{x:160,y:10},{x:200,y:10}];*/
     var data1=operate(layer);
 
 

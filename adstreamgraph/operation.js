@@ -1,7 +1,8 @@
 function operate(a)
 {
-    var dg=baseline(a);
+    //var dg=baseline(a);
     var ordering=resort(a);
+    var dg=baseline(ordering);
     return {g:dg,data:ordering};
 }
 

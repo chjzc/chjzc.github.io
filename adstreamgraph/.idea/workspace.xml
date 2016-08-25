@@ -19,22 +19,22 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="vertical" split-proportion="0.20508982">
+    <splitter split-orientation="vertical" split-proportion="0.47415066">
       <split-first>
         <leaf>
           <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/operation.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="54" column="20" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.0">
+                <state line="3" column="27" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="staked.html" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="43" column="14" selection-start="1217" selection-end="1230" vertical-scroll-proportion="0.43283582">
+                <state line="56" column="22" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.79770994">
                   <folding />
                 </state>
               </provider>
@@ -44,10 +44,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="stack_graph.js" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="6" column="120" selection-start="219" selection-end="219" vertical-scroll-proportion="0.23408625">
+                <state line="381" column="49" selection-start="14503" selection-end="14503" vertical-scroll-proportion="0.42356688">
                   <folding />
                 </state>
               </provider>
@@ -66,15 +66,16 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/operation.js" />
-        <option value="$PROJECT_DIR$/staked.html" />
         <option value="$PROJECT_DIR$/stack_graph.js" />
+        <option value="$PROJECT_DIR$/staked.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="761" />
-    <option name="width" value="782" />
-    <option name="height" value="831" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1552" />
+    <option name="height" value="840" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -90,7 +91,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -101,29 +102,7 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adstreamgraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adstreamgraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adstreamgraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -141,13 +120,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="761" y="0" width="782" height="831" extended-state="0" />
+    <frame x="-8" y="-8" width="1552" height="840" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07402422" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07267833" sideWeight="0.99418604" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -213,7 +192,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -310,21 +289,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/operation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="20" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/staked.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="14" selection-start="1217" selection-end="1230" vertical-scroll-proportion="0.43283582">
+        <state line="3" column="27" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="120" selection-start="219" selection-end="219" vertical-scroll-proportion="0.23408625">
+        <state line="381" column="49" selection-start="14503" selection-end="14503" vertical-scroll-proportion="0.42356688">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/staked.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="22" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.79770994">
           <folding />
         </state>
       </provider>

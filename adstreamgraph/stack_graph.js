@@ -258,7 +258,7 @@ stackGraph.prototype = {
                 }
             }
         }
-		
+
 		var path = svg.getElementsByTagName("path");
 		for (var i=0;i<path.length;i++)
 		{
@@ -351,6 +351,35 @@ stackGraph.prototype = {
                         TEXT[k-1].setAttribute("y",center_y.toString());
                         TEXT[k-1].setAttribute("font-size",Math.ceil(w/this.Label[k-1].length).toString());
                         TEXT[k-1].setAttribute("textLength", (w-0.5*this.Label[k-1].length).toString());
+
+                        /*if (TEXT[k-1].firstChild != null)
+                        {
+                            var temp=TEXT[k-1].firstChild;
+                            var cx = temp.getAttribute("to");
+                            TEXT[k-1].setAttribute("x",cx);
+                            TEXT[k-1].removeChild(temp);
+                            temp=TEXT[k-1].firstChild;
+                            var cy = temp.getAttribute("to");
+                            TEXT[k-1].setAttribute("y",cy);
+                            TEXT[k-1].removeChild(temp);
+                            temp=TEXT[k-1].firstChild;
+                            var fs = temp.getAttribute("to");
+                            TEXT[k-1].setAttribute("font-size",fs);
+                            TEXT[k-1].removeChild(temp);
+                            temp=TEXT[k-1].firstChild;
+                            var tl = temp.getAttribute("to");
+                            TEXT[k-1].setAttribute("textLength",tl);
+                            TEXT[k-1].removeChild(temp);
+                        }
+                        var animate1 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+                        animate.setAttributeNS(null,"attributeName","x");
+                        animate.setAttributeNS(null,"to",d);
+                        animate.setAttributeNS(null,"begin","indefinite");
+                        animate.setAttributeNS(null,"dur","0.5s");
+                        animate.setAttributeNS(null,"fill","freeze");
+                        animate.setAttributeNS(null,"repeatCount","1");
+                        path[i].appendChild(animate);
+                        animate.beginElement();*/
                         flag=1;
                         break;
                     }
@@ -359,8 +388,8 @@ stackGraph.prototype = {
             }
             if(flag==0)
             {
-                TEXT[k-1].setAttribute("x","0");
-                TEXT[k-1].setAttribute("y","0");
+                //TEXT[k-1].setAttribute("x","0");
+                //TEXT[k-1].setAttribute("y","0");
                 TEXT[k-1].setAttribute("font-size","0");
                 TEXT[k-1].setAttribute("textLength", "0");
             }
