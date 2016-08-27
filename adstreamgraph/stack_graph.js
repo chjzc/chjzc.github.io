@@ -89,7 +89,7 @@ stackGraph.prototype = {
     {
         var w=Math.round(maxfont*label.length);
         var w_min=Math.round(minfont*label.length);
-        var step=2*Math.round(((w-0.5*label.length)/2)/40)+1;
+        var step=2*Math.round((w/2)/40)+1;
         var imax=0,hmax=0;
         var flag=0;
         while(w>w_min)
@@ -107,7 +107,7 @@ stackGraph.prototype = {
                     imax=i;
                 }
             }
-            var center_x=(imax+(step-1)/2)*40-(w-0.5*label.length)/2;
+            var center_x=(imax+(step-1)/2)*40-w/2;
             var center_y=(B[imax]+T[imax])/2+1.2*Math.ceil(w/label.length)/2;
             if(Math.ceil(w/label.length)<=hmax)
             {
@@ -115,8 +115,8 @@ stackGraph.prototype = {
                 Text.textContent=label;
                 Text.setAttribute("x",center_x.toString());
                 Text.setAttribute("y",center_y.toString());
-                Text.setAttribute("font-size",Math.ceil(w/label.length).toString());
-                Text.setAttribute("textLength",(w-0.5*label.length).toString());
+                Text.setAttribute("font-size",(1.2*Math.ceil(w/label.length)).toString());
+                Text.setAttribute("textLength",w.toString());
                 svg.appendChild(Text);
                 flag=1;
                 break;
@@ -127,7 +127,7 @@ stackGraph.prototype = {
         {
             var w=Math.round(maxfont*label.length);
             var w_min=Math.round(minfont*label.length);
-            var step=Math.round((w-0.5*label.length)/40)+1;
+            var step=Math.round(w/40)+1;
             var imax=0,hmax=0;
             var flag=0;
             while(w>w_min)
@@ -153,8 +153,8 @@ stackGraph.prototype = {
                     Text.textContent=label;
                     Text.setAttribute("x",center_x.toString());
                     Text.setAttribute("y",center_y.toString());
-                    Text.setAttribute("font-size",Math.ceil(w/label.length).toString());
-                    Text.setAttribute("textLength", (w-0.5*label.length).toString());
+                    Text.setAttribute("font-size",(1.2*Math.ceil(w/label.length)).toString());
+                    Text.setAttribute("textLength", w.toString());
                     svg.appendChild(Text);
                     flag=1;
                     break;
@@ -290,7 +290,7 @@ stackGraph.prototype = {
             var minfont=2;
             var w=Math.round(maxfont*this.Label[k-1].length);
             var w_min=Math.round(minfont*this.Label[k-1].length);
-            var step=2*Math.round(((w-0.5*this.Label[k-1].length)/2)/40)+1;
+            var step=2*Math.round((w/2)/40)+1;
             var imax=0,hmax=0;
             var flag=0;
             while(w>w_min)
@@ -308,14 +308,14 @@ stackGraph.prototype = {
                         imax=i;
                     }
                 }
-                var center_x=(imax+(step-1)/2)*40-(w-0.5*this.Label[k-1].length)/2;
+                var center_x=(imax+(step-1)/2)*40-w/2;
                 var center_y=(B[imax]+T[imax])/2+Math.ceil(w/this.Label[k-1].length)/2;
                 if(Math.ceil(w/this.Label.length)<=hmax)
                 {
                     TEXT[k-1].setAttribute("x",center_x.toString());
                     TEXT[k-1].setAttribute("y",center_y.toString());
-                    TEXT[k-1].setAttribute("font-size",Math.ceil(w/this.Label[k-1].length).toString());
-                    TEXT[k-1].setAttribute("textLength", (w-0.5*this.Label[k-1].length).toString());
+                    TEXT[k-1].setAttribute("font-size",(1.2*Math.ceil(w/this.Label[k-1].length)).toString());
+                    TEXT[k-1].setAttribute("textLength", w.toString());
                     flag=1;
                     break;
                 }
@@ -325,7 +325,7 @@ stackGraph.prototype = {
             {
                 var w=Math.round(maxfont*this.Label[k-1].length);
                 var w_min=Math.round(minfont*this.Label[k-1].length);
-                var step=Math.round((w-0.5*this.Label[k-1].length)/40)+1;
+                var step=Math.round(w/40)+1;
                 var imax=0,hmax=0;
                 var flag=0;
                 while(w>w_min)
@@ -344,13 +344,13 @@ stackGraph.prototype = {
                         }
                     }
                     var center_x=imax*40;
-                    var center_y=(B[imax]+T[imax])/2+1.5*Math.ceil(w/this.Label[k-1].length)/2;
+                    var center_y=(B[imax]+T[imax])/2+Math.ceil(w/this.Label[k-1].length)/2;
                     if(Math.ceil(w/this.Label[k-1].length)<=hmax)
                     {
                         TEXT[k-1].setAttribute("x",center_x.toString());
                         TEXT[k-1].setAttribute("y",center_y.toString());
-                        TEXT[k-1].setAttribute("font-size",Math.ceil(w/this.Label[k-1].length).toString());
-                        TEXT[k-1].setAttribute("textLength", (w-0.5*this.Label[k-1].length).toString());
+                        TEXT[k-1].setAttribute("font-size",(1.2*Math.ceil(w/this.Label[k-1].length)).toString());
+                        TEXT[k-1].setAttribute("textLength", w.toString());
 
                         /*if (TEXT[k-1].firstChild != null)
                         {
@@ -388,8 +388,8 @@ stackGraph.prototype = {
             }
             if(flag==0)
             {
-                //TEXT[k-1].setAttribute("x","0");
-                //TEXT[k-1].setAttribute("y","0");
+                TEXT[k-1].setAttribute("x","0");
+                TEXT[k-1].setAttribute("y","0");
                 TEXT[k-1].setAttribute("font-size","0");
                 TEXT[k-1].setAttribute("textLength", "0");
             }

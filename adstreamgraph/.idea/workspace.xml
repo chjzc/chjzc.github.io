@@ -31,10 +31,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="staked.html" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="staked.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/staked.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="56" column="22" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.79770994">
+                <state line="63" column="87" selection-start="2308" selection-end="2308" vertical-scroll-proportion="0.5801527">
                   <folding />
                 </state>
               </provider>
@@ -44,10 +44,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="stack_graph.js" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="stack_graph.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stack_graph.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="381" column="49" selection-start="14503" selection-end="14503" vertical-scroll-proportion="0.42356688">
+                <state line="114" column="39" selection-start="4360" selection-end="4360" vertical-scroll-proportion="0.18152866">
                   <folding />
                 </state>
               </provider>
@@ -66,8 +66,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/operation.js" />
-        <option value="$PROJECT_DIR$/stack_graph.js" />
         <option value="$PROJECT_DIR$/staked.html" />
+        <option value="$PROJECT_DIR$/stack_graph.js" />
       </list>
     </option>
   </component>
@@ -294,16 +294,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stack_graph.js">
+    <entry file="file://$PROJECT_DIR$/staked.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="381" column="49" selection-start="14503" selection-end="14503" vertical-scroll-proportion="0.42356688">
+        <state line="63" column="87" selection-start="2308" selection-end="2308" vertical-scroll-proportion="0.5801527">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/staked.html">
+    <entry file="file://$PROJECT_DIR$/stack_graph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="22" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.79770994">
+        <state line="114" column="39" selection-start="4360" selection-end="4360" vertical-scroll-proportion="0.18152866">
           <folding />
         </state>
       </provider>
