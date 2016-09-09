@@ -1,0 +1,131 @@
+<html>
+<head>
+    <script src="core.js"></script>
+    <script src="picture.js"></script>
+    <script src="grid.js"></script>
+	<script src="jquery.js"></script>
+    <style>
+        div.s{
+            position:absolute;
+            left:0px;
+            top:2500px;
+        }
+    </style>
+</head>
+
+<body>
+
+<canvas id="myCanvas">
+</canvas>
+<div class="s">
+<label id="label1"></label>
+<label id="label2"></label>
+<input type="button" id="b1"  value="X up" />
+<input type="button" id="b2"  value="X down" />
+<input type="button" id="b3"  value="Y up" />
+<input type="button" id="b4"  value="Y down" />
+</div>
+
+<script>
+	var iCanvas = document.getElementById("myCanvas"),
+            iCtx = iCanvas.getContext("2d");
+    var lab1=document.getElementById("label1");
+    var lab2=document.getElementById("label2");
+    var img = new Image();
+    img.src = "http://127.0.0.1:5000/static/eg.jpg";
+	img.onload=function(){
+		var orgin;
+		orgin=cv.imread(img);
+		iCanvas.width = orgin.col;
+		iCanvas.height = orgin.row;
+		iCtx.putImageData(cv.RGBA2ImageData(orgin), 0, 0);
+		lab1.innerHTML=orgin.col.toString();
+		lab2.innerHTML=orgin.row.toString();
+		var result=makeorgingrid(orgin);
+		//var mydata=transfrom(result);
+		
+		//var test=JSON.stringify(mydata);
+		//console.log(test);
+		//alert(test);
+		//var test2=JSON.stringify(result);
+		$(function(){
+			$('#b1').bind('click',upinX);
+			$('#b2').bind('click',downinX);
+			$('#b3').bind('click', upinY);
+			$('#b4').bind('click', downinY);
+			function upinX(e)
+			{
+				var tempx=parseInt(lab1.innerHTML);
+				lab1.innerHTML=Math.round(tempx*10/9).toString();
+				update();
+			}
+			function downinX(e)
+			{
+				var tempx=parseInt(lab1.innerHTML);
+				lab1.innerHTML=Math.round(tempx*0.9).toString();
+				update();
+			}
+			function upinY(e)
+			{
+				var tempy=parseInt(lab2.innerHTML);
+				lab2.innerHTML=Math.round(tempy*10/9).toString();
+				updatel();
+			}
+			function downinY(e)
+			{
+				var tempy=parseInt(lab2.innerHTML);
+				lab2.innerHTML=Math.round(tempy*0.9).toString();
+				update();
+			}
+			function update()
+			{
+				var data={};
+				//data["xscale"]="xscale";
+				//data["yscale"]="yscale";
+				data["xscale"]=(parseInt(lab1.innerHTML)/orgin.col);
+				data["yscale"]=(parseInt(lab2.innerHTML)/orgin.row);
+				$.getJSON('/dataconvector', {
+							mykey: JSON.stringify(data)
+						},
+						function(D) {
+							var edge=result.edge;
+							var Data=D.result;
+							var Col=parseInt(lab1.innerHTML);
+							var Row=parseInt(lab2.innerHTML);
+							var iCanvas = document.getElementById("myCanvas"),
+							iCtx = iCanvas.getContext("2d");
+							iCanvas.width = Col;
+							iCanvas.height = Row;
+							/*var imageData = iCtx.createImageData(Col, Row);
+							for(var j=0;j<Row;j++)
+							{
+								for(var i=0;i<Col;i++)
+								{
+									var temp=(j*Col+i)*4; 
+									imageData.data[temp]=255;
+									imageData.data[temp+1]=255;
+									imageData.data[temp+2]=255;
+									imageData.data[temp+3]=255;
+								}
+							}*/
+							//iCtx.strokeStyle ='';
+							iCtx.lineWidth = 2;
+							for(var i=0;i<edge.length;i++)
+							{
+								iCtx.beginPath();
+								iCtx.moveTo(Data.vertex[edge[i].start].x,Data.vertex[edge[i].start].y)
+								iCtx.lineTo(Data.vertex[edge[i].stop].x,Data.vertex[edge[i].stop].y)
+								//iCtx.closePath();
+								iCtx.stroke()
+							}
+							//iCtx.putImageData(imageData, 0, 0);
+						});
+			}
+		});
+	};
+    
+    
+</script>
+
+</body>
+</html>
