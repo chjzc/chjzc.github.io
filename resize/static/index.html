@@ -36,9 +36,9 @@
 	img.onload=function(){
 		var orgin;
 		orgin=cv.imread(img);
-		//iCanvas.width = orgin.col;
-		//iCanvas.height = orgin.row;
-		//iCtx.putImageData(cv.RGBA2ImageData(orgin), 0, 0);
+		iCanvas.width = orgin.col;
+		iCanvas.height = orgin.row;
+		iCtx.putImageData(cv.RGBA2ImageData(orgin), 0, 0);
 		lab1.innerHTML=orgin.col.toString();
 		lab2.innerHTML=orgin.row.toString();
 		var result=makeorgingrid(orgin);
