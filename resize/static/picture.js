@@ -2,7 +2,7 @@ function transtoshow(mat)
 {
     var result=new cv.Mat(mat.row,mat.col,CV_GRAY);
     for(var i=0;i<result.data.length;i++)
-        result.data[i]=mat.data[i]*4;
+        result.data[i]=mat.data[i]*256*2;
     return result;
 }
 

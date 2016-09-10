@@ -25,14 +25,31 @@ function grid(row,col,vertex,edge,face)
 
 function makeorgingrid(img)
 {
+    var iCanvas = document.getElementById("myCanvas"),
+	iCtx = iCanvas.getContext("2d");
+	
+	
     var amat=gradient(img);
     amat=nor(amat);
+	//amat=transtoshow(amat);
+	//iCanvas.width = amat.col;
+	//iCanvas.height = amat.row;
+	//iCtx.putImageData(cv.RGBA2ImageData(amat), 0, 0);
     var bmat=saliency(img);
     bmat=nor(bmat);
+	//bmat=transtoshow(bmat);
+	//iCanvas.width = bmat.col;
+	//iCanvas.height = bmat.row;
+	//iCtx.putImageData(cv.RGBA2ImageData(bmat), 0, 0);
     var sigaMap=new cv.Mat(bmat.row,bmat.col,CV_64F,1);
     for(var i=0;i<sigaMap.data.length;i++)
         sigaMap.data[i]=bmat.data[i]*amat.data[i];
     sigaMap=nor(sigaMap);
+	//sigaMap=transtoshow(sigaMap);
+	//iCanvas.width = sigaMap.col;
+	//iCanvas.height = sigaMap.row;
+	//iCtx.putImageData(cv.RGBA2ImageData(sigaMap), 0, 0);
+	
 	var test=nor(sigaMap)
     var col=img.col;
     var row=img.row;
