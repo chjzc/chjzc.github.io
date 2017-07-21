@@ -88,8 +88,8 @@ vis.correlate = function() {
 		top: 40,
 		bottom: 40
 	};
-	var single_line_chart_height = 60;
-	var single_line_chart_paddind = 8;
+	var single_line_chart_height = 40;
+	var single_line_chart_paddind = 4;
 	var tool_size = 20;
 
 	var time_axis_height = 20;
@@ -454,6 +454,7 @@ vis.correlate = function() {
 				.datum(sen);
 
 			floating.append("text")
+				.attr("transform", "translate(0," + (single_line_chart_height/2-9) + ")")
 				.attr("font-family", "FontAwesome")
 				.attr("font-size", tool_size)
 				.text("\uf01b")
@@ -477,7 +478,7 @@ vis.correlate = function() {
 				});
 
 			floating.append("text")
-				.attr("transform", "translate(" + (15) + ",0)")
+				.attr("transform", "translate(0," + (single_line_chart_height/2+9) + ")")
 				.attr("font-family","FontAwesome")
 				.attr("font-size",tool_size)
 				.text("\uf01a")
@@ -890,7 +891,7 @@ vis.correlate = function() {
 
 				var hf = ''
 
-				hf += "<div><svg id='tip' width='180' height='160' style='background:white'><g transform=translate(0,10)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.5 stroke-width=2 fill='none'></path><path d=" + real_line_current(current_line) + " stroke='blue' stroke-opacity=0.5 stroke-width=2 fill='none'></path></g><g transform=translate(0,90)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.5 stroke-width=2 fill='none'></path><path d=" + real_line_invert(current_line) + " stroke='green' stroke-opacity=0.5 stroke-width=2 fill='none'></path></g></svg></div>"
+				hf += "<div><svg id='tip' width='180' height='160' style='background:white'><g transform=translate(0,10)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_current(current_line) + " stroke='blue' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g><g transform=translate(0,90)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_invert(current_line) + " stroke='green' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
 
 				return hf;
 			}
