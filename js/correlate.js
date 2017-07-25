@@ -351,6 +351,9 @@ vis.correlate = function() {
 		for(var i=0;i<sensors.length;i++){
 			brush_appen[sensors[i].name]=d3.svg.brush()
 				.x(time_scale)
+				.on("brush",function(d){
+					brush_move(d);
+				})
 				.on("brushend", function(d) {
 					brushed_appen(d);
 				});
@@ -376,7 +379,10 @@ vis.correlate = function() {
 			.enter()
 			.append("g")
 			.attr("class", function(d) {
-				return "chart " + d.type + " " + d.name;
+				return "chart " + d.name;
+			})
+			.attr("id",function(d){
+				return "chart_"+d.name;
 			})
 			.attr("value", function(d) {
 				return d.name;
@@ -442,8 +448,9 @@ vis.correlate = function() {
 				}))
 				.enter()
 				.append("path")
-				.attr("stroke", "yellow")
-				.attr("fill", "yellow")
+				.attr("stroke", "black")
+				.attr("stroke-width",2)
+				.attr("fill", "black")
 				.attr("fill-opacity", 0.3)
 				.attr("transform", function(d) {
 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height + ")");
@@ -660,7 +667,7 @@ vis.correlate = function() {
 								return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
 							});
 
-						update_correlation(1000)
+						update_correlation(100)
 					}
 				})
 
@@ -980,6 +987,61 @@ vis.correlate = function() {
 		component.draw_correlation();
 	}
 
+	function brush_move(_){
+		
+
+		var Rect=d3.select("#brush-"+_.name+" .extent");
+
+		var rect_x=parseFloat(Rect.attr("x"));
+		var rect_width=parseFloat(Rect.attr("width"));
+		var base_width=time_scale(truth["main"][1]*1000)-time_scale(truth["main"][0]*1000);
+
+
+		var current_chart=d3.select("#chart_"+_.name);
+
+		current_chart.selectAll(".cover").remove();
+
+		current_chart.append("rect")
+			.attr("class","cover")
+			.attr("x",rect_x)
+			.attr("y",0)
+			.attr("height",single_line_chart_height)
+			.attr("width",Math.min(rect_width,base_width))
+			.style("fill","white");
+
+		var current_interval=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+Math.min(rect_width,base_width)).getTime()/1000];
+		var interval_data=data[_.name].filter(function(d) {
+					return d.t >= current_interval[0] && d.t <= current_interval[1];
+				});
+		var redraw_data=[];
+
+		for(var i=0;i<interval_data.length;i++){
+			var temp={};
+			temp.t=interval_data[i].t;
+			temp.v=interval_data[i].v-baseline[i].v;
+			temp.name=interval_data[i].name;
+			redraw_data.push(temp)
+		}
+
+		var real_line_diff = d3.svg.line()
+					.interpolate("basis")
+					.x(function(d) {
+						return time_scale(d.t * 1000);
+					})
+					.y(function(d) {
+						return y_scales['main'](d.v+25);
+					});
+
+		current_chart.selectAll(".diff").remove();
+
+
+		current_chart.append("path")
+			.attr("class","diff")
+			.attr("d",real_line_diff(redraw_data))
+			.style("stroke","black")
+			.style("fill","none");
+	}
+
 	function brushed_appen(_) {
 
 
@@ -988,11 +1050,62 @@ vis.correlate = function() {
 
 		var Rect=d3.select("#brush-"+_.name+" .extent");
 
-		var temp=Rect.attr("x");
+		var rect_x=parseFloat(Rect.attr("x"));
+		var rect_width=parseFloat(Rect.attr("width"));
+		var base_width=time_scale(truth["main"][1]*1000)-time_scale(truth["main"][0]*1000);
 
-		correlations[0][_.name]=[time_scale.invert(parseFloat(Rect.attr("x"))).getTime()/1000,time_scale.invert(parseFloat(Rect.attr("x")) + parseFloat(Rect.attr("width"))).getTime()/1000]
+
+		var current_chart=d3.select("#chart_"+_.name);
+
+		current_chart.selectAll(".cover").remove();
+
+		current_chart.append("rect")
+			.attr("class","cover")
+			.attr("x",rect_x)
+			.attr("y",0)
+			.attr("height",single_line_chart_height)
+			.attr("width",Math.min(rect_width,base_width))
+			.style("fill","white");
+
+		var current_interval=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+Math.min(rect_width,base_width)).getTime()/1000];
+		var interval_data=data[_.name].filter(function(d) {
+					return d.t >= current_interval[0] && d.t <= current_interval[1];
+				});
+		var redraw_data=[];
+
+		for(var i=0;i<interval_data.length;i++){
+			var temp={};
+			temp.t=interval_data[i].t;
+			temp.v=interval_data[i].v-baseline[i].v;
+			temp.name=interval_data[i].name;
+			redraw_data.push(temp)
+		}
+
+		var real_line_diff = d3.svg.line()
+					.interpolate("basis")
+					.x(function(d) {
+						return time_scale(d.t * 1000);
+					})
+					.y(function(d) {
+						return y_scales['main'](d.v+25);
+					});
+
+		current_chart.selectAll(".diff").remove();
+
+
+		current_chart.append("path")
+			.attr("class","diff")
+			.attr("d",real_line_diff(redraw_data))
+			.style("stroke","black")
+			.style("fill","none");
+
+
+		correlations[0][_.name]=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+rect_width).getTime()/1000]
 
 		update_correlation();
+
+
+
 		current_rect.tipsy({
 			trigger: 'hover',
 			opacity: 1,

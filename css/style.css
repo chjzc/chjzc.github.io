@@ -115,10 +115,14 @@ div.no_selection {
 /* brush */
 .brush .extent {
   stroke: black;
-  fill-opacity: .125;
+  stroke-width: 2;
+  fill-opacity: .3;
   shape-rendering: crispEdges;
 }
 
+.cover{
+  pointer-events: none
+}
 
 .no_selection {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
