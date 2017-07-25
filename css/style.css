@@ -184,9 +184,6 @@ div.no_selection {
   stroke-linecap: round;
 }
 
-#main-view {
-  overflow: auto;
-}
 
 .container {
   width: 100%;
