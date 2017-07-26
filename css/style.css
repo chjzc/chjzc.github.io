@@ -120,6 +120,13 @@ div.no_selection {
   shape-rendering: crispEdges;
 }
 
+.brush .extent .highlight{
+  stroke: red;
+  stroke-width: 2;
+  fill-opacity: .3;
+  shape-rendering: crispEdges;
+}
+
 .cover{
   pointer-events: none
 }

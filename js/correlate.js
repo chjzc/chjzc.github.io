@@ -88,7 +88,7 @@ vis.correlate = function() {
 		top: 40,
 		bottom: 40
 	};
-	var single_line_chart_height = 40;
+	var single_line_chart_height = 30;
 	var single_line_chart_paddind = 4;
 	var tool_size = 20;
 
@@ -141,12 +141,24 @@ vis.correlate = function() {
 
 		time_scale.range([0, width]).domain(time_interval);
 
+		d3.selectAll(".text").remove();
+
+		d3.select("#" + container)
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", 30)
+			.attr("class","text")
+			.append("text")
+			.attr("transform","translate("+(width/2+margin.left)+",30)")
+			.text("Task "+(iter+1)+"/108")
+
+
 		svg = d3.select("#" + container)
 			.append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			.attr("transform", "translate(" + margin.left + "," + (margin.top) + ")");
 
 		var time_axis_component = svg.append("g");
 		time_axis_g = time_axis_component.append("g").attr("class", "x_axis");
@@ -539,7 +551,7 @@ vis.correlate = function() {
 	///////////////////////////////////////////////////
 	// Private Functions
 
-	function update_correlation(duration) {
+	function update_correlation(duration,opacity) {
 		svg.selectAll(".correlation-g").each(function (ele,index){
 			// d3.select(this).selectAll("rect")
 			// 	.transition()
@@ -552,7 +564,7 @@ vis.correlate = function() {
 			// 	});
 			d3.select(this).selectAll("path")
 				.transition()
-				.duration(100)
+				.duration(duration)
 				.attr("transform",function(d){
 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height) + ")";
 				})
@@ -569,7 +581,9 @@ vis.correlate = function() {
 						"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
 						"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
 				})
-		})
+				.style("stroke-opacity",opacity)
+				.style("fill-opacity",opacity-0.3)
+		});
 	}
 
 	function four_min(a, b, c, d) {
@@ -643,7 +657,7 @@ vis.correlate = function() {
 								return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
 							});
 
-						update_correlation(1000)
+						update_correlation(100)
 
 					}
 				});
@@ -1013,18 +1027,56 @@ vis.correlate = function() {
 		var interval_data=data[_.name].filter(function(d) {
 					return d.t >= current_interval[0] && d.t <= current_interval[1];
 				});
-		var redraw_data=[];
+		var redraw_pos=[];
+		var redraw_neg=[];
+		var sum=0;
 
 		for(var i=0;i<interval_data.length;i++){
-			var temp={};
-			temp.t=interval_data[i].t;
-			temp.v=interval_data[i].v-baseline[i].v;
-			temp.name=interval_data[i].name;
-			redraw_data.push(temp)
+			var temp1={};
+			var temp2={};
+			if(interval_data[i].v-baseline[i].v>=0){
+				temp1.t=interval_data[i].t;
+				temp1.v=interval_data[i].v-baseline[i].v;
+				temp1.name=interval_data[i].name;
+				temp2.t=interval_data[i].t;
+				temp2.v=0;
+				temp2.name=interval_data[i].name;	
+
+				sum=sum+temp1.v;
+			}else{
+				temp1.t=interval_data[i].t;
+				temp1.v=0;
+				temp1.name=interval_data[i].name;
+				temp2.t=interval_data[i].t;
+				temp2.v=interval_data[i].v-baseline[i].v;
+				temp2.name=interval_data[i].name;
+
+				sum=sum-temp2.v;
+			}
+			redraw_pos.push(temp1);
+			redraw_neg.push(temp2);
+		}
+
+		if(interval_data.length>=1){
+			redraw_pos.push({'name':interval_data[0].name, 't':interval_data[interval_data.length-1].t, 'v':0})
+			redraw_pos.push({'name':interval_data[0].name, 't':interval_data[0].t, 'v':0})
+			redraw_neg.push({'name':interval_data[0].name, 't':interval_data[interval_data.length-1].t, 'v':0})
+			redraw_neg.push({'name':interval_data[0].name, 't':interval_data[0].t, 'v':0})
+		}else{}
+		
+
+		var test = y_scales[_.name].domain()[1]/6;
+
+		if(sum/interval_data.length<(y_scales[_.name].domain()[1]-25)/6){
+			Rect.style("stroke","yellow")
+				.style("stroke-width",8)
+		}else{
+			Rect.style("stroke","black")
+				.style("stroke-width",2)
 		}
 
 		var real_line_diff = d3.svg.line()
-					.interpolate("basis")
+					.interpolate("linear")
 					.x(function(d) {
 						return time_scale(d.t * 1000);
 					})
@@ -1037,9 +1089,25 @@ vis.correlate = function() {
 
 		current_chart.append("path")
 			.attr("class","diff")
-			.attr("d",real_line_diff(redraw_data))
-			.style("stroke","black")
-			.style("fill","none");
+			.attr("d",real_line_diff(redraw_pos))
+			.style("stroke","red")
+			.style("fill","red");
+
+		current_chart.append("path")
+			.attr("class","diff")
+			.attr("d",real_line_diff(redraw_neg))
+			.style("stroke","blue")
+			.style("fill","blue");
+
+		var Rect=d3.select("#brush-"+_.name+" .extent");
+
+		var rect_x=parseFloat(Rect.attr("x"));
+		var rect_width=parseFloat(Rect.attr("width"));
+		var base_width=time_scale(truth["main"][1]*1000)-time_scale(truth["main"][0]*1000);
+
+		correlations[0][_.name]=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+rect_width).getTime()/1000];
+
+		update_correlation(1,0.4);
 	}
 
 	function brushed_appen(_) {
@@ -1054,55 +1122,9 @@ vis.correlate = function() {
 		var rect_width=parseFloat(Rect.attr("width"));
 		var base_width=time_scale(truth["main"][1]*1000)-time_scale(truth["main"][0]*1000);
 
+		correlations[0][_.name]=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+rect_width).getTime()/1000];
 
-		var current_chart=d3.select("#chart_"+_.name);
-
-		current_chart.selectAll(".cover").remove();
-
-		current_chart.append("rect")
-			.attr("class","cover")
-			.attr("x",rect_x)
-			.attr("y",0)
-			.attr("height",single_line_chart_height)
-			.attr("width",Math.min(rect_width,base_width))
-			.style("fill","white");
-
-		var current_interval=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+Math.min(rect_width,base_width)).getTime()/1000];
-		var interval_data=data[_.name].filter(function(d) {
-					return d.t >= current_interval[0] && d.t <= current_interval[1];
-				});
-		var redraw_data=[];
-
-		for(var i=0;i<interval_data.length;i++){
-			var temp={};
-			temp.t=interval_data[i].t;
-			temp.v=interval_data[i].v-baseline[i].v;
-			temp.name=interval_data[i].name;
-			redraw_data.push(temp)
-		}
-
-		var real_line_diff = d3.svg.line()
-					.interpolate("basis")
-					.x(function(d) {
-						return time_scale(d.t * 1000);
-					})
-					.y(function(d) {
-						return y_scales['main'](d.v+25);
-					});
-
-		current_chart.selectAll(".diff").remove();
-
-
-		current_chart.append("path")
-			.attr("class","diff")
-			.attr("d",real_line_diff(redraw_data))
-			.style("stroke","black")
-			.style("fill","none");
-
-
-		correlations[0][_.name]=[time_scale.invert(rect_x).getTime()/1000,time_scale.invert(rect_x+rect_width).getTime()/1000]
-
-		update_correlation();
+		update_correlation(100,1);
 
 
 
