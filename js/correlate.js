@@ -407,9 +407,6 @@ vis.correlate = function() {
 
 		chart_g.each(function(d) {
 			var current_chart = d3.select(this);
-			if (d.name == 'main') {
-				results.push(0);
-			}
 			draw_single_chart(current_chart, d, data[d.name])
 		})
 
@@ -492,26 +489,28 @@ vis.correlate = function() {
 		}
 	}
 
-	// component.pushResult = function(){
+	component.pushResult = function(){
 
 	// 	var results=[];
+		if(sensor){
+			for(var i=0;i<sensor.c_sensors.length;i++){
+			var current_brush = d3.select("#brush-"+sensor.c_sensors[i].name);
+			var current_x = parseFloat(current_brush.select(".extent").attr("x"));
+			var current_width = parseFloat(current_brush.select(".extent").attr("width"));
 
-	// 	for(var i=0;i<sensor.c_sensors.length;i++){
-	// 		var current_brush = d3.select("#brush-"+sensor.c_sensors[i].name);
-	// 		var current_x = parseFloat(current_brush.select(".extent").attr("x"));
-	// 		var current_width = parseFloat(current_brush.select(".extent").attr("width"));
+			var true_x = time_scale(truth[sensor.c_sensors[i].name][0]*1000);
+			var true_width = time_scale(truth[sensor.c_sensors[i].name][1]*1000)-true_x;
 
-	// 		var true_x = time_scale(truth[sensor.c_sensors[i].name][0]*1000);
-	// 		var true_width = time_scale(truth[sensor.c_sensors[i].name][1]*1000)-true_x;
-
-	// 		var intersection = four_min(current_width, true_width, true_x+true_width-current_x, current_x+current_width-true_x);
-	// 		var ratio = 0;
-	// 		if(intersection>0){
-	// 			var union = Math.max(true_x+true_width,current_x+current_width)-Math.min(true_x,current_x);
-	// 			var ratio = intersection/union;
-	// 		}
-	// 		results.push(ratio);
-	// 	}
+			var intersection = four_min(current_width, true_width, true_x+true_width-current_x, current_x+current_width-true_x);
+			var ratio = 0;
+			if(intersection>0){
+				var union = Math.max(true_x+true_width,current_x+current_width)-Math.min(true_x,current_x);
+				var ratio = intersection/union;
+			}
+			results.push(ratio);
+		}
+		}
+		
 
 	// 	var url_result = "data/results?radio="+ results;
 
@@ -519,7 +518,7 @@ vis.correlate = function() {
 	// 		return ;
 	// 	});
 
-	// }
+	}
 
 	component.isReady = function() {
 
@@ -747,7 +746,7 @@ vis.correlate = function() {
 
 		paths.append("path").attr("class", "real-line").attr("d", real_line_gen(time_series));
 
-		var y_axis = d3.svg.axis().scale(y_scales[sen.name]).orient("left").ticks(9);
+		var y_axis = d3.svg.axis().scale(y_scales[sen.name]).orient("left").ticks(5);
 
 
 
@@ -1064,8 +1063,11 @@ vis.correlate = function() {
 
 	function brush_move(_) {
 
+		//var base_time_interval=chosen_time_interval;
+		var base_time_interval=truth["main"];
+
 		var main_values = data["main"].filter(function(ele) {
-			return ele.t >= chosen_time_interval[0] && ele.t <= chosen_time_interval[1]
+			return ele.t >= base_time_interval[0] && ele.t <= base_time_interval[1]
 		}).map(function(ele) {
 			return ele.v;
 		});
@@ -1076,7 +1078,7 @@ vis.correlate = function() {
 
 		var rect_x = parseFloat(Rect.attr("x"));
 		var rect_width = parseFloat(Rect.attr("width"));
-		var base_width = time_scale(chosen_time_interval[1] * 1000) - time_scale(chosen_time_interval[0] * 1000);
+		var base_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
 
 
 		var current_chart = d3.select("#chart_" + _.name);
@@ -1091,7 +1093,7 @@ vis.correlate = function() {
 			.attr("width", rect_width)
 			.style("fill", "white");
 
-		var current_interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + Math.min(rect_width, base_width)).getTime() / 1000];
+		var current_interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
 		var interval_data = data[_.name].filter(function(ele) {
 			return ele.t >= current_interval[0] && ele.t <= current_interval[1];
@@ -1193,13 +1195,6 @@ vis.correlate = function() {
 			.style("fill", "blue");
 
 
-
-		var Rect = d3.select("#brush-" + _.name + " .extent");
-
-		var rect_x = parseFloat(Rect.attr("x"));
-		var rect_width = parseFloat(Rect.attr("width"));
-		var base_width = time_scale(chosen_time_interval[1] * 1000) - time_scale(chosen_time_interval[0] * 1000);
-
 		correlations[0][_.name].interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
 		update_correlation(1, 0.4);
@@ -1207,7 +1202,7 @@ vis.correlate = function() {
 
 	function brushed_appen(_) {
 
-
+		var base_time_interval=truth["main"];
 
 		var current_rect = $("#brush-" + _.name + " .extent");
 
@@ -1215,7 +1210,7 @@ vis.correlate = function() {
 
 		var rect_x = parseFloat(Rect.attr("x"));
 		var rect_width = parseFloat(Rect.attr("width"));
-		var base_width = time_scale(chosen_time_interval[1] * 1000) - time_scale(chosen_time_interval[0] * 1000);
+		var base_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
 
 		correlations[0][_.name].interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
@@ -1236,7 +1231,7 @@ vis.correlate = function() {
 
 
 				var base_line = baseline;
-				var base_interval = chosen_time_interval;
+				var base_interval = base_time_interval;
 
 				var current_start = time_scale.invert(this.x.baseVal.value).getTime();
 				var current_end = time_scale.invert(this.x.baseVal.value + this.width.baseVal.value).getTime();

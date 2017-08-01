@@ -49,6 +49,7 @@ $(document).ready(function() {
 			alert("Please brush !");
 			return;
 		}
+		correlate.pushResult();
 		var results=correlate.results();
 		first = false;
 		runner.stop(results);
