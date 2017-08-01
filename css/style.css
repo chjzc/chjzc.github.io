@@ -127,9 +127,14 @@ div.no_selection {
   shape-rendering: crispEdges;
 }
 
+.connect,
+.ba_co,
+.cu_co,
 .cover{
   pointer-events: none
 }
+
+
 
 .no_selection {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
