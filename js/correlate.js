@@ -462,6 +462,7 @@ vis.correlate = function() {
 				.enter()
 				.append("path")
 				.attr("stroke", "black")
+				.attr("stroke-opacity",0.5)
 				.attr("stroke-width", 2)
 				.attr("fill", "black")
 				.attr("fill-opacity", 0.3)
@@ -1132,12 +1133,6 @@ vis.correlate = function() {
 		var redraw_neg = [];
 		var sum = 0;
 
-
-
-		for(var i=0;i< dtw.path.length;i++){
-
-		}
-
 		for (var i = 0; i < interval_data.length; i++) {
 			var temp1 = {};
 			var temp2 = {};
@@ -1228,14 +1223,14 @@ vis.correlate = function() {
 		current_chart.append("path")
 			.attr("class", "diff")
 			.attr("d", real_line_diff(redraw_pos))
-			.style("stroke", "red")
-			.style("fill", "red");
+			.style("stroke", "#e41a1c")
+			.style("fill", "#e41a1c");
 
 		current_chart.append("path")
 			.attr("class", "diff")
 			.attr("d", real_line_diff(redraw_neg))
-			.style("stroke", "blue")
-			.style("fill", "blue");
+			.style("stroke", "#377eb8")
+			.style("fill", "#377eb8");
 
 		for(var i=0;i<interval_data.length;i++){
 			current_chart.append("line")
@@ -1261,10 +1256,11 @@ vis.correlate = function() {
 			current_chart.append("line")
 				.attr("class","connect")
 				.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
-				.attr("y1",0)
+				.attr("y1",4)
 				.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
 				.attr("y2",single_line_chart_height/2)
 				.style("stroke","black")
+				.style("stroke-opacity",0.6)
 				.style("stroke-dasharray","0.9")
 		}
 
@@ -1288,7 +1284,7 @@ vis.correlate = function() {
 
 		correlations[0][_.name].interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
-		update_correlation(100, 1);
+		update_correlation(100, 0.6);
 
 
 
