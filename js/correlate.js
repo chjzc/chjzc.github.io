@@ -12,7 +12,8 @@ vis.correlate = function() {
 		data = null,
 		sensor = null,
 		time_interval = null,
-		iter = null;
+		kind=1,
+		iter = 1;
 
 	var results = [];
 	var dispatch = d3.dispatch("select", "mouseover", "mouseout");
@@ -22,6 +23,12 @@ vis.correlate = function() {
 		container = _;
 		return component;
 	};
+
+	component.kind=function(_) {
+		if(!arguments.length) return kind;
+		kind = _;
+		return component;
+	}
 
 	component.truth = function(_) {
 		if (!arguments.length) return container;
@@ -114,11 +121,11 @@ vis.correlate = function() {
 
 	var sensors_path = {};
 
-	var color_base = "#ffffff";
-	var color_sd = "#238b45";
-	var color_hd = "#08519c";
-	var color_su = "#fe9929";
-	var color_hu = "#980043";
+	// var color_base = "#ffffff";
+	// var color_sd = "#238b45";
+	// var color_hd = "#08519c";
+	// var color_su = "#fe9929";
+	// var color_hu = "#980043";
 
 
 
@@ -145,6 +152,13 @@ vis.correlate = function() {
 
 		d3.selectAll(".text").remove();
 
+		
+		if(kind==1){
+			var kind_text="positive"
+		}else if(kind==-1){
+			var kind_text="negative"
+		}
+
 		d3.select("#" + container)
 			.append("svg")
 			.attr("width", width + margin.left + margin.right)
@@ -152,7 +166,7 @@ vis.correlate = function() {
 			.attr("class", "text")
 			.append("text")
 			.attr("transform", "translate(" + (width / 2 + margin.left) + ",30)")
-			.text("Task " + (iter + 1) + "/108")
+			.text("Task " + (iter + 1) + "/144  "+kind_text);
 
 
 		svg = d3.select("#" + container)
@@ -695,11 +709,13 @@ vis.correlate = function() {
 
 
 		if (sen.type == "main") {
-			container.append("g")
+			if(iter==1){
+				container.append("g")
 				.attr("class", "x brush")
 				.call(brush)
 				.selectAll("rect")
 				.attr("height", single_line_chart_height);
+			}
 		} else {
 			container.append("g")
 				.datum(sen)
@@ -923,9 +939,16 @@ vis.correlate = function() {
 					return ele.v;
 				});
 
-				var dtw = DynamicWarping(main_values, current_values, function(a, b) {
-					return Math.min(Math.abs(50 - a - b), Math.abs(a - b));
-				});
+				if(kind==1){
+					var dtw = DynamicWarping(main_values, current_values, function(a, b) {
+						return Math.abs(a - b);
+					});
+				}else if(kind==-1){
+					var dtw = DynamicWarping(main_values, current_values, function(a, b) {
+						return Math.abs(50 - a - b);
+					});
+				}else{}
+				
 
 				if (dtw.cost < dist) {
 					dist = dtw.cost;
@@ -990,21 +1013,46 @@ vis.correlate = function() {
 			if (i > 0 && j > 0) {
 				var m = Math.min(Math.min(matrix[i - 1][j], matrix[i][j - 1]), matrix[i - 1][j - 1]);
 				if (m == matrix[i - 1][j]) {
-					dtwpath[i - 1][j] = ser1[i - 2] - ser2[j - 1];
+					if(kind==1){
+						dtwpath[i - 1][j] = ser1[i - 2] - ser2[j - 1];
+					}else if(kind==-1){
+						dtwpath[i - 1][j] = 50-ser1[i - 2] - ser2[j - 1];	
+					}
+					
 					i = i - 1;
 				} else if (m == matrix[i - 1][j - 1]) {
-					dtwpath[i - 1][j - 1] = ser1[i - 2] - ser2[j - 2];
+					if(kind==1){
+						dtwpath[i - 1][j - 1] = ser1[i - 2] - ser2[j - 2];
+					}else if(kind==-1){
+						dtwpath[i - 1][j - 1] = 50-ser1[i - 2] - ser2[j - 2];	
+					}
+					
 					i = i - 1;
 					j = j - 1;
 				} else {
-					dtwpath[i][j - 1] = ser1[i - 1] - ser2[j - 2];
+					if(kind==1){
+						dtwpath[i][j - 1] = ser1[i - 1] - ser2[j - 2];
+					}else if(kind==-1){
+						dtwpath[i][j - 1] = 50-ser1[i - 1] - ser2[j - 2];	
+					}
+					
 					j = j - 1;
 				}
 			} else if (i == 1) {
-				dtwpath[1][j - 1] = ser1[i - 1] - ser2[j - 2];
+				if(kind==1){
+					dtwpath[1][j - 1] = ser1[i - 1] - ser2[j - 2];
+				}else if(kind==-1){
+					dtwpath[1][j - 1] = 50-ser1[i - 1] - ser2[j - 2];
+				}
+				
 				j = j - 1;
 			} else {
-				dtwpath[i - 1][1] = ser1[i - 2] - ser2[j - 1];
+				if(kind==1){
+					dtwpath[i - 1][1] = ser1[i - 2] - ser2[j - 1];
+				}else if(kind==-1){
+					dtwpath[i - 1][1] = 50-ser1[i - 2] - ser2[j - 1];
+				}
+				
 				i = i - 1;
 			}
 		}
@@ -1123,11 +1171,20 @@ vis.correlate = function() {
 			return ele.t >= current_interval[0] && ele.t <= current_interval[1];
 		});
 
-		var dtw = DynamicWarping(main_values.map(function(ele){return ele.v;}), interval_data.map(function(ele) {
-			return ele.v;
-		}), function(a, b) {
-			return Math.abs(a - b);
-		});
+		if(kind==1){
+			var dtw = DynamicWarping(main_values.map(function(ele){return ele.v;}), interval_data.map(function(ele) {
+				return ele.v;
+			}), function(a, b) {
+				return Math.abs(a - b);
+			});
+		}else if(kind==-1){
+			var dtw = DynamicWarping(main_values.map(function(ele){return ele.v;}), interval_data.map(function(ele) {
+				return ele.v;
+			}), function(a, b) {
+				return Math.abs(50 - a - b);
+			});
+		}else{}
+		
 
 		var redraw_pos = [];
 		var redraw_neg = [];

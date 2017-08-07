@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 	correlate.container("main-view");
 
-	d3.json("./data/final1.json", function(error, d) {
+	d3.json("./data/finalfinal7.json", function(error, d) {
 		if (error) {
 			console.log(error)
 			return;
@@ -83,6 +83,13 @@ function display(d,coun) {
 	// if(!data||data==''){
 	// 	return;
 	// }
+	var k=null;
+	if(d.type=='positive')
+	{
+		k=1;
+	}else{
+		k=-1;
+	}
 	d1=d.sensors;
 
 	var sensor_num = d1.length;
@@ -115,7 +122,7 @@ function display(d,coun) {
 	}
 
 	correlate.sensor(sensor)
-		.iter(coun)
+		.kind(k)
 		.data(sensor_data)
 		.truth(Ground_truth)
 		.time_interval([parseInt(start_time * 1000), parseInt((start_time + static_time_win) * 1000)])
