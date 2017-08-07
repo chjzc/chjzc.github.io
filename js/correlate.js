@@ -1389,13 +1389,18 @@ vis.correlate = function() {
 
 				var hf = ''
 
-				hf += "<div><svg id='tip' width="+Math.max(current_width,tipsy_width)+" height='90' style='background:white'>"
+				hf += "<div><svg id='tip' width="+Math.max(current_width,tipsy_width)+" height='90' style='background:white'><g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
 				if(kind==1){
-					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_current(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
+					if(current_line.length>0){
+						hf += "<path d=" + real_line_current(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
+					}
+					
 				}else if(kind==-1){
-					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_invert(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
+					if(current_line.length>0){
+						hf += "<path d=" + real_line_invert(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
+					}
 				}				
-				
+				hf += "</g></svg></div>";
 				return hf;
 			}
 		})
