@@ -725,6 +725,85 @@ vis.correlate = function() {
 				.call(brush_appen[sen.name])
 				.selectAll("rect")
 				.attr("height", single_line_chart_height);
+
+			$("#brush-" + sen.name + " .extent").tipsy({
+				opacity: 1,
+				html: true,
+				title: function() {
+					var temp = this.x.baseVal.value;
+
+					var current_sensor = this.__data__
+
+					var tipsy_width = 160;
+
+
+					var base_line = baseline;
+					var base_interval = truth["main"];
+
+					var current_start = time_scale.invert(this.x.baseVal.value).getTime();
+					var current_end = time_scale.invert(this.x.baseVal.value + this.width.baseVal.value).getTime();
+
+					var current_interval = [current_start, current_end];
+					var current_line = data[current_sensor.name].filter(function(d) {
+						return d.t >= current_start / 1000 && d.t <= current_end / 1000;
+					});
+
+
+					var current_width = tipsy_width * (current_end - current_start) / (base_interval[1] * 1000 - base_interval[0] * 1000);
+
+					var time_scale_base = d3.time.scale().range([0, tipsy_width]).domain(base_interval.map(function(d) {
+						return d * 1000;
+					}));
+					var time_scale_current = d3.time.scale().range([0, current_width]).domain(current_interval);
+
+
+
+					real_line_base = d3.svg.line()
+						.interpolate("basis")
+						.x(function(d) {
+							return time_scale_base(d.t * 1000);
+						})
+						.y(function(d) {
+							return y_scales['main'](d.v);
+						});
+
+					real_line_current = d3.svg.line()
+						.interpolate("basis")
+						.x(function(d) {
+							var temp = time_scale_current(d.t * 1000)
+							return time_scale_current(d.t * 1000);
+						})
+						.y(function(d) {
+							return y_scales['main'](d.v);
+						});
+
+					real_line_invert = d3.svg.line()
+						.interpolate("basis")
+						.x(function(d) {
+							return time_scale_current(d.t * 1000);
+						})
+						.y(function(d) {
+							return y_scales['main'](50 - d.v);
+						});
+
+
+					var hf = ''
+
+					hf += "<div><svg id='tip' width="+Math.max(current_width,tipsy_width)+" height='90' style='background:white'><g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
+					if(kind==1){
+						if(current_line.length>0){
+							hf += "<path d=" + real_line_current(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
+						}
+						
+					}else if(kind==-1){
+						if(current_line.length>0){
+							hf += "<path d=" + real_line_invert(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
+						}
+					}				
+					hf += "</g></svg></div>";
+					return hf;
+				}
+			})
 		}
 
 		// sub_chart.each(function(d){
@@ -1326,84 +1405,7 @@ vis.correlate = function() {
 		}
 
 		var current_rect = $("#brush-" + _.name + " .extent");
-		current_rect.tipsy({
-			opacity: 1,
-			html: true,
-			title: function() {
-				var temp = this.x.baseVal.value;
 
-				var current_sensor = this.__data__
-
-				var tipsy_width = 160;
-
-
-				var base_line = baseline;
-				var base_interval = base_time_interval;
-
-				var current_start = time_scale.invert(this.x.baseVal.value).getTime();
-				var current_end = time_scale.invert(this.x.baseVal.value + this.width.baseVal.value).getTime();
-
-				var current_interval = [current_start, current_end];
-				var current_line = data[current_sensor.name].filter(function(d) {
-					return d.t >= current_start / 1000 && d.t <= current_end / 1000;
-				});
-
-
-				var current_width = tipsy_width * (current_end - current_start) / (base_interval[1] * 1000 - base_interval[0] * 1000);
-
-				var time_scale_base = d3.time.scale().range([0, tipsy_width]).domain(base_interval.map(function(d) {
-					return d * 1000;
-				}));
-				var time_scale_current = d3.time.scale().range([0, current_width]).domain(current_interval);
-
-
-
-				real_line_base = d3.svg.line()
-					.interpolate("basis")
-					.x(function(d) {
-						return time_scale_base(d.t * 1000);
-					})
-					.y(function(d) {
-						return y_scales['main'](d.v);
-					});
-
-				real_line_current = d3.svg.line()
-					.interpolate("basis")
-					.x(function(d) {
-						var temp = time_scale_current(d.t * 1000)
-						return time_scale_current(d.t * 1000);
-					})
-					.y(function(d) {
-						return y_scales['main'](d.v);
-					});
-
-				real_line_invert = d3.svg.line()
-					.interpolate("basis")
-					.x(function(d) {
-						return time_scale_current(d.t * 1000);
-					})
-					.y(function(d) {
-						return y_scales['main'](50 - d.v);
-					});
-
-
-				var hf = ''
-
-				hf += "<div><svg id='tip' width="+Math.max(current_width,tipsy_width)+" height='90' style='background:white'><g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
-				if(kind==1){
-					if(current_line.length>0){
-						hf += "<path d=" + real_line_current(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
-					}
-					
-				}else if(kind==-1){
-					if(current_line.length>0){
-						hf += "<path d=" + real_line_invert(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path>"
-					}
-				}				
-				hf += "</g></svg></div>";
-				return hf;
-			}
-		})
 
 		current_rect.tipsy("hide");
     	current_rect.tipsy("show");
