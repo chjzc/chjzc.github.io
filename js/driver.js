@@ -16,7 +16,7 @@ var static_time_win = 5 * 300;
 // 		name:"PT_3703"
 // 	}]
 // };
-var count=0;
+var count=1;
 
 var sensor = {};
 
@@ -122,6 +122,7 @@ function display(d,coun) {
 	}
 
 	correlate.sensor(sensor)
+		.iter(coun)
 		.kind(k)
 		.data(sensor_data)
 		.truth(Ground_truth)

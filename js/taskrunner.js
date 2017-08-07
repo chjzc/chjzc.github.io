@@ -53,11 +53,11 @@ taskrunner = function() {
 
 		var result = _;
 
-		var task_num=tasks[did].sensors.length-1;
+		// var task_num=tasks[did].sensors.length-1;
 
 		// var res = '' + did + ',' + tasks[did].params[0] + ',' + tasks[did].params[1] + ',' + tasks[did].params[2] + ',' + (end - start) + ',' + result + '\n';
 		// var res = (end - start) + '';
-		var res = '' + did + ',' + (end - start)/task_num + ',' + result.toString() + '\n';
+		var res = '' + did + ',' + (end - start) + ',' + result.toString() + '\n';
 
 		console.log(res);
 
