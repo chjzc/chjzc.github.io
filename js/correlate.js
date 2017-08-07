@@ -163,7 +163,7 @@ vis.correlate = function() {
 		d3.select("#" + container)
 			.append("svg")
 			.attr("width", width + margin.left + margin.right)
-			.attr("height", 30)
+			.attr("height", 50)
 			.attr("class", "text")
 			.append("text")
 			.attr("transform", "translate(" + (width / 2 + margin.left) + ",30)")
@@ -476,10 +476,9 @@ vis.correlate = function() {
 				}))
 				.enter()
 				.append("path")
-				.attr("stroke", "black")
-				.attr("stroke-opacity",0.5)
+				.attr("stroke", "#99999C")
 				.attr("stroke-width", 2)
-				.attr("fill", "black")
+				.attr("fill", "#99999C")
 				.attr("fill-opacity", 0.3)
 				.attr("transform", function(d) {
 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height + ")");
@@ -1420,7 +1419,7 @@ vis.correlate = function() {
 
 		correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
-		update_correlation(100, 0.6);
+		update_correlation(100, 1);
 
 		$("#brush-" + _.name + " .extent").tipsy("hide")
 
