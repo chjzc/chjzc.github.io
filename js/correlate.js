@@ -1392,9 +1392,9 @@ vis.correlate = function() {
 
 				hf += "<div><svg id='tip' width="+Math.max(current_width,tipsy_width)+" height='90' style='background:white'>"
 				if(kind==1){
-					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_current(current_line) + " stroke='blue' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
+					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_current(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
 				}else if(kind==-1){
-					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='red' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_invert(current_line) + " stroke='green' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
+					hf += "<g transform=translate(0,20)><path d=" + real_line_base(base_line) + " stroke='#66c2a5' stroke-opacity=0.7 stroke-width=2 fill='none'></path><path d=" + real_line_invert(current_line) + " stroke='#d95f02' stroke-opacity=0.7 stroke-width=2 fill='none'></path></g></svg></div>"
 				}				
 				
 				return hf;
