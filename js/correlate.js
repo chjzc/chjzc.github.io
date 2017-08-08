@@ -1082,8 +1082,17 @@ vis.correlate = function() {
 
 		var i = ser1.length;
 		var j = ser2.length;
-		while (j > 1 || i > 1) {
-			if (i > 0 && j > 0) {
+
+		if(i>0&&j>0){
+			if(kind==1){
+				dtwpath[i][j]=ser1[i-1]-ser2[j-1];
+			}else if(kind==-1){
+				dtwpath[i][j]=50-ser1[i-1]-ser2[j-1];
+			}
+		}
+			
+		while (j >1 || i >1) {
+			if (i > 1 && j > 1) {
 				var m = Math.min(Math.min(matrix[i - 1][j], matrix[i][j - 1]), matrix[i - 1][j - 1]);
 				if (m == matrix[i - 1][j]) {
 					if(kind==1){
@@ -1148,13 +1157,17 @@ vis.correlate = function() {
 			var min = 1000000;
 			var temp = null;
 			for (var i = 1; i <= ser1.length; i++) {
-				if(Math.abs(dtwpath[i][j])<1000000){
-					path.push({'row':i-1,'col':j-1,'val':dtwpath[i][j]});
+				if (Math.abs(dtwpath[i][j]) < 1000000) {
+					path.push({
+						'row': i - 1,
+						'col': j - 1,
+						'val': dtwpath[i][j]
+					});
 				}
 
 				if (Math.abs(dtwpath[i][j]) < min) {
-		 			temp = dtwpath[i][j];
-		 		}
+					temp = dtwpath[i][j];
+				}
 			}
 			diff.push(temp);
 		}
@@ -1290,13 +1303,13 @@ vis.correlate = function() {
 				redraw_pos.push(temp1);
 				redraw_neg.push(temp2);
 
-				current_chart.append("line")
-					.attr("class","cu_co")
-					.attr("x1",time_scale(interval_data[i].t*1000))
-					.attr("y1",single_line_chart_height/2+2)
-					.attr("x2",time_scale(interval_data[i].t*1000))
-					.attr("y2",single_line_chart_height/2-2)
-					.style("stroke","black")
+				// current_chart.append("line")
+				// 	.attr("class","cu_co")
+				// 	.attr("x1",time_scale(interval_data[i].t*1000))
+				// 	.attr("y1",single_line_chart_height/2+2)
+				// 	.attr("x2",time_scale(interval_data[i].t*1000))
+				// 	.attr("y2",single_line_chart_height/2-2)
+				// 	.style("stroke","black")
 			}
 
 			if (interval_data.length >= 1) {
