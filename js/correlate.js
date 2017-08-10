@@ -1082,17 +1082,8 @@ vis.correlate = function() {
 
 		var i = ser1.length;
 		var j = ser2.length;
-
-		if(i>0&&j>0){
-			if(kind==1){
-				dtwpath[i][j]=ser1[i-1]-ser2[j-1];
-			}else if(kind==-1){
-				dtwpath[i][j]=50-ser1[i-1]-ser2[j-1];
-			}
-		}
-			
-		while (j >1 || i >1) {
-			if (i > 1 && j > 1) {
+		while (j > 1 || i > 1) {
+			if (i > 0 && j > 0) {
 				var m = Math.min(Math.min(matrix[i - 1][j], matrix[i][j - 1]), matrix[i - 1][j - 1]);
 				if (m == matrix[i - 1][j]) {
 					if(kind==1){
@@ -1154,20 +1145,19 @@ vis.correlate = function() {
 		// }
 		for (var j = 1; j <= ser2.length; j++) {
 
-			var min = 1000000;
+			//var min = 1000000;
+			var max=0;
 			var temp = null;
 			for (var i = 1; i <= ser1.length; i++) {
-				if (Math.abs(dtwpath[i][j]) < 1000000) {
-					path.push({
-						'row': i - 1,
-						'col': j - 1,
-						'val': dtwpath[i][j]
-					});
+				if(Math.abs(dtwpath[i][j])<1000000){
+					path.push({'row':i-1,'col':j-1,'val':dtwpath[i][j]});
+					if (Math.abs(dtwpath[i][j]) >= max) {
+					max=Math.abs(dtwpath[i][j])
+		 			temp = dtwpath[i][j];
+		 		}
 				}
 
-				if (Math.abs(dtwpath[i][j]) < min) {
-					temp = dtwpath[i][j];
-				}
+				
 			}
 			diff.push(temp);
 		}
@@ -1238,26 +1228,32 @@ vis.correlate = function() {
 
 		var current_chart = d3.select("#chart_" + _.name);
 
-		if(iter==1){
+	if(iter==1){
 
 		current_chart.selectAll(".cover").remove();
 		current_chart.selectAll(".cu_co").remove();
 		current_chart.selectAll(".ba_co").remove();
 		current_chart.selectAll(".connect").remove();
+		current_chart.selectAll(".base_data").remove();
+		current_chart.selectAll(".current_data").remove();
+		current_chart.selectAll(".grid").remove();
 
-			current_chart.append("rect")
-				.attr("class", "cover")
-				.attr("x", rect_x)
-				.attr("y", 0)
-				.attr("height", single_line_chart_height)
-				.attr("width", rect_width)
-				.style("fill", "white");
+			// current_chart.append("rect")
+			// 	.attr("class", "cover")
+			// 	.attr("x", rect_x)
+			// 	.attr("y", 0)
+			// 	.attr("height", single_line_chart_height)
+			// 	.attr("width", rect_width)
+			// 	.style("fill", "white");
 
 			var current_interval = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
 			var interval_data = data[_.name].filter(function(ele) {
 				return ele.t >= current_interval[0] && ele.t <= current_interval[1];
 			});
+
+
+				
 
 			if(kind==1){
 				var dtw = DynamicWarping(main_values.map(function(ele){return ele.v;}), interval_data.map(function(ele) {
@@ -1365,17 +1361,17 @@ vis.correlate = function() {
 			current_chart.selectAll(".diff").remove();
 
 
-			current_chart.append("path")
-				.attr("class", "diff")
-				.attr("d", real_line_diff(redraw_pos))
-				.style("stroke", "#e41a1c")
-				.style("fill", "#e41a1c");
+			// current_chart.append("path")
+			// 	.attr("class", "diff")
+			// 	.attr("d", real_line_diff(redraw_pos))
+			// 	.style("stroke", "#e41a1c")
+			// 	.style("fill", "#e41a1c");
 
-			current_chart.append("path")
-				.attr("class", "diff")
-				.attr("d", real_line_diff(redraw_neg))
-				.style("stroke", "#377eb8")
-				.style("fill", "#377eb8");
+			// current_chart.append("path")
+			// 	.attr("class", "diff")
+			// 	.attr("d", real_line_diff(redraw_neg))
+			// 	.style("stroke", "#377eb8")
+			// 	.style("fill", "#377eb8");
 
 			for(var i=0;i<interval_data.length;i++){
 				current_chart.append("line")
@@ -1397,16 +1393,72 @@ vis.correlate = function() {
 					.style("stroke","black")
 			}
 
-			for(var i=0;i<dtw.path.length;i++){
-				current_chart.append("line")
-					.attr("class","connect")
-					.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
-					.attr("y1",4)
-					.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
-					.attr("y2",single_line_chart_height/2)
-					.style("stroke","black")
-					.style("stroke-opacity",0.6)
-					.style("stroke-dasharray","0.9")
+			var test1=[];
+
+			for(var k=0;k<dtw.path.length;k++){
+				var temp={};
+				temp.name=interval_data[0].name;
+				temp.t=interval_data[dtw.path[k].col].t;
+				temp.v=50-main_values[dtw.path[k].row].v;
+				test1.push(temp)
+			}
+
+			// current_chart.append("path")
+			// 	.attr("class","base_data")
+			// 	.attr("d", real_line_gen(test1))
+			// 	.style("stroke","red")
+			// 	.style("stroke-width",1)
+			// 	.style("fill","none");
+
+			// current_chart.append("path")
+			// 	.attr("class","current_data")
+			// 	.attr("d", real_line_gen(interval_data))
+			// 	.style("stroke","black")
+			// 	.style("stroke-width",1)
+			// 	.style("fill","none");
+
+			// for(var i=0;i<dtw.path.length;i++){
+			// 	current_chart.append("line")
+			// 		.attr("class","connect")
+			// 		.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
+			// 		.attr("y1",4)
+			// 		.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
+			// 		.attr("y2",single_line_chart_height/2)
+			// 		.style("stroke","black")
+			// 		.style("stroke-opacity",0.6)
+			// 		.style("stroke-dasharray","0.9")
+			// }
+
+			if(interval_data.length>0){
+				var start=time_scale(interval_data[0].t*1000)
+				var side=3;
+				for(var i=0;i<main_values.length;i++){
+					for(var j=0;j<interval_data.length;j++){
+						current_chart.append("rect")
+							.attr("class","grid")
+							.attr("x",j*side+start)
+							.attr("y",i*side)
+							.attr("width",side)
+							.attr("height",side)
+							.style("fill","none")
+							.style("stroke","black")
+							.style("stroke-width",1);
+					}
+				}
+
+				for(var k=0;k<dtw.path.length;k++){
+					current_chart.append("rect")
+						.attr("class","grid")
+						.attr("x",dtw.path[k].col*side+start)
+						.attr("y",dtw.path[k].row*side)
+						.attr("width",side)
+						.attr("height",side)
+						.style("fill","red")
+						.style("stroke","black")
+						.style("stroke-width",1);
+				}
+
+				
 			}
 		}
 
@@ -1420,8 +1472,8 @@ vis.correlate = function() {
 		var current_rect = $("#brush-" + _.name + " .extent");
 
 
-		current_rect.tipsy("hide");
-    	current_rect.tipsy("show");
+		// current_rect.tipsy("hide");
+  //   	current_rect.tipsy("show");
 		
 	}
 
