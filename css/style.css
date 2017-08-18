@@ -44,6 +44,15 @@ div.no_selection {
     padding: 5px;
 }
 
+text.click {
+    pointer-events: none;
+    text-anchor: middle;
+    font: 50px sans-serif;
+    font-weight: bold;
+    fill: black;
+    text-shadow: 0 1px 0 #ccc, 0 -1px 0 #756bb1, 1px 0 0 #de2d26, -1px 0 0 #edf8b1;
+}
+
 #userfilter,
 #levelfilter,
 #mdsslider {
@@ -54,7 +63,7 @@ div.no_selection {
 #mainview {
     text-align: center;
     padding: 4px;
-    height: 580px;
+    height: 300px;
     width: 960px;
 }
 
@@ -157,7 +166,7 @@ div.no_selection {
 .real-line{
     fill:none;
     stroke:#66a61e;
-    stroke-width:3;
+    stroke-width:2;
 }
 
 .axis{

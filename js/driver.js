@@ -6,7 +6,7 @@ var correlate = vis.correlate(),
 	runner = taskrunner();
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
-var static_time_win = 5 * 300;
+var static_time_win = 7*250;
 
 // var sensor = {
 // 	name:"FI_3702",
@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 	correlate.container("main-view");
 
-	d3.json("./data/finalfinal7.json", function(error, d) {
+	d3.json("./data/SENSOR_1.json", function(error, d) {
 		if (error) {
 			console.log(error)
 			return;
@@ -84,7 +84,7 @@ function display(d,coun) {
 	// 	return;
 	// }
 	var k=null;
-	if(d.type=='positive')
+	if(d.type==1)
 	{
 		k=1;
 	}else{
@@ -122,7 +122,8 @@ function display(d,coun) {
 	}
 
 	correlate.sensor(sensor)
-		.iter(coun)
+		.num_id(coun)
+		.iter(3)
 		.kind(k)
 		.data(sensor_data)
 		.truth(Ground_truth)
