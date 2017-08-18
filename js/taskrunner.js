@@ -10,6 +10,7 @@ taskrunner = function() {
 		start = -1,
 		end = -1,
 		report = [];
+	report.push(' id,time,accuracy,noise,fre,type,scale\n')
 
 	taskrunner.tasks = function(_) {
 
@@ -57,7 +58,7 @@ taskrunner = function() {
 
 		// var res = '' + did + ',' + tasks[did].params[0] + ',' + tasks[did].params[1] + ',' + tasks[did].params[2] + ',' + (end - start) + ',' + result + '\n';
 		// var res = (end - start) + '';
-		var res = '' + did + ',' + (end - start) + ',' + result.toString() + '\n';
+		var res = '' + did + ',' + (end - start) + ',' + result.toString() +',' +tasks[did].noise+ ',' +tasks[did].fre+ ',' +tasks[did].type+ ',' +tasks[did].scale+ '\n';
 
 		console.log(res);
 
@@ -84,7 +85,7 @@ taskrunner = function() {
 
 	taskrunner.next = function() {
 
-		if (did + 1 < tasks.length) {
+		if (did + 1 < 1) {
 			did++;
 		}else{
 			console.log(report);
