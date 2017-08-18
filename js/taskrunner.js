@@ -10,7 +10,7 @@ taskrunner = function() {
 		start = -1,
 		end = -1,
 		report = [];
-	report.push(' id,time,accuracy,noise,fre,type,scale\n')
+	report.push(' id,time,accuracy,noise,fre,type,scale\n');
 
 	taskrunner.tasks = function(_) {
 
@@ -85,7 +85,7 @@ taskrunner = function() {
 
 	taskrunner.next = function() {
 
-		if (did + 1 < 1) {
+		if (did + 1 < tasks.length) {
 			did++;
 		}else{
 			console.log(report);

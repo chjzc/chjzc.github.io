@@ -1427,14 +1427,14 @@ vis.correlate = function() {
 			current_chart.append("path")
 				.attr("class", "base_data")
 				.attr("d", real_line_gen(test1))
-				.style("stroke", "red")
+				.style("stroke", "#ff7f00")
 				.style("stroke-width", 1)
 				.style("fill", "none");
 
 			current_chart.append("path")
 				.attr("class", "current_data")
 				.attr("d", real_line_gen(interval_data))
-				.style("stroke", "black")
+				.style("stroke", "#1f78b4")
 				.style("stroke-width", 1)
 				.style("fill", "none");
 		}

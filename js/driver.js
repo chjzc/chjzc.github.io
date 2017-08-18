@@ -5,7 +5,7 @@
 var correlate = vis.correlate(),
 	runner = taskrunner();
 var data_num=1;
-var glyph_num=1;
+var glyph_num=3;
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
 var static_time_win = 7*250;
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 	correlate.container("main-view");
 
-	d3.json("./data/SENSOR_"+data_num+".json", function(error, d) {
+	d3.json("./data/sensor_final"+data_num+".json", function(error, d) {
 		if (error) {
 			console.log(error)
 			return;
