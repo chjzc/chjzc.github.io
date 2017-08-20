@@ -4,11 +4,11 @@
 */
 var correlate = vis.correlate(),
 	runner = taskrunner();
-var data_num=1;
+var data_num=2;
 var glyph_num=3;
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
-var static_time_win = 7*250;
+var static_time_win = 7*2.5*90;
 
 // var sensor = {
 // 	name:"FI_3702",
@@ -35,7 +35,10 @@ $(document).ready(function() {
 
 	correlate.container("main-view");
 
-	d3.json("./data/sensor_final"+data_num+".json", function(error, d) {
+	var url="./data/last"+data_num+".json";
+	 // var url="./data/final1.json"
+
+	d3.json(url, function(error, d) {
 		if (error) {
 			console.log(error)
 			return;
@@ -122,7 +125,7 @@ function display(d,coun) {
 
 		Ground_truth[d1[i].NNAME] = d1[i].ground_truth;
 	}
-
+	 // glyph_num=coun;
 	correlate.sensor(sensor)
 		.num_id(coun)
 		.iter(glyph_num)

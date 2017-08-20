@@ -161,7 +161,7 @@ vis.correlate = function() {
 			.append("text")
 			.attr("transform", "translate(" + (width / 2) + ",60)")
 			.attr("font-size",18)
-			.text("Task " + (num_id) + "/72 " + kind_text);
+			.text("Task " + (num_id) + "/72 ");
 
 
 		svg = d3.select("#" + container)
@@ -1209,7 +1209,8 @@ vis.correlate = function() {
 		return {
 			'cost': matrix[ser1.length][ser2.length],
 			'path': path,
-			'diff': diff
+			'diff': diff,
+			'score': matrix[ser1.length][ser2.length]
 		};
 	}
 
@@ -1295,8 +1296,21 @@ vis.correlate = function() {
 		// }
 
 		if (iter == 1) {
+			current_chart.selectAll(".score").remove();
+			current_chart.append("g")
+				.attr("class","score")
+				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+				.append("text")
+				.text((dtw.score/interval_data.length).toFixed(4));
 
 		} else if (iter == 2) {
+			current_chart.selectAll(".score").remove();
+			current_chart.append("g")
+				.attr("class","score")
+				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+				.append("text")
+				.text((dtw.score/interval_data.length).toFixed(4));
+
 			current_chart.selectAll(".cover").remove();
 			current_chart.append("rect")
 				.attr("class", "cover")
@@ -1401,6 +1415,13 @@ vis.correlate = function() {
 				.style("stroke", "#377eb8")
 				.style("fill", "#377eb8");
 		} else if (iter == 3) {
+			current_chart.selectAll(".score").remove();
+			current_chart.append("g")
+				.attr("class","score")
+				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+				.append("text")
+				.text((dtw.score/interval_data.length).toFixed(4));
+
 			current_chart.selectAll(".cover").remove();
 			current_chart.append("rect")
 				.attr("class", "cover")
