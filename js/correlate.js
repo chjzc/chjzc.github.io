@@ -119,9 +119,9 @@ vis.correlate = function() {
 
 	var pre_extent = {};
 
-	// var brush = d3.svg.brush()
-	// 	.x(time_scale)
-	// 	.on("brushend", brushed);
+	var brush = d3.svg.brush()
+		.x(time_scale)
+		.on("brushend", brushed);
 
 	var brush_appen = {};
 
@@ -438,76 +438,76 @@ vis.correlate = function() {
 		return component;
 	};
 
-	// component.draw_correlation = function() {
-	// 	if (chosen_time_interval) {
-	// 		var correlated_time_intervals = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval);
+	component.draw_correlation = function() {
+		if (chosen_time_interval) {
+			var correlated_time_intervals = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval);
 
-	// 		correlations[0] = (correlated_time_intervals);
+			correlations[0] = (correlated_time_intervals);
 
-	// 		svg.selectAll(".correlation-g").remove();
+			svg.selectAll(".correlation-g").remove();
 
-	// 		var correlation_g = svg.append("g")
-	// 			.attr("class", "correlation-g");
+			var correlation_g = svg.append("g")
+				.attr("class", "correlation-g");
 
-	// 		// correlation_g.append("g")
-	// 		// 	.selectAll("rect")
-	// 		// 	.data(sensors)
-	// 		// 	.enter()
-	// 		// 	.append("rect")
-	// 		// 	.attr("width", function(d) {
-	// 		// 		return time_scale(correlated_time_intervals[d.name][1] * 1000) - time_scale(correlated_time_intervals[d.name][0] * 1000)
-	// 		// 	})
-	// 		// 	.attr("height", single_line_chart_height)
-	// 		// 	.attr("transform", function(d, i) {
-	// 		// 		return "translate(" + time_scale(correlated_time_intervals[d.name][0] * 1000) + "," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name]) + single_line_chart_paddind) + ")";
-	// 		// 	})
-	// 		// 	.attr("fill", "yellow")
-	// 		// 	.attr("fill-opacity", 0.3)
-	// 		// 	.attr("stroke", "yellow");
+			// correlation_g.append("g")
+			// 	.selectAll("rect")
+			// 	.data(sensors)
+			// 	.enter()
+			// 	.append("rect")
+			// 	.attr("width", function(d) {
+			// 		return time_scale(correlated_time_intervals[d.name][1] * 1000) - time_scale(correlated_time_intervals[d.name][0] * 1000)
+			// 	})
+			// 	.attr("height", single_line_chart_height)
+			// 	.attr("transform", function(d, i) {
+			// 		return "translate(" + time_scale(correlated_time_intervals[d.name][0] * 1000) + "," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name]) + single_line_chart_paddind) + ")";
+			// 	})
+			// 	.attr("fill", "yellow")
+			// 	.attr("fill-opacity", 0.3)
+			// 	.attr("stroke", "yellow");
 
-	// 		for (var i = 1; i < sensors.length; i++) {
+			for (var i = 1; i < sensors.length; i++) {
 
-	// 			sensors_path[sensors[i].name] = correlated_time_intervals[sensors[i].name].path;
-	// 			var current_brush = brush_appen[sensors[i].name];
-	// 			current_brush.extent([correlated_time_intervals[sensors[i].name][0] * 1000, correlated_time_intervals[sensors[i].name][1] * 1000]);
-	// 			current_brush(d3.select("#brush-" + sensors[i].name).transition());
-	// 			current_brush.event(d3.select("#brush-" + sensors[i].name).transition().delay(1))
-	// 		}
+				sensors_path[sensors[i].name] = correlated_time_intervals[sensors[i].name].path;
+				var current_brush = brush_appen[sensors[i].name];
+				current_brush.extent([correlated_time_intervals[sensors[i].name][0] * 1000, correlated_time_intervals[sensors[i].name][1] * 1000]);
+				current_brush(d3.select("#brush-" + sensors[i].name).transition());
+				current_brush.event(d3.select("#brush-" + sensors[i].name).transition().delay(1))
+			}
 
-	// 		correlation_g.append("g")
-	// 			.selectAll("path")
-	// 			.data(sensors.filter(function(ele) {
-	// 				return ele.name != sensor.name;
-	// 			}))
-	// 			.enter()
-	// 			.append("path")
-	// 			.attr("stroke", "#99999C")
-	// 			.attr("stroke-width", 2)
-	// 			.attr("fill", "#99999C")
-	// 			.attr("fill-opacity", 0.3)
-	// 			.attr("transform", function(d) {
-	// 				return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height + ")");
-	// 			})
-	// 			.attr("d", function(d) {
-	// 				var prev_sensor = get_prev_sensor(d.name);
-	// 				var prev_interval = time_scale(correlated_time_intervals[prev_sensor][1] * 1000) - time_scale(correlated_time_intervals[prev_sensor][0] * 1000)
-	// 				var current_interval = time_scale(correlated_time_intervals[d.name][1] * 1000) - time_scale(correlated_time_intervals[d.name][0] * 1000);
-	// 				return "M" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0" +
-	// 					"L" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000) + prev_interval) + ",0" +
-	// 					"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-	// 					"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+			correlation_g.append("g")
+				.selectAll("path")
+				.data(sensors.filter(function(ele) {
+					return ele.name != sensor.name;
+				}))
+				.enter()
+				.append("path")
+				.attr("stroke", "#99999C")
+				.attr("stroke-width", 2)
+				.attr("fill", "#99999C")
+				.attr("fill-opacity", 0.3)
+				.attr("transform", function(d) {
+					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height + ")");
+				})
+				.attr("d", function(d) {
+					var prev_sensor = get_prev_sensor(d.name);
+					var prev_interval = time_scale(correlated_time_intervals[prev_sensor][1] * 1000) - time_scale(correlated_time_intervals[prev_sensor][0] * 1000)
+					var current_interval = time_scale(correlated_time_intervals[d.name][1] * 1000) - time_scale(correlated_time_intervals[d.name][0] * 1000);
+					return "M" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0" +
+						"L" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000) + prev_interval) + ",0" +
+						"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+						"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
 
-	// 			})
+				})
 
-	// 		// correlation_g.append("g")
-	// 		// 	.selectAll("path")
+			// correlation_g.append("g")
+			// 	.selectAll("path")
 
 
 
-	// 	} else {
-	// 		alert("please brush a time interval");
-	// 	}
-	// }
+		} else {
+			alert("please brush a time interval");
+		}
+	}
 
 	component.pushResult = function() {
 
@@ -575,40 +575,40 @@ vis.correlate = function() {
 	///////////////////////////////////////////////////
 	// Private Functions
 
-	// function update_correlation(duration, opacity) {
-	// 	svg.selectAll(".correlation-g").each(function(ele, index) {
-	// 		// d3.select(this).selectAll("rect")
-	// 		// 	.transition()
-	// 		// 	.duration(duration)
-	// 		// 	.attr("width",function(d){
-	// 		// 		return time_scale(correlations[0][d.name][1]*1000)-time_scale(correlations[0][d.name][0]*1000)
-	// 		// 	})
-	// 		// 	.attr("transform",function(d){
-	// 		// 		return "translate("+time_scale(correlations[0][d.name][0]*1000)+","+((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name]) + single_line_chart_paddind)+")";
-	// 		// 	});
-	// 		d3.select(this).selectAll("path")
-	// 			.transition()
-	// 			.duration(duration)
-	// 			.attr("transform", function(d) {
-	// 				return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height) + ")";
-	// 			})
-	// 			.attr("d", function(d) {
-	// 				var prev_sensor = get_prev_sensor(d.name);
-	// 				var prev_interval = time_scale(correlations[0][prev_sensor][1] * 1000) - time_scale(correlations[0][prev_sensor][0] * 1000);
-	// 				var current_interval = time_scale(correlations[0][d.name][1] * 1000) - time_scale(correlations[0][d.name][0] * 1000);
-	// 				var d_path = "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
-	// 					"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
-	// 					"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-	// 					"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
-	// 				return "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
-	// 					"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
-	// 					"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-	// 					"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
-	// 			})
-	// 			.style("stroke-opacity", opacity)
-	// 			.style("fill-opacity", opacity - 0.3)
-	// 	});
-	// }
+	function update_correlation(duration, opacity) {
+		svg.selectAll(".correlation-g").each(function(ele, index) {
+			// d3.select(this).selectAll("rect")
+			// 	.transition()
+			// 	.duration(duration)
+			// 	.attr("width",function(d){
+			// 		return time_scale(correlations[0][d.name][1]*1000)-time_scale(correlations[0][d.name][0]*1000)
+			// 	})
+			// 	.attr("transform",function(d){
+			// 		return "translate("+time_scale(correlations[0][d.name][0]*1000)+","+((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name]) + single_line_chart_paddind)+")";
+			// 	});
+			d3.select(this).selectAll("path")
+				.transition()
+				.duration(duration)
+				.attr("transform", function(d) {
+					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height) + ")";
+				})
+				.attr("d", function(d) {
+					var prev_sensor = get_prev_sensor(d.name);
+					var prev_interval = time_scale(correlations[0][prev_sensor][1] * 1000) - time_scale(correlations[0][prev_sensor][0] * 1000);
+					var current_interval = time_scale(correlations[0][d.name][1] * 1000) - time_scale(correlations[0][d.name][0] * 1000);
+					var d_path = "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
+						"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
+						"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+						"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+					return "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
+						"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
+						"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+						"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+				})
+				.style("stroke-opacity", opacity)
+				.style("fill-opacity", opacity - 0.3)
+		});
+	}
 
 	function four_min(a, b, c, d) {
 		var temp1 = Math.min(a, b);
@@ -629,7 +629,7 @@ vis.correlate = function() {
 			.text(sen.name)
 			.attr("font-size",20);
 
-		// if (sen.type != 'main') {
+		if (sen.type != 'main') {
 			// var checkbox = container.append("g")
 			// 	.attr("transform","translate("+(width+5)+",0)")
 
@@ -664,70 +664,70 @@ vis.correlate = function() {
 			// 		}
 			// 	})
 
-			// var floating = container.append("g")
-			// 	.attr("transform", "translate(" + (width + 5) + ",0)")
-			// 	.datum(sen);
+			var floating = container.append("g")
+				.attr("transform", "translate(" + (width + 5) + ",0)")
+				.datum(sen);
 
-			// floating.append("text")
-			// 	.attr("transform", "translate(0," + (single_line_chart_height / 2 - 9) + ")")
-			// 	.attr("font-family", "FontAwesome")
-			// 	.attr("font-size", tool_size)
-			// 	.text("\uf01b")
-			// 	.on("click", function(d) {
-			// 		if (sensor_location[d.name] == 0 || sensor_location[d.name] == 1) {
-			// 			alert("already up most");
-			// 		} else {
-			// 			var prev_sensor = get_prev_sensor(d.name);
-			// 			sensor_location[d.name] = sensor_location[d.name] - 1;
-			// 			sensor_location[prev_sensor] = sensor_location[prev_sensor] + 1;
-			// 			svg.selectAll(".chart")
-			// 				.transition()
-			// 				.duration(1000)
-			// 				.attr("transform", function(d) {
-			// 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
-			// 				});
+			floating.append("text")
+				.attr("transform", "translate(0," + (single_line_chart_height / 2 - 9) + ")")
+				.attr("font-family", "FontAwesome")
+				.attr("font-size", tool_size)
+				.text("\uf01b")
+				.on("click", function(d) {
+					if (sensor_location[d.name] == 0 || sensor_location[d.name] == 1) {
+						alert("already up most");
+					} else {
+						var prev_sensor = get_prev_sensor(d.name);
+						sensor_location[d.name] = sensor_location[d.name] - 1;
+						sensor_location[prev_sensor] = sensor_location[prev_sensor] + 1;
+						svg.selectAll(".chart")
+							.transition()
+							.duration(1000)
+							.attr("transform", function(d) {
+								return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
+							});
 
-			// 			update_correlation(100)
+						update_correlation(100)
 
-			// 		}
-			// 	});
+					}
+				});
 
-			// floating.append("text")
-			// 	.attr("transform", "translate(0," + (single_line_chart_height / 2 + 9) + ")")
-			// 	.attr("font-family", "FontAwesome")
-			// 	.attr("font-size", tool_size)
-			// 	.text("\uf01a")
-			// 	.on("click", function(d) {
-			// 		if (sensor_location[d.name] == 0 || sensor_location[d.name] == (sensors.length - 1)) {
-			// 			alert("already bottom most")
-			// 		} else {
-			// 			var next_sensor = get_next_sensor(d.name);
-			// 			sensor_location[d.name] = sensor_location[d.name] + 1;
-			// 			sensor_location[next_sensor] = sensor_location[next_sensor] - 1;
-			// 			svg.selectAll(".chart")
-			// 				.transition()
-			// 				.duration(1000)
-			// 				.attr("transform", function(d) {
-			// 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
-			// 				});
+			floating.append("text")
+				.attr("transform", "translate(0," + (single_line_chart_height / 2 + 9) + ")")
+				.attr("font-family", "FontAwesome")
+				.attr("font-size", tool_size)
+				.text("\uf01a")
+				.on("click", function(d) {
+					if (sensor_location[d.name] == 0 || sensor_location[d.name] == (sensors.length - 1)) {
+						alert("already bottom most")
+					} else {
+						var next_sensor = get_next_sensor(d.name);
+						sensor_location[d.name] = sensor_location[d.name] + 1;
+						sensor_location[next_sensor] = sensor_location[next_sensor] - 1;
+						svg.selectAll(".chart")
+							.transition()
+							.duration(1000)
+							.attr("transform", function(d) {
+								return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
+							});
 
-			// 			update_correlation(100)
-			// 		}
-			// 	})
+						update_correlation(100)
+					}
+				})
 
 
-		// }
+		 }
 
 
 
 		if (sen.type == "main") {
 			// if (iter == 1) {
-			// 	container.append("g")
-			// 		.attr("class", "x brush")
-			// 		.call(brush)
-			// 		.selectAll("rect")
-			// 		.attr("height", single_line_chart_height);
-			// }
+				container.append("g")
+					.attr("class", "x brush")
+					.call(brush)
+					.selectAll("rect")
+					.attr("height", single_line_chart_height);
+			//}
 		} else {
 			container.append("g")
 				.datum(sen)
@@ -994,65 +994,65 @@ vis.correlate = function() {
 		return [minimun - padding, maximun + padding];
 	}
 
-	// function get_correlated_time_interval(sen, c_sens, chosen_time_interval) {
-	// 	var interval = chosen_time_interval[1] - chosen_time_interval[0];
-	// 	var time_span = 10 * 60;
-	// 	var shift_param = 30;
+	function get_correlated_time_interval(sen, c_sens, chosen_time_interval) {
+		var interval = chosen_time_interval[1] - chosen_time_interval[0];
+		var time_span = 10 * 60;
+		var shift_param = 30;
 
-	// 	var correlated_time_intervals = {},
-	// 		path = null;
+		var correlated_time_intervals = {},
+			path = null;
 
-	// 	var start_time = time_interval[0] / 1000 > (chosen_time_interval[0] - time_span) ? (time_interval[0] / 1000) : (chosen_time_interval[0] - time_span);
-	// 	var end_time = time_interval[1] / 1000 < (chosen_time_interval[1] + time_span) ? (time_interval[1] / 1000) : (chosen_time_interval[1] + time_span);
+		var start_time = time_interval[0] / 1000 > (chosen_time_interval[0] - time_span) ? (time_interval[0] / 1000) : (chosen_time_interval[0] - time_span);
+		var end_time = time_interval[1] / 1000 < (chosen_time_interval[1] + time_span) ? (time_interval[1] / 1000) : (chosen_time_interval[1] + time_span);
 
-	// 	end_time = start_time + Math.floor((end_time - interval - start_time) / shift_param) * shift_param + interval;
+		end_time = start_time + Math.floor((end_time - interval - start_time) / shift_param) * shift_param + interval;
 
-	// 	var main_values = data[sen].filter(function(ele) {
-	// 		return ele.t >= chosen_time_interval[0] && ele.t <= chosen_time_interval[1]
-	// 	}).map(function(ele) {
-	// 		return ele.v;
-	// 	});
+		var main_values = data[sen].filter(function(ele) {
+			return ele.t >= chosen_time_interval[0] && ele.t <= chosen_time_interval[1]
+		}).map(function(ele) {
+			return ele.v;
+		});
 
-	// 	c_sens.forEach(function(c_sen) {
+		c_sens.forEach(function(c_sen) {
 
-	// 		correlated_time_intervals[c_sen.name] = [];
-	// 		var c_sen_values = data[c_sen.name].filter(function(ele) {
-	// 			return ele.t >= start_time && ele.t <= end_time
-	// 		});
-
-
-	// 		var dist = 100000;
-	// 		var iterations = parseInt((end_time - interval - start_time) / shift_param)
-	// 		for (var i = 0; i < iterations; i++) {
-	// 			var current_values = c_sen_values.filter(function(ele) {
-	// 				return ele.t >= (start_time + i * shift_param) && ele.t <= (start_time + i * shift_param + interval)
-	// 			}).map(function(ele) {
-	// 				return ele.v;
-	// 			});
-
-	// 			if (kind == 1) {
-	// 				var dtw = DynamicWarping(main_values, current_values, function(a, b) {
-	// 					return Math.abs(a - b);
-	// 				});
-	// 			} else if (kind == -1) {
-	// 				var dtw = DynamicWarping(main_values, current_values, function(a, b) {
-	// 					return Math.abs(50 - a - b);
-	// 				});
-	// 			} else {}
+			correlated_time_intervals[c_sen.name] = [];
+			var c_sen_values = data[c_sen.name].filter(function(ele) {
+				return ele.t >= start_time && ele.t <= end_time
+			});
 
 
-	// 			if (dtw.cost < dist) {
-	// 				dist = dtw.cost;
-	// 				correlated_time_intervals[c_sen.name] = [start_time + i * shift_param, start_time + i * shift_param + interval];
-	// 			}
-	// 		}
+			var dist = 100000;
+			var iterations = parseInt((end_time - interval - start_time) / shift_param)
+			for (var i = 0; i < iterations; i++) {
+				var current_values = c_sen_values.filter(function(ele) {
+					return ele.t >= (start_time + i * shift_param) && ele.t <= (start_time + i * shift_param + interval)
+				}).map(function(ele) {
+					return ele.v;
+				});
 
-	// 	});
+				if (kind == 1) {
+					var dtw = DynamicWarping(main_values, current_values, function(a, b) {
+						return Math.abs(a - b);
+					});
+				} else if (kind == -1) {
+					var dtw = DynamicWarping(main_values, current_values, function(a, b) {
+						return Math.abs(50 - a - b);
+					});
+				} else {}
 
-	// 	correlated_time_intervals[sen] = chosen_time_interval;
 
-	// 	return correlated_time_intervals;
-	// }
+				if (dtw.cost < dist) {
+					dist = dtw.cost;
+					correlated_time_intervals[c_sen.name] = [start_time + i * shift_param, start_time + i * shift_param + interval];
+				}
+			}
+
+		});
+
+		correlated_time_intervals[sen] = chosen_time_interval;
+
+		return correlated_time_intervals;
+	}
 
 	function DynamicWarping(ts1, ts2, distanceFunction) {
 		var ser1 = ts1;
@@ -1214,15 +1214,15 @@ vis.correlate = function() {
 		};
 	}
 
-	// function brushed() {
-	// 	chosen_time_interval = brush.extent();
+	function brushed() {
+		chosen_time_interval = brush.extent();
 
-	// 	chosen_time_interval = chosen_time_interval.map(function(ele) {
-	// 		return ele.getTime() / 1000;
-	// 	})
+		chosen_time_interval = chosen_time_interval.map(function(ele) {
+			return ele.getTime() / 1000;
+		})
 
-	// 	component.draw_correlation();
-	// }
+		component.draw_correlation();
+	}
 
 	function brush_move(_) {
 
@@ -1249,8 +1249,8 @@ vis.correlate = function() {
 
 
 
-		// current_chart.selectAll(".cu_co").remove();
-		// current_chart.selectAll(".ba_co").remove();
+		current_chart.selectAll(".cu_co").remove();
+		current_chart.selectAll(".ba_co").remove();
 		current_chart.selectAll(".connect").remove();
 		current_chart.selectAll(".base_data").remove();
 		current_chart.selectAll(".current_data").remove();
@@ -1465,39 +1465,39 @@ vis.correlate = function() {
 
 
 
-		// for(var i=0;i<interval_data.length;i++){
-		// 	current_chart.append("line")
-		// 		.attr("class","cu_co")
-		// 		.attr("x1",time_scale(interval_data[i].t*1000))
-		// 		.attr("y1",single_line_chart_height/2+2)
-		// 		.attr("x2",time_scale(interval_data[i].t*1000))
-		// 		.attr("y2",single_line_chart_height/2-2)
-		// 		.style("stroke","black")
-		// }
+		for(var i=0;i<interval_data.length;i++){
+			current_chart.append("line")
+				.attr("class","cu_co")
+				.attr("x1",time_scale(interval_data[i].t*1000))
+				.attr("y1",single_line_chart_height/2+2)
+				.attr("x2",time_scale(interval_data[i].t*1000))
+				.attr("y2",single_line_chart_height/2-2)
+				.style("stroke","black")
+		}
 
-		// for(var i=0;i<main_values.length;i++){
-		// 	current_chart.append("line")
-		// 		.attr("class","ba_co")
-		// 		.attr("x1",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
-		// 		.attr("y1",0)
-		// 		.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
-		// 		.attr("y2",4)
-		// 		.style("stroke","black")
-		// }
+		for(var i=0;i<main_values.length;i++){
+			current_chart.append("line")
+				.attr("class","ba_co")
+				.attr("x1",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y1",0)
+				.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y2",4)
+				.style("stroke","black")
+		}
 
 
 
-		// for(var i=0;i<dtw.path.length;i++){
-		// 	current_chart.append("line")
-		// 		.attr("class","connect")
-		// 		.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
-		// 		.attr("y1",4)
-		// 		.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
-		// 		.attr("y2",single_line_chart_height/2)
-		// 		.style("stroke","black")
-		// 		.style("stroke-opacity",0.6)
-		// 		.style("stroke-dasharray","0.9")
-		// }
+		for(var i=0;i<dtw.path.length;i++){
+			current_chart.append("line")
+				.attr("class","connect")
+				.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y1",4)
+				.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
+				.attr("y2",single_line_chart_height/2)
+				.style("stroke","black")
+				.style("stroke-opacity",0.6)
+				.style("stroke-dasharray","0.9")
+		}
 
 		// if(interval_data.length>0){
 		// 	var start=time_scale(interval_data[0].t*1000)
@@ -1532,11 +1532,11 @@ vis.correlate = function() {
 		// }
 
 
-		// correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
+		 correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
 		// if (iter == 1) {
 
-		// 	update_correlation(1, 0.4);
+			update_correlation(1, 0.4);
 		// }
 
 		// var current_rect = $("#brush-" + _.name + " .extent");
@@ -1549,21 +1549,21 @@ vis.correlate = function() {
 
 	function brushed_appen(_) {
 
-		// var base_time_interval = truth["main"];
+		var base_time_interval = truth["main"];
 
 
 
-		// var Rect = d3.select("#brush-" + _.name + " .extent");
+		var Rect = d3.select("#brush-" + _.name + " .extent");
 
-		// var rect_x = parseFloat(Rect.attr("x"));
-		// var rect_width = parseFloat(Rect.attr("width"));
-		// var base_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
+		var rect_x = parseFloat(Rect.attr("x"));
+		var rect_width = parseFloat(Rect.attr("width"));
+		var base_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
 
-		// correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
+		correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
-		// update_correlation(100, 1);
+		update_correlation(100, 1);
 
-		// $("#brush-" + _.name + " .extent").tipsy("hide")
+		$("#brush-" + _.name + " .extent").tipsy("hide")
 
 		// current_rect.on('mouseenter',function(){
 		// 	 $('.tipsy').remove();
