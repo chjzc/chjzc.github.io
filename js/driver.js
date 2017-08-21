@@ -5,7 +5,7 @@
 var correlate = vis.correlate(),
 	runner = taskrunner();
 var data_num=1;
-var glyph_num=1;
+var glyph_num=2;
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
 var static_time_win = 7*2.5*90;
@@ -35,8 +35,8 @@ $(document).ready(function() {
 
 	correlate.container("main-view");
 
-	var url="./data/final"+data_num+".json";
-	 // var url="./data/final1.json"
+	//var url="./data/final"+data_num+".json";
+var url="./data/final1.json"
 
 	d3.json(url, function(error, d) {
 		if (error) {
