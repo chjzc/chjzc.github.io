@@ -125,6 +125,7 @@ text.click {
 .brush .extent {
   stroke: black;
   stroke-width: 2;
+  fill: grey;
   fill-opacity: .3;
   shape-rendering: crispEdges;
 }

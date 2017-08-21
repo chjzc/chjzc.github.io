@@ -104,7 +104,7 @@ vis.correlate = function() {
 		bottom: 40
 	};
 	var single_line_chart_height = 60;
-	var single_line_chart_paddind = 20;
+	var single_line_chart_paddind = 30;
 	var tool_size = 20;
 
 	var time_axis_height = 20;
@@ -420,15 +420,15 @@ vis.correlate = function() {
 			var current_chart = d3.select(this);
 			draw_single_chart(current_chart, d, data[d.name])
 		})
-		svg.append("text")
-                    .attr("class", "click")
-                    .attr("transform", "translate(" + width / 2 + ", " +  80 + ")")
-                    .attr("dy", "1em")
-                    .text(kind_text)
-                    .transition()
-                    .duration(1500)
-                    .style("opacity", 0)
-                    .remove();
+		// svg.append("text")
+  //                   .attr("class", "click")
+  //                   .attr("transform", "translate(" + width / 2 + ", " +  80 + ")")
+  //                   .attr("dy", "1em")
+  //                   .text(kind_text)
+  //                   .transition()
+  //                   .duration(1500)
+  //                   .style("opacity", 0)
+  //                   .remove();
 
 		return component.update();
 	};
@@ -440,7 +440,16 @@ vis.correlate = function() {
 
 	component.draw_correlation = function() {
 		if (chosen_time_interval) {
-			var correlated_time_intervals = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval);
+			if(iter!=1){
+				var correlated_time_intervals = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval);
+			}else{
+				var correlated_time_intervals = {}
+				correlated_time_intervals[sensor.name]=chosen_time_interval;
+				for(var i=0;i<sensor.c_sensors.length;i++){
+					correlated_time_intervals[sensor.c_sensors[i].name]=[time_interval[0],time_interval[0]]
+				}
+			}
+			
 
 			correlations[0] = (correlated_time_intervals);
 
@@ -467,7 +476,7 @@ vis.correlate = function() {
 
 			for (var i = 1; i < sensors.length; i++) {
 
-				sensors_path[sensors[i].name] = correlated_time_intervals[sensors[i].name].path;
+				// sensors_path[sensors[i].name] = correlated_time_intervals[sensors[i].name].path;
 				var current_brush = brush_appen[sensors[i].name];
 				current_brush.extent([correlated_time_intervals[sensors[i].name][0] * 1000, correlated_time_intervals[sensors[i].name][1] * 1000]);
 				current_brush(d3.select("#brush-" + sensors[i].name).transition());
@@ -489,13 +498,30 @@ vis.correlate = function() {
 					return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * (sensor_location[d.name] - 1) + single_line_chart_paddind + single_line_chart_height + ")");
 				})
 				.attr("d", function(d) {
+
 					var prev_sensor = get_prev_sensor(d.name);
 					var prev_interval = time_scale(correlated_time_intervals[prev_sensor][1] * 1000) - time_scale(correlated_time_intervals[prev_sensor][0] * 1000)
 					var current_interval = time_scale(correlated_time_intervals[d.name][1] * 1000) - time_scale(correlated_time_intervals[d.name][0] * 1000);
-					return "M" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0" +
-						"L" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000) + prev_interval) + ",0" +
-						"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-						"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+					var p="M";
+					if(prev_interval!=0){
+						if(current_interval!=0){
+							p+=(time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0" +
+							"L" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000) + prev_interval) + ",0" +
+							"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+							"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+						}else{
+							p+=(time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0" +
+							"L" + (time_scale(correlated_time_intervals[prev_sensor][0] * 1000) + prev_interval) + ",0Z"
+						}
+					}else{
+						if(current_interval!=0){
+							p+=(time_scale(correlated_time_intervals[d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+							"L" + (time_scale(correlated_time_intervals[d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+						}else{
+							p+=(time_scale(correlated_time_intervals[prev_sensor][0] * 1000)) + ",0Z"
+						}
+					}
+					return p;
 
 				})
 
@@ -557,7 +583,7 @@ vis.correlate = function() {
 		svg = null;
 		// svg.select(".brush .extent").attr("width",0).attr("x",0);
 		// svg.select(".brush .resize").attr("translate(0,0)");
-		// brush.clear();
+		brush.clear();
 		for (var i = 0; i < sensors.length; i++) {
 			brush_appen[sensors[i].name].clear();
 		}
@@ -596,14 +622,26 @@ vis.correlate = function() {
 					var prev_sensor = get_prev_sensor(d.name);
 					var prev_interval = time_scale(correlations[0][prev_sensor][1] * 1000) - time_scale(correlations[0][prev_sensor][0] * 1000);
 					var current_interval = time_scale(correlations[0][d.name][1] * 1000) - time_scale(correlations[0][d.name][0] * 1000);
-					var d_path = "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
-						"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
-						"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-						"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
-					return "M" + (time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
-						"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
-						"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
-						"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+					var p="M";
+					if(prev_interval!=0){
+						if(current_interval!=0){
+							p+=(time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
+							"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0" +
+							"L" + (time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+							"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+						}else{
+							p+=(time_scale(correlations[0][prev_sensor][0] * 1000)) + ",0" +
+							"L" + (time_scale(correlations[0][prev_sensor][0] * 1000) + prev_interval) + ",0Z"
+						}
+					}else{
+						if(current_interval!=0){
+							p+=(time_scale(correlations[0][d.name][0] * 1000) + current_interval) + "," + (2 * single_line_chart_paddind) +
+							"L" + (time_scale(correlations[0][d.name][0] * 1000)) + "," + (2 * single_line_chart_paddind) + "Z";
+						}else{
+							p+=time_scale(correlations[0][prev_sensor][0] * 1000)+ ",0Z"
+						}
+					}
+					return p;
 				})
 				.style("stroke-opacity", opacity)
 				.style("fill-opacity", opacity - 0.3)
@@ -623,7 +661,7 @@ vis.correlate = function() {
 			.attr("class", "sub-chart");
 
 		var checkbox = container.append("g")
-				.attr("transform","translate("+(width+10)+","+(single_line_chart_height/2+10)+")");
+				.attr("transform","translate("+(width+40)+","+(single_line_chart_height/2+10)+")");
 
 		checkbox.append("text")
 			.text(sen.name)
@@ -1221,7 +1259,9 @@ vis.correlate = function() {
 			return ele.getTime() / 1000;
 		})
 
-		component.draw_correlation();
+			component.draw_correlation();
+	
+		
 	}
 
 	function brush_move(_) {
@@ -1296,20 +1336,20 @@ vis.correlate = function() {
 		// }
 
 		if (iter == 1) {
-			current_chart.selectAll(".score").remove();
-			current_chart.append("g")
-				.attr("class","score")
-				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
-				.append("text")
-				.text((dtw.score/interval_data.length).toFixed(4));
+			// current_chart.selectAll(".score").remove();
+			// current_chart.append("g")
+			// 	.attr("class","score")
+			// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+			// 	.append("text")
+			// 	.text((dtw.score/interval_data.length).toFixed(4));
 
 		} else if (iter == 2) {
-			current_chart.selectAll(".score").remove();
-			current_chart.append("g")
-				.attr("class","score")
-				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
-				.append("text")
-				.text((dtw.score/interval_data.length).toFixed(4));
+			// current_chart.selectAll(".score").remove();
+			// current_chart.append("g")
+			// 	.attr("class","score")
+			// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+			// 	.append("text")
+			// 	.text((dtw.score/interval_data.length).toFixed(4));
 
 			current_chart.selectAll(".cover").remove();
 			current_chart.append("rect")
@@ -1414,13 +1454,47 @@ vis.correlate = function() {
 				.attr("d", real_line_diff(redraw_neg))
 				.style("stroke", "#377eb8")
 				.style("fill", "#377eb8");
+
+		for(var i=0;i<interval_data.length;i++){
+			current_chart.append("line")
+				.attr("class","cu_co")
+				.attr("x1",time_scale(interval_data[i].t*1000))
+				.attr("y1",single_line_chart_height/2+2)
+				.attr("x2",time_scale(interval_data[i].t*1000))
+				.attr("y2",single_line_chart_height/2-2)
+				.style("stroke","black")
+		}
+
+		for(var i=0;i<main_values.length;i++){
+			current_chart.append("line")
+				.attr("class","ba_co")
+				.attr("x1",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y1",0)
+				.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y2",4)
+				.style("stroke","black")
+		}
+
+
+
+		for(var i=0;i<dtw.path.length;i++){
+			current_chart.append("line")
+				.attr("class","connect")
+				.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
+				.attr("y1",4)
+				.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
+				.attr("y2",single_line_chart_height/2)
+				.style("stroke","black")
+				.style("stroke-opacity",0.6)
+				.style("stroke-dasharray","0.9")
+		}
 		} else if (iter == 3) {
-			current_chart.selectAll(".score").remove();
-			current_chart.append("g")
-				.attr("class","score")
-				.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
-				.append("text")
-				.text((dtw.score/interval_data.length).toFixed(4));
+			// current_chart.selectAll(".score").remove();
+			// current_chart.append("g")
+			// 	.attr("class","score")
+			// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+			// 	.append("text")
+			// 	.text((dtw.score/interval_data.length).toFixed(4));
 
 			current_chart.selectAll(".cover").remove();
 			current_chart.append("rect")
@@ -1463,41 +1537,6 @@ vis.correlate = function() {
 
 		/*-----------------------------------------------------------------------------*/
 
-
-
-		for(var i=0;i<interval_data.length;i++){
-			current_chart.append("line")
-				.attr("class","cu_co")
-				.attr("x1",time_scale(interval_data[i].t*1000))
-				.attr("y1",single_line_chart_height/2+2)
-				.attr("x2",time_scale(interval_data[i].t*1000))
-				.attr("y2",single_line_chart_height/2-2)
-				.style("stroke","black")
-		}
-
-		for(var i=0;i<main_values.length;i++){
-			current_chart.append("line")
-				.attr("class","ba_co")
-				.attr("x1",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
-				.attr("y1",0)
-				.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
-				.attr("y2",4)
-				.style("stroke","black")
-		}
-
-
-
-		for(var i=0;i<dtw.path.length;i++){
-			current_chart.append("line")
-				.attr("class","connect")
-				.attr("x1",base_start+time_scale(main_values[dtw.path[i].row].t*1000)-time_scale(main_values[0].t*1000))
-				.attr("y1",4)
-				.attr("x2",time_scale(interval_data[dtw.path[i].col].t*1000))
-				.attr("y2",single_line_chart_height/2)
-				.style("stroke","black")
-				.style("stroke-opacity",0.6)
-				.style("stroke-dasharray","0.9")
-		}
 
 		// if(interval_data.length>0){
 		// 	var start=time_scale(interval_data[0].t*1000)
