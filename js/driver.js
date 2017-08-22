@@ -36,7 +36,7 @@ $(document).ready(function() {
 	correlate.container("main-view");
 
 	//var url="./data/final"+data_num+".json";
-var url="./data/final1.json"
+var url="./data/final1(7).json"
 
 	d3.json(url, function(error, d) {
 		if (error) {
@@ -129,7 +129,7 @@ function display(d,coun) {
 	correlate.sensor(sensor)
 		.num_id(coun)
 		.iter(glyph_num)
-		.kind(k)
+		.kind(1)
 		.data(sensor_data)
 		.truth(Ground_truth)
 		.time_interval([parseInt(start_time * 1000), parseInt((start_time + static_time_win) * 1000)])
