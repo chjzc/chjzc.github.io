@@ -5,7 +5,7 @@
 var correlate = vis.correlate(),
 	runner = taskrunner();
 var data_num=1;
-var glyph_num=3;
+var glyph_num=2;
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
 var static_time_win = 7*2.5*90;
