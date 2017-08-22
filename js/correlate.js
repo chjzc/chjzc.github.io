@@ -106,6 +106,7 @@ vis.correlate = function() {
 	var single_line_chart_height = 60;
 	var single_line_chart_paddind = 20;
 	var tool_size = 20;
+	var flag=0;
 
 	var time_axis_height = 20;
 	var marker_size = time_axis_height * 0.95;
@@ -473,14 +474,19 @@ vis.correlate = function() {
 			// 	.attr("fill", "yellow")
 			// 	.attr("fill-opacity", 0.3)
 			// 	.attr("stroke", "yellow");
-
+			
 			for (var i = 1; i < sensors.length; i++) {
 
 				// sensors_path[sensors[i].name] = correlated_time_intervals[sensors[i].name].path;
 				var current_brush = brush_appen[sensors[i].name];
 				current_brush.extent([correlated_time_intervals[sensors[i].name][0] * 1000, correlated_time_intervals[sensors[i].name][1] * 1000]);
 				current_brush(d3.select("#brush-" + sensors[i].name).transition());
-				current_brush.event(d3.select("#brush-" + sensors[i].name).transition().delay(1))
+				//current_brush.event(d3.select("#brush-" + sensors[i].name).transition())
+			}
+
+			for (var i = 1; i < sensors.length; i++) {
+
+				brush_move(sensors[i]);
 			}
 
 			correlation_g.append("g")
@@ -1273,12 +1279,16 @@ vis.correlate = function() {
 		})
 
 		component.draw_correlation();
-
+		correlations[0]["main"] = chosen_time_interval;
 
 	}
 
 	function brush_move(_) {
 
+		var Rect = d3.select("#brush-" + _.name + " .extent");
+
+		var rect_x = parseFloat(Rect.attr("x"));
+		var rect_width = parseFloat(Rect.attr("width"));
 		var pre_sensor = get_prev_sensor(_.name);
 
 
@@ -1289,12 +1299,6 @@ vis.correlate = function() {
 		var main_values = data[pre_sensor].filter(function(ele) {
 			return ele.t >= base_time_interval[0] && ele.t <= base_time_interval[1]
 		});
-
-
-		var Rect = d3.select("#brush-" + _.name + " .extent");
-
-		var rect_x = parseFloat(Rect.attr("x"));
-		var rect_width = parseFloat(Rect.attr("width"));
 		var base_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
 		// var next_width = time_scale(next_time_interval[1] * 1000) - time_scale(next_time_interval[0] * 1000);
 
@@ -1397,79 +1401,103 @@ vis.correlate = function() {
 					return temp;
 				});
 
+			var chart = d3.horizon()
+				.width(rect_width)
+				.height(single_line_chart_height)
+				.bands(1)
+				.mode("mirror")
+				.interpolate("basis");
 
 
+			// for (var i = 0; i < interval_data.length; i++) {
+			// 	var temp1 = {};
+			// 	var temp2 = {};
+			// 	if (dtw.diff[i] >= 0) {
+			// 		temp1.t = interval_data[i].t;
+			// 		temp1.v = dtw.diff[i];
+			// 		temp1.name = interval_data[i].name;
+			// 		temp2.t = interval_data[i].t;
+			// 		temp2.v = 0;
+			// 		temp2.name = interval_data[i].name;
+
+			// 		sum = sum + temp1.v;
+			// 	} else {
+			// 		temp1.t = interval_data[i].t;
+			// 		temp1.v = 0;
+			// 		temp1.name = interval_data[i].name;
+			// 		temp2.t = interval_data[i].t;
+			// 		temp2.v = dtw.diff[i];
+			// 		temp2.name = interval_data[i].name;
+
+			// 		sum = sum - temp2.v;
+			// 	}
+			// 	redraw_pos.push(temp1);
+			// 	redraw_neg.push(temp2);
+			// }
+
+			// if (interval_data.length >= 1) {
+			// 	redraw_pos.push({
+			// 		'name': interval_data[0].name,
+			// 		't': interval_data[interval_data.length - 1].t,
+			// 		'v': 0
+			// 	})
+			// 	redraw_pos.push({
+			// 		'name': interval_data[0].name,
+			// 		't': interval_data[0].t,
+			// 		'v': 0
+			// 	})
+			// 	redraw_neg.push({
+			// 		'name': interval_data[0].name,
+			// 		't': interval_data[interval_data.length - 1].t,
+			// 		'v': 0
+			// 	})
+			// 	redraw_neg.push({
+			// 		'name': interval_data[0].name,
+			// 		't': interval_data[0].t,
+			// 		'v': 0
+			// 	})
+			// } else {}
+			var pos=[];
 			for (var i = 0; i < interval_data.length; i++) {
-				var temp1 = {};
-				var temp2 = {};
-				if (dtw.diff[i] >= 0) {
-					temp1.t = interval_data[i].t;
-					temp1.v = dtw.diff[i];
-					temp1.name = interval_data[i].name;
-					temp2.t = interval_data[i].t;
-					temp2.v = 0;
-					temp2.name = interval_data[i].name;
-
-					sum = sum + temp1.v;
-				} else {
-					temp1.t = interval_data[i].t;
-					temp1.v = 0;
-					temp1.name = interval_data[i].name;
-					temp2.t = interval_data[i].t;
-					temp2.v = dtw.diff[i];
-					temp2.name = interval_data[i].name;
-
-					sum = sum - temp2.v;
-				}
-				redraw_pos.push(temp1);
-				redraw_neg.push(temp2);
+				var temp = [time_scale(interval_data[i].t*1000),dtw.diff[i]];
+				pos.push(temp);
 			}
-
-			if (interval_data.length >= 1) {
-				redraw_pos.push({
-					'name': interval_data[0].name,
-					't': interval_data[interval_data.length - 1].t,
-					'v': 0
-				})
-				redraw_pos.push({
-					'name': interval_data[0].name,
-					't': interval_data[0].t,
-					'v': 0
-				})
-				redraw_neg.push({
-					'name': interval_data[0].name,
-					't': interval_data[interval_data.length - 1].t,
-					'v': 0
-				})
-				redraw_neg.push({
-					'name': interval_data[0].name,
-					't': interval_data[0].t,
-					'v': 0
-				})
-			} else {}
+			if(interval_data.length>0){
+				var test=1;
+			}
 
 
 
 			current_chart.selectAll(".diff").remove();
 
 
-			current_chart.append("path")
-				.attr("clip-path", function(d) {
-					return "url(#inspection-clip-" + d.name + ")"
-				})
-				.attr("class", "diff")
-				.attr("d", real_line_diff(redraw_pos))
-				.style("stroke", "#e41a1c")
-				.style("fill", "#e41a1c");
+			// current_chart.append("path")
+			// 	.attr("clip-path", function(d) {
+			// 		return "url(#inspection-clip-" + d.name + ")"
+			// 	})
+			// 	.attr("class", "diff")
+			// 	.attr("d", real_line_diff(redraw_pos))
+			// 	.style("stroke", "#e41a1c")
+			// 	.style("fill", "#e41a1c");
 
-			current_chart.append("path")
-				.attr("clip-path", function(d) {
-					return "url(#inspection-clip-" + d.name + ")"
-				})
-				.attr("class", "diff")
-				.attr("d", real_line_diff(redraw_neg))
-				.style("stroke", "#377eb8")
-				.style("fill", "#377eb8");
+			// current_chart.append("path")
+			// 	.attr("clip-path", function(d) {
+			// 		return "url(#inspection-clip-" + d.name + ")"
+			// 	})
+			// 	.attr("class", "diff")
+			// 	.attr("d", real_line_diff(redraw_neg))
+			// 	.style("stroke", "#377eb8")
+			// 	.style("fill", "#377eb8");
+			var horizon_canvas=current_chart.append("g")
+				.attr("class","diff")
+				.attr("transform","translate("+rect_x+",0)");
+
+			if(pos.length>0){
+				horizon_canvas.data([pos]).call(chart);
+			}
+			
+
+			/*----------------------------------------------------------------------------*/
 
 			// for(var i=0;i<interval_data.length;i++){
 			// 	current_chart.append("line")
@@ -1552,214 +1580,216 @@ vis.correlate = function() {
 
 
 		/*-----------------------------------------------------------------------------*/
-		if (sensor_location[_.name] != sensors.length - 1) {
-			var next_sensor = get_next_sensor(_.name);
-			var next_time_interval = correlations[0][next_sensor];
-			var next_values = data[next_sensor].filter(function(ele) {
-				return ele.t >= next_time_interval[0] && ele.t <= next_time_interval[1]
-			});
-
-			if (kind == 1) {
-				var dtw_next = DynamicWarping(interval_data.map(function(ele) {
-					return y_scales[ele.name](ele.v);
-				}), next_values.map(function(ele) {
-					return y_scales[ele.name](ele.v);
-				}), function(a, b) {
-					return Math.abs(a - b);
-				});
-			} else if (kind == -1) {
-				var dtw_next = DynamicWarping(interval_data.map(function(ele) {
-					return y_scales[ele.name](ele.v);
-				}), next_values.map(function(ele) {
-					return y_scales[ele.name](ele.v);
-				}), function(a, b) {
-					return Math.abs(50 - a - b);
-				});
-			} else {}
-
-			var next_chart = d3.select("#chart_" + next_sensor);
-
-			next_chart.selectAll(".cu_co").remove();
-			next_chart.selectAll(".ba_co").remove();
-			next_chart.selectAll(".connect").remove();
-			next_chart.selectAll(".base_data").remove();
-			next_chart.selectAll(".current_data").remove();
-
-			if (iter == 1) {
-				// current_chart.selectAll(".score").remove();
-				// current_chart.append("g")
-				// 	.attr("class","score")
-				// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
-				// 	.append("text")
-				// 	.text((dtw.score/interval_data.length).toFixed(4));
-
-			} else if (iter == 2) {
-				var redraw_pos = [];
-				var redraw_neg = [];
-				var sum = 0;
-				var real_line_diff = d3.svg.line()
-					.interpolate("linear")
-					.x(function(d) {
-						return time_scale(d.t * 1000);
-					})
-					.y(function(d) {
-						var temp = d.v + single_line_chart_height/2;
-
-						// console.log("yes")
-						// console.log(temp)
-						// if (temp < 0) {
-						// 	temp = 0;
-						// } else if (temp > single_line_chart_height) {
-						// 	temp = single_line_chart_height;
-						// }
-						return temp;
-					});
+		// if (sensor_location[_.name] != sensors.length - 1) {
+		// 	interval_data=main_values
+		// 	var next_sensor = get_next_sensor(_.name);
+		// 	var next_time_interval = correlations[0][next_sensor];
+		// 	var next_values = data[next_sensor].filter(function(ele) {
+		// 		return ele.t >= next_time_interval[0] && ele.t <= next_time_interval[1]
+		// 	});
 
 
+		// 	if (kind == 1) {
+		// 		var dtw_next = DynamicWarping(interval_data.map(function(ele) {
+		// 			return y_scales[ele.name](ele.v);
+		// 		}), next_values.map(function(ele) {
+		// 			return y_scales[ele.name](ele.v);
+		// 		}), function(a, b) {
+		// 			return Math.abs(a - b);
+		// 		});
+		// 	} else if (kind == -1) {
+		// 		var dtw_next = DynamicWarping(interval_data.map(function(ele) {
+		// 			return y_scales[ele.name](ele.v);
+		// 		}), next_values.map(function(ele) {
+		// 			return y_scales[ele.name](ele.v);
+		// 		}), function(a, b) {
+		// 			return Math.abs(50 - a - b);
+		// 		});
+		// 	} else {}
 
-				for (var i = 0; i < next_values.length; i++) {
-					var temp1 = {};
-					var temp2 = {};
-					if (dtw_next.diff[i] >= 0) {
-						temp1.t = next_values[i].t;
-						temp1.v = dtw_next.diff[i];
-						temp1.name = next_values[i].name;
-						temp2.t = next_values[i].t;
-						temp2.v = 0;
-						temp2.name = next_values[i].name;
+		// 	var next_chart = d3.select("#chart_" + next_sensor);
 
-						//sum = sum + temp1.v;
-					} else {
-						temp1.t = next_values[i].t;
-						temp1.v = 0;
-						temp1.name = next_values[i].name;
-						temp2.t = next_values[i].t;
-						temp2.v = dtw_next.diff[i];
-						temp2.name = next_values[i].name;
+		// 	next_chart.selectAll(".cu_co").remove();
+		// 	next_chart.selectAll(".ba_co").remove();
+		// 	next_chart.selectAll(".connect").remove();
+		// 	next_chart.selectAll(".base_data").remove();
+		// 	next_chart.selectAll(".current_data").remove();
 
-						//sum = sum - temp2.v;
-					}
-					redraw_pos.push(temp1);
-					redraw_neg.push(temp2);
-				}
+		// 	if (iter == 1) {
+		// 		// current_chart.selectAll(".score").remove();
+		// 		// current_chart.append("g")
+		// 		// 	.attr("class","score")
+		// 		// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+		// 		// 	.append("text")
+		// 		// 	.text((dtw.score/interval_data.length).toFixed(4));
 
-				if (next_values.length >= 1) {
-					redraw_pos.push({
-						'name': next_values[0].name,
-						't': next_values[next_values.length - 1].t,
-						'v': 0
-					})
-					redraw_pos.push({
-						'name': next_values[0].name,
-						't': next_values[0].t,
-						'v': 0
-					})
-					redraw_neg.push({
-						'name': next_values[0].name,
-						't': next_values[next_values.length - 1].t,
-						'v': 0
-					})
-					redraw_neg.push({
-						'name': next_values[0].name,
-						't': next_values[0].t,
-						'v': 0
-					})
-				} else {}
+		// 	} else if (iter == 2) {
+		// 		var redraw_pos = [];
+		// 		var redraw_neg = [];
+		// 		var sum = 0;
+		// 		var real_line_diff = d3.svg.line()
+		// 			.interpolate("linear")
+		// 			.x(function(d) {
+		// 				return time_scale(d.t * 1000);
+		// 			})
+		// 			.y(function(d) {
+		// 				var temp = d.v + single_line_chart_height/2;
+
+		// 				// console.log("yes")
+		// 				// console.log(temp)
+		// 				// if (temp < 0) {
+		// 				// 	temp = 0;
+		// 				// } else if (temp > single_line_chart_height) {
+		// 				// 	temp = single_line_chart_height;
+		// 				// }
+		// 				return temp;
+		// 			});
 
 
 
-				next_chart.selectAll(".diff").remove();
+		// 		for (var i = 0; i < next_values.length; i++) {
+		// 			var temp1 = {};
+		// 			var temp2 = {};
+		// 			if (dtw_next.diff[i] >= 0) {
+		// 				temp1.t = next_values[i].t;
+		// 				temp1.v = dtw_next.diff[i];
+		// 				temp1.name = next_values[i].name;
+		// 				temp2.t = next_values[i].t;
+		// 				temp2.v = 0;
+		// 				temp2.name = next_values[i].name;
+
+		// 				//sum = sum + temp1.v;
+		// 			} else {
+		// 				temp1.t = next_values[i].t;
+		// 				temp1.v = 0;
+		// 				temp1.name = next_values[i].name;
+		// 				temp2.t = next_values[i].t;
+		// 				temp2.v = dtw_next.diff[i];
+		// 				temp2.name = next_values[i].name;
+
+		// 				//sum = sum - temp2.v;
+		// 			}
+		// 			redraw_pos.push(temp1);
+		// 			redraw_neg.push(temp2);
+		// 		}
+
+		// 		if (next_values.length >= 1) {
+		// 			redraw_pos.push({
+		// 				'name': next_values[0].name,
+		// 				't': next_values[next_values.length - 1].t,
+		// 				'v': 0
+		// 			})
+		// 			redraw_pos.push({
+		// 				'name': next_values[0].name,
+		// 				't': next_values[0].t,
+		// 				'v': 0
+		// 			})
+		// 			redraw_neg.push({
+		// 				'name': next_values[0].name,
+		// 				't': next_values[next_values.length - 1].t,
+		// 				'v': 0
+		// 			})
+		// 			redraw_neg.push({
+		// 				'name': next_values[0].name,
+		// 				't': next_values[0].t,
+		// 				'v': 0
+		// 			})
+		// 		} else {}
 
 
-				next_chart.append("path")
-					.attr("clip-path", function(d) {
-						return "url(#inspection-clip-" + d.name + ")"
-					})
-					.attr("class", "diff")
-					.attr("d", real_line_diff(redraw_pos))
-					.style("stroke", "#e41a1c")
-					.style("fill", "#e41a1c");
 
-				next_chart.append("path")
-					.attr("clip-path", function(d) {
-						return "url(#inspection-clip-" + d.name + ")"
-					})
-					.attr("class", "diff")
-					.attr("d", real_line_diff(redraw_neg))
-					.style("stroke", "#377eb8")
-					.style("fill", "#377eb8");
-
-				// for(var i=0;i<next_values.length;i++){
-				// 	next_chart.append("line")
-				// 		.attr("class","cu_co")
-				// 		.attr("x1",time_scale(next_values[i].t*1000))
-				// 		.attr("y1",single_line_chart_height/2+2)
-				// 		.attr("x2",time_scale(next_values[i].t*1000))
-				// 		.attr("y2",single_line_chart_height/2-2)
-				// 		.style("stroke","black")
-				// }
-
-				// for(var i=0;i<interval_data.length;i++){
-				// 	next_chart.append("line")
-				// 		.attr("class","ba_co")
-				// 		.attr("x1",base_start+time_scale(interval_data[i].t*1000)-time_scale(main_values[0].t*1000))
-				// 		.attr("y1",0)
-				// 		.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
-				// 		.attr("y2",4)
-				// 		.style("stroke","black")
-				// }
+		// 		next_chart.selectAll(".diff").remove();
 
 
+		// 		next_chart.append("path")
+		// 			.attr("clip-path", function(d) {
+		// 				return "url(#inspection-clip-" + d.name + ")"
+		// 			})
+		// 			.attr("class", "diff")
+		// 			.attr("d", real_line_diff(redraw_pos))
+		// 			.style("stroke", "#e41a1c")
+		// 			.style("fill", "#e41a1c");
 
-				for (var i = 0; i < dtw_next.path.length; i++) {
-					next_chart.append("line")
-						.attr("class", "connect")
-						.attr("x1", time_scale(interval_data[dtw_next.path[i].row].t * 1000))
-						.attr("y1", -2 * single_line_chart_paddind)
-						.attr("x2", time_scale(next_values[dtw_next.path[i].col].t * 1000))
-						.attr("y2", 0)
-						.style("stroke", "black")
-						.style("stroke-opacity", 1)
-						.style("stroke-dasharray", "0.9")
-				}
-			} else if (iter == 3) {
-				// current_chart.selectAll(".score").remove();
-				// current_chart.append("g")
-				// 	.attr("class","score")
-				// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
-				// 	.append("text")
-				// 	.text((dtw.score/interval_data.length).toFixed(4));
+		// 		next_chart.append("path")
+		// 			.attr("clip-path", function(d) {
+		// 				return "url(#inspection-clip-" + d.name + ")"
+		// 			})
+		// 			.attr("class", "diff")
+		// 			.attr("d", real_line_diff(redraw_neg))
+		// 			.style("stroke", "#377eb8")
+		// 			.style("fill", "#377eb8");
 
-				var test1 = [];
+		// 		// for(var i=0;i<next_values.length;i++){
+		// 		// 	next_chart.append("line")
+		// 		// 		.attr("class","cu_co")
+		// 		// 		.attr("x1",time_scale(next_values[i].t*1000))
+		// 		// 		.attr("y1",single_line_chart_height/2+2)
+		// 		// 		.attr("x2",time_scale(next_values[i].t*1000))
+		// 		// 		.attr("y2",single_line_chart_height/2-2)
+		// 		// 		.style("stroke","black")
+		// 		// }
 
-				for (var k = 0; k < dtw_next.path.length; k++) {
-					var temp = {};
-					temp.name = next_values[0].name;
-					temp.t = next_values[dtw_next.path[k].col].t;
-					if (kind == 1) {
-						temp.v = interval_data[dtw_next.path[k].row].v
-					} else {
-						temp.v = 50 - interval_data[dtw_next.path[k].row].v;
-					}
+		// 		// for(var i=0;i<interval_data.length;i++){
+		// 		// 	next_chart.append("line")
+		// 		// 		.attr("class","ba_co")
+		// 		// 		.attr("x1",base_start+time_scale(interval_data[i].t*1000)-time_scale(main_values[0].t*1000))
+		// 		// 		.attr("y1",0)
+		// 		// 		.attr("x2",base_start+time_scale(main_values[i].t*1000)-time_scale(main_values[0].t*1000))
+		// 		// 		.attr("y2",4)
+		// 		// 		.style("stroke","black")
+		// 		// }
 
-					test1.push(temp)
-				}
 
-				next_chart.append("path")
-					.attr("class", "base_data")
-					.attr("d", real_line_gen(test1))
-					.style("stroke", "#ff7f00")
-					.style("stroke-width", 1)
-					.style("fill", "none");
 
-				next_chart.append("path")
-					.attr("class", "current_data")
-					.attr("d", real_line_gen(next_values))
-					.style("stroke", "#1f78b4")
-					.style("stroke-width", 1)
-					.style("fill", "none");
-			}
-		}
+		// 		for (var i = 0; i < dtw_next.path.length; i++) {
+		// 			next_chart.append("line")
+		// 				.attr("class", "connect")
+		// 				.attr("x1", time_scale(interval_data[dtw_next.path[i].row].t * 1000))
+		// 				.attr("y1", -2 * single_line_chart_paddind)
+		// 				.attr("x2", time_scale(next_values[dtw_next.path[i].col].t * 1000))
+		// 				.attr("y2", 0)
+		// 				.style("stroke", "black")
+		// 				.style("stroke-opacity", 1)
+		// 				.style("stroke-dasharray", "0.9")
+		// 		}
+		// 	} else if (iter == 3) {
+		// 		// current_chart.selectAll(".score").remove();
+		// 		// current_chart.append("g")
+		// 		// 	.attr("class","score")
+		// 		// 	.attr("transform","translate("+(width/2-40)+","+(single_line_chart_height+50)+")")
+		// 		// 	.append("text")
+		// 		// 	.text((dtw.score/interval_data.length).toFixed(4));
+
+		// 		var test1 = [];
+
+		// 		for (var k = 0; k < dtw_next.path.length; k++) {
+		// 			var temp = {};
+		// 			temp.name = next_values[0].name;
+		// 			temp.t = next_values[dtw_next.path[k].col].t;
+		// 			if (kind == 1) {
+		// 				temp.v = interval_data[dtw_next.path[k].row].v
+		// 			} else {
+		// 				temp.v = 50 - interval_data[dtw_next.path[k].row].v;
+		// 			}
+
+		// 			test1.push(temp)
+		// 		}
+
+		// 		next_chart.append("path")
+		// 			.attr("class", "base_data")
+		// 			.attr("d", real_line_gen(test1))
+		// 			.style("stroke", "#ff7f00")
+		// 			.style("stroke-width", 1)
+		// 			.style("fill", "none");
+
+		// 		next_chart.append("path")
+		// 			.attr("class", "current_data")
+		// 			.attr("d", real_line_gen(next_values))
+		// 			.style("stroke", "#1f78b4")
+		// 			.style("stroke-width", 1)
+		// 			.style("fill", "none");
+		// 	}
+		// }
 
 
 
@@ -1795,6 +1825,7 @@ vis.correlate = function() {
 
 		// }
 
+		
 
 		correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 
