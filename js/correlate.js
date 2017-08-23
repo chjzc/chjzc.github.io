@@ -858,7 +858,7 @@ vis.correlate = function() {
 
 			results.accu=accuracy;
 
-			results.order=cnt/entropy.length;
+			results.order=cnt;
 		}
 		// 	var url_result = "data/results?radio="+ results;
 
