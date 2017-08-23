@@ -10,7 +10,7 @@ taskrunner = function() {
 		start = -1,
 		end = -1,
 		report = [];
-	report.push(' id,time,accuracy,noise,fre,type,scale\n');
+	// report.push(' id,time,accuracy,noise,fre,type,scale\n');
 
 	taskrunner.tasks = function(_) {
 
@@ -52,7 +52,8 @@ taskrunner = function() {
 		// 	}
 		// }
 
-		var result = _;
+		var result = _.accu;
+		var order = _.order;
 		var result_sum = 0;
 		var result_num=result.length;
 
@@ -64,7 +65,7 @@ taskrunner = function() {
 
 		// var res = '' + did + ',' + tasks[did].params[0] + ',' + tasks[did].params[1] + ',' + tasks[did].params[2] + ',' + (end - start) + ',' + result + '\n';
 		// var res = (end - start) + '';
-		var res = '' + did + ',' + (end - start) + ',' + result_ave.toString() +',' +tasks[did].noise+ ',' +tasks[did].fre+ ',' +tasks[did].type+ ',' +tasks[did].scale+ '\n';
+		var res = '' + did + ',' + (end - start) + ',' + result.toString() +',' +order.toString()+ ',' +tasks[did].noise+ ',' +tasks[did].fre+ ',' +tasks[did].type+ ',' +tasks[did].scale+ '\n';
 
 		console.log(res);
 

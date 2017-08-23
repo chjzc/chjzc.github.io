@@ -36,7 +36,7 @@ $(document).ready(function() {
 	correlate.container("main-view");
 
 	//var url="./data/final"+data_num+".json";
-var url="./data/final1(7).json"
+var url="./data/final1.json"
 
 	d3.json(url, function(error, d) {
 		if (error) {
@@ -106,12 +106,13 @@ function display(d,coun) {
 	sensor.c_sensors = [];
 
 	var Ground_truth = {};
+	var Order={};
 
 	for (var i = 1; i < sensor_num; i++) {
 		var temp = {};
 		temp.name = d1[i].NNAME;
 		sensor.c_sensors.push(temp);
-
+		Order[d1[i].NNAME] = d1[i].order;
 	}
 
 
@@ -124,6 +125,7 @@ function display(d,coun) {
 		});
 
 		Ground_truth[d1[i].NNAME] = d1[i].ground_truth;
+		
 	}
 	 // glyph_num=coun;
 	correlate.sensor(sensor)
@@ -132,6 +134,7 @@ function display(d,coun) {
 		.kind(1)
 		.data(sensor_data)
 		.truth(Ground_truth)
+		.truth_order(Order)
 		.time_interval([parseInt(start_time * 1000), parseInt((start_time + static_time_win) * 1000)])
 		.render();
 

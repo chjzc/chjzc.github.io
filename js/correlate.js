@@ -7,6 +7,7 @@ vis.correlate = function() {
 
 	var component = {},
 		truth = null,
+		truth_order=null,
 		abnormal = null,
 		container = null,
 		data = null,
@@ -16,7 +17,7 @@ vis.correlate = function() {
 		iter = 1,
 		num_id = null;
 
-	var results = [];
+	var results = {};
 	var dispatch = d3.dispatch("select", "mouseover", "mouseout");
 
 	component.container = function(_) {
@@ -34,6 +35,12 @@ vis.correlate = function() {
 	component.truth = function(_) {
 		if (!arguments.length) return container;
 		truth = _;
+		return component;
+	};
+
+	component.truth_order = function(_) {
+		if (!arguments.length) return container;
+		truth_order = _;
 		return component;
 	};
 
@@ -815,26 +822,44 @@ vis.correlate = function() {
 	component.pushResult = function() {
 
 		// 	var results=[];
-		if (sensor) {
-			for (var i = 0; i < sensor.c_sensors.length; i++) {
-				var current_brush = d3.select("#brush-" + sensor.c_sensors[i].name);
-				var current_x = parseFloat(current_brush.select(".extent").attr("x"));
-				var current_width = parseFloat(current_brush.select(".extent").attr("width"));
+		if (sensor){
+				var accuracy=[];
+				for (var i = 0; i < sensor.c_sensors.length; i++) {
+					var current_brush = d3.select("#brush-" + sensor.c_sensors[i].name);
+					var current_x = parseFloat(current_brush.select(".extent").attr("x"));
+					var current_width = parseFloat(current_brush.select(".extent").attr("width"));
 
-				var true_x = time_scale(truth[sensor.c_sensors[i].name][0] * 1000);
-				var true_width = time_scale(truth[sensor.c_sensors[i].name][1] * 1000) - true_x;
+					var true_x = time_scale(truth[sensor.c_sensors[i].name][0] * 1000);
+					var true_width = time_scale(truth[sensor.c_sensors[i].name][1] * 1000) - true_x;
 
-				var intersection = four_min(current_width, true_width, true_x + true_width - current_x, current_x + current_width - true_x);
-				var ratio = 0;
-				if (intersection > 0) {
-					var union = Math.max(true_x + true_width, current_x + current_width) - Math.min(true_x, current_x);
-					var ratio = intersection / union;
+					var intersection = four_min(current_width, true_width, true_x + true_width - current_x, current_x + current_width - true_x);
+					var ratio = 0;
+					if (intersection > 0) {
+						var union = Math.max(true_x + true_width, current_x + current_width) - Math.min(true_x, current_x);
+						var ratio = intersection / union;
+					}
+					accuracy.push(ratio);
 				}
-				results.push(ratio);
-			}
+				var entropy=[]
+				for(var i=0; i<sensor.c_sensors.length; i++) {
+					entropy.push(i);
+				}
+				for(var i=0; i<sensor.c_sensors.length; i++){
+					entropy[truth_order[sensor.c_sensors[i].name]-1]=sensor_location[sensor.c_sensors[i].name]-1; 
+				}
+				var cnt=0;
+				for(var i=0;i<entropy.length;i++){
+					for(var j=i+1;j<entropy.length;j++){
+						if(entropy[i]>entropy[j]){
+							cnt=cnt+1;
+						}
+					}
+				}
+
+			results.accu=accuracy;
+
+			results.order=cnt/entropy.length;
 		}
-
-
 		// 	var url_result = "data/results?radio="+ results;
 
 		// 	$.get(url_result, function(d){
