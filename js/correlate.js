@@ -896,7 +896,7 @@ vis.correlate = function() {
 		sensor_index = {};
 		sensors = [];
 		y_scales = {};
-		results = [];
+		results = {};
 		return component;
 	}
 
