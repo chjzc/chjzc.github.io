@@ -36,7 +36,7 @@ $(document).ready(function() {
 	correlate.container("main-view");
 
 	//var url="./data/final"+data_num+".json";
-var url="./data/final1.json"
+var url="./data/final1(11).json"
 
 	d3.json(url, function(error, d) {
 		if (error) {
