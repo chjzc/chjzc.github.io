@@ -635,8 +635,12 @@ vis.correlate = function() {
 					// 	})
 					// } else {}
 					var pos = [];
+					// var diff_max=0;
 					for (var i = 0; i < interval_data.length; i++) {
 						var temp = [time_scale(interval_data[i].t * 1000), dtw.diff[i]];
+						// if(Math.abs(dtw.diff[i])>diff_max){
+						// 	diff_max=Math.abs(dtw.diff[i])
+						// }
 						pos.push(temp);
 					}
 					if (interval_data.length > 0) {
