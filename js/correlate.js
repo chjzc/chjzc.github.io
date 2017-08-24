@@ -7,7 +7,7 @@ vis.correlate = function() {
 
 	var component = {},
 		truth = null,
-		truth_order=null,
+		truth_order = null,
 		abnormal = null,
 		container = null,
 		data = null,
@@ -491,6 +491,21 @@ vis.correlate = function() {
 				//current_brush.event(d3.select("#brush-" + sensors[i].name).transition())
 			}
 
+			for(var p=1; p< sensors.length; p++){
+				var current_chart = d3.select("#chart_" + sensors[p].name);
+				var current_interval = correlations[0][sensors[p].name]
+				var rect_x = time_scale(current_interval[0] * 1000)
+				var rect_width = time_scale(current_interval[1] * 1000) - time_scale(current_interval[0] * 1000);
+				current_chart.selectAll(".cover").remove();
+				current_chart.append("rect")
+						.attr("class", "cover")
+						.attr("x", rect_x)
+						.attr("y", 0)
+						.attr("height", single_line_chart_height)
+						.attr("width", rect_width)
+						.style("fill", "white");
+			}
+
 			for (var p = 1; p < sensors.length; p++) {
 
 
@@ -515,8 +530,8 @@ vis.correlate = function() {
 					return ele.t >= current_interval[0] && ele.t <= current_interval[1];
 				});
 
-				var rect_x=time_scale(current_interval[0]*1000)
-				var rect_width=time_scale(current_interval[1]*1000)-time_scale(current_interval[0]*1000);
+				var rect_x = time_scale(current_interval[0] * 1000)
+				var rect_width = time_scale(current_interval[1] * 1000) - time_scale(current_interval[0] * 1000);
 
 
 
@@ -528,7 +543,7 @@ vis.correlate = function() {
 					}), function(a, b) {
 						return Math.abs(a - b);
 					});
-				} 
+				}
 				// var test = y_scales[_.name].domain()[1] / 6;
 
 				// if (sum / interval_data.length < (y_scales[_.name].domain()[1] - 25) / 6) {
@@ -555,42 +570,34 @@ vis.correlate = function() {
 					// 	.append("text")
 					// 	.text((dtw.score/interval_data.length).toFixed(4));
 
-					current_chart.selectAll(".cover").remove();
-					current_chart.append("rect")
-						.attr("class", "cover")
-						.attr("x", rect_x)
-						.attr("y", 0)
-						.attr("height", single_line_chart_height)
-						.attr("width", rect_width)
-						.style("fill", "white");
-
 					var redraw_pos = [];
 					var redraw_neg = [];
 					var sum = 0;
-					var real_line_diff = d3.svg.line()
-						.interpolate("linear")
-						.x(function(d) {
-							return time_scale(d.t * 1000);
-						})
-						.y(function(d) {
-							var temp = d.v + single_line_chart_height / 2;
+					// var real_line_diff = d3.svg.line()
+					// 	.interpolate("linear")
+					// 	.x(function(d) {
+					// 		return time_scale(d.t * 1000);
+					// 	})
+					// 	.y(function(d) {
+					// 		var temp = d.v + single_line_chart_height / 2;
 
-							console.log("yes")
-							console.log(temp)
-								// if (temp < 0) {
-								// 	temp = 0;
-								// } else if (temp > single_line_chart_height) {
-								// 	temp = single_line_chart_height;
-								// }
-							return temp;
-						});
+					// 		console.log("yes")
+					// 		console.log(temp)
+					// 			// if (temp < 0) {
+					// 			// 	temp = 0;
+					// 			// } else if (temp > single_line_chart_height) {
+					// 			// 	temp = single_line_chart_height;
+					// 			// }
+					// 		return temp;
+					// 	});
 
 					var chart = d3.horizon()
 						.width(rect_width)
-						.height(single_line_chart_height)
+						.height(single_line_chart_height / 2 - 3)
 						.bands(2)
 						.mode("mirror")
-						.interpolate("basis");
+						.interpolate("basis")
+						.position("bottom");
 
 
 					// for (var i = 0; i < interval_data.length; i++) {
@@ -658,7 +665,6 @@ vis.correlate = function() {
 
 					current_chart.selectAll(".diff").remove();
 
-
 					// current_chart.append("path")
 					// 	.attr("clip-path", function(d) {
 					// 		return "url(#inspection-clip-" + d.name + ")"
@@ -682,6 +688,52 @@ vis.correlate = function() {
 
 					if (pos.length > 0) {
 						horizon_canvas.data([pos]).call(chart);
+					}
+
+					current_chart.selectAll(".limit").remove();
+
+					current_chart.append("g")
+						.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 3) + ")")
+						.attr("class", "limit")
+						.append("rect")
+						.attr("x", 0)
+						.attr("y", 0)
+						.attr("width", rect_width)
+						.attr("height", 3 * 2);
+
+					if (pre_sensor != 'main') {
+						rect_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
+						rect_x = time_scale(base_time_interval[0] * 1000)
+
+						var chart = d3.horizon()
+							.width(rect_width)
+							.height(single_line_chart_height / 2 - 3)
+							.bands(2)
+							.mode("mirror")
+							.interpolate("basis")
+							.position("top");
+
+						var pos = [];
+						// var diff_max=0;
+						for (var i = 0; i < main_values.length; i++) {
+							var temp = [time_scale(main_values[i].t * 1000), dtw.diff_before[i]];
+							// if(Math.abs(dtw.diff[i])>diff_max){
+							// 	diff_max=Math.abs(dtw.diff[i])
+							// }
+							pos.push(temp);
+						}
+
+						var prev_chart = d3.select("#chart_" + pre_sensor);
+
+						prev_chart.selectAll(".diff_before").remove();
+
+						var horizon_canvas = prev_chart.append("g")
+							.attr("class", "diff_before")
+							.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+
+						if (pos.length > 0) {
+							horizon_canvas.data([pos]).call(chart);
+						}
 					}
 
 
@@ -737,6 +789,19 @@ vis.correlate = function() {
 						.attr("width", rect_width)
 						.style("fill", "white");
 					var test1 = [];
+
+					for (var k = 0; k < dtw.path.length; k++) {
+						var temp = {};
+						temp.name = interval_data[0].name;
+						temp.t = interval_data[dtw.path[k].col].t;
+						if (kind == 1) {
+							temp.v = main_values[dtw.path[k].row].v
+						} else {
+							temp.v = 50 - main_values[dtw.path[k].row].v;
+						}
+
+						test1.push(temp)
+					}
 
 					for (var k = 0; k < dtw.path.length; k++) {
 						var temp = {};
@@ -822,43 +887,43 @@ vis.correlate = function() {
 	component.pushResult = function() {
 
 		// 	var results=[];
-		if (sensor){
-				var accuracy=[];
-				for (var i = 0; i < sensor.c_sensors.length; i++) {
-					var current_brush = d3.select("#brush-" + sensor.c_sensors[i].name);
-					var current_x = parseFloat(current_brush.select(".extent").attr("x"));
-					var current_width = parseFloat(current_brush.select(".extent").attr("width"));
+		if (sensor) {
+			var accuracy = [];
+			for (var i = 0; i < sensor.c_sensors.length; i++) {
+				var current_brush = d3.select("#brush-" + sensor.c_sensors[i].name);
+				var current_x = parseFloat(current_brush.select(".extent").attr("x"));
+				var current_width = parseFloat(current_brush.select(".extent").attr("width"));
 
-					var true_x = time_scale(truth[sensor.c_sensors[i].name][0] * 1000);
-					var true_width = time_scale(truth[sensor.c_sensors[i].name][1] * 1000) - true_x;
+				var true_x = time_scale(truth[sensor.c_sensors[i].name][0] * 1000);
+				var true_width = time_scale(truth[sensor.c_sensors[i].name][1] * 1000) - true_x;
 
-					var intersection = four_min(current_width, true_width, true_x + true_width - current_x, current_x + current_width - true_x);
-					var ratio = 0;
-					if (intersection > 0) {
-						var union = Math.max(true_x + true_width, current_x + current_width) - Math.min(true_x, current_x);
-						var ratio = intersection / union;
+				var intersection = four_min(current_width, true_width, true_x + true_width - current_x, current_x + current_width - true_x);
+				var ratio = 0;
+				if (intersection > 0) {
+					var union = Math.max(true_x + true_width, current_x + current_width) - Math.min(true_x, current_x);
+					var ratio = intersection / union;
+				}
+				accuracy.push(ratio);
+			}
+			var entropy = []
+			for (var i = 0; i < sensor.c_sensors.length; i++) {
+				entropy.push(i);
+			}
+			for (var i = 0; i < sensor.c_sensors.length; i++) {
+				entropy[truth_order[sensor.c_sensors[i].name] - 1] = sensor_location[sensor.c_sensors[i].name] - 1;
+			}
+			var cnt = 0;
+			for (var i = 0; i < entropy.length; i++) {
+				for (var j = i + 1; j < entropy.length; j++) {
+					if (entropy[i] > entropy[j]) {
+						cnt = cnt + 1;
 					}
-					accuracy.push(ratio);
 				}
-				var entropy=[]
-				for(var i=0; i<sensor.c_sensors.length; i++) {
-					entropy.push(i);
-				}
-				for(var i=0; i<sensor.c_sensors.length; i++){
-					entropy[truth_order[sensor.c_sensors[i].name]-1]=sensor_location[sensor.c_sensors[i].name]-1; 
-				}
-				var cnt=0;
-				for(var i=0;i<entropy.length;i++){
-					for(var j=i+1;j<entropy.length;j++){
-						if(entropy[i]>entropy[j]){
-							cnt=cnt+1;
-						}
-					}
-				}
+			}
 
-			results.accu=accuracy;
+			results.accu = accuracy;
 
-			results.order=cnt;
+			results.order = cnt;
 		}
 		// 	var url_result = "data/results?radio="+ results;
 
@@ -1496,6 +1561,7 @@ vis.correlate = function() {
 
 		var path = [];
 		var diff = [];
+		var diff_before = [];
 		// for (var j = 1; j <= ser2.length; j++) {
 
 		// 	var min = 1000000;
@@ -1533,6 +1599,24 @@ vis.correlate = function() {
 			diff.push(temp);
 		}
 
+		for (var i = 1; i <= ser1.length; i++) {
+
+			var min = 1000000;
+			var max = 0;
+			var temp = null;
+			for (var j = 1; j <= ser2.length; j++) {
+				if (Math.abs(dtwpath[i][j]) < 1000000) {
+					// temp
+					if (Math.abs(dtwpath[i][j]) >= max) {
+						max = Math.abs(dtwpath[i][j])
+						temp = dtwpath[i][j];
+					}
+				}
+
+
+			}
+			diff_before.push(temp);
+		}
 
 		// for ( var i = 0; i < ser1.length; i++ ) {
 		//   matrix[ i ] = [];
@@ -1563,6 +1647,7 @@ vis.correlate = function() {
 			'cost': matrix[ser1.length][ser2.length],
 			'path': path,
 			'diff': diff,
+			'diff_before': diff_before,
 			'score': matrix[ser1.length][ser2.length]
 		};
 	}
@@ -1679,27 +1764,10 @@ vis.correlate = function() {
 			var redraw_pos = [];
 			var redraw_neg = [];
 			var sum = 0;
-			var real_line_diff = d3.svg.line()
-				.interpolate("linear")
-				.x(function(d) {
-					return time_scale(d.t * 1000);
-				})
-				.y(function(d) {
-					var temp = d.v + single_line_chart_height / 2;
-
-					console.log("yes")
-					console.log(temp)
-						// if (temp < 0) {
-						// 	temp = 0;
-						// } else if (temp > single_line_chart_height) {
-						// 	temp = single_line_chart_height;
-						// }
-					return temp;
-				});
 
 			var chart = d3.horizon()
 				.width(rect_width)
-				.height(single_line_chart_height)
+				.height(single_line_chart_height / 2 - 3)
 				.bands(2)
 				.mode("mirror")
 				.interpolate("basis");
@@ -1758,9 +1826,6 @@ vis.correlate = function() {
 				var temp = [time_scale(interval_data[i].t * 1000), dtw.diff[i]];
 				pos.push(temp);
 			}
-			if (interval_data.length > 0) {
-				var test = 1;
-			}
 
 
 
@@ -1791,6 +1856,77 @@ vis.correlate = function() {
 			if (pos.length > 0) {
 				horizon_canvas.data([pos]).call(chart);
 			}
+
+			current_chart.selectAll(".limit").remove();
+
+			current_chart.append("g")
+				.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 3) + ")")
+				.attr("class", "limit")
+				.append("rect")
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("width", rect_width)
+				.attr("height", 3 * 2);
+
+			if (pre_sensor != 'main') {
+				rect_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
+				rect_x = time_scale(base_time_interval[0] * 1000)
+
+				var chart = d3.horizon()
+					.width(rect_width)
+					.height(single_line_chart_height / 2 - 3)
+					.bands(2)
+					.mode("mirror")
+					.interpolate("basis")
+					.position("top");
+
+				var pos = [];
+				// var diff_max=0;
+				for (var i = 0; i < main_values.length; i++) {
+					var temp = [time_scale(main_values[i].t * 1000), dtw.diff_before[i]];
+					// if(Math.abs(dtw.diff[i])>diff_max){
+					// 	diff_max=Math.abs(dtw.diff[i])
+					// }
+					pos.push(temp);
+				}
+
+				var prev_chart = d3.select("#chart_" + pre_sensor);
+
+				prev_chart.selectAll(".diff_before").remove();
+
+				var horizon_canvas = prev_chart.append("g")
+					.attr("class", "diff_before")
+					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+
+				if (pos.length > 0) {
+					horizon_canvas.data([pos]).call(chart);
+				}
+			}
+
+			// if(pre_sensor!='main'){
+			// 	var prev_chart = d3.select("#chart_" + pre_sensor);
+			// 	var chart = d3.horizon()
+			// 	.width(rect_width)
+			// 	.height(single_line_chart_height/2-5)
+			// 	.bands(2)
+			// 	.mode("mirror")
+			// 	.interpolate("basis");
+
+			// 	var pos = [];
+			// 	for (var i = 0; i < main_values.length; i++) {
+			// 		var temp = [time_scale(main_values[i].t * 1000), dtw.diff_before[i]];
+			// 		pos.push(temp);
+			// 	}
+			// 	current_chart.selectAll(".diff").remove();
+			// 	var horizon_canvas = current_chart.append("g")
+			// 		.attr("class", "diff")
+			// 		.attr("transform", "translate(" + rect_x + ",0)");
+
+			// 	if (pos.length > 0) {
+			// 		horizon_canvas.data([pos]).call(chart);
+			// 	}
+			// }
+
 
 
 			/*----------------------------------------------------------------------------*/
@@ -1968,9 +2104,42 @@ vis.correlate = function() {
 				// 		'v': 0
 				// 	})
 				// } else {}
+
+				rect_x = parseFloat(Rect.attr("x"));
+				rect_width = parseFloat(Rect.attr("width"));
+
 				var chart = d3.horizon()
-					.width(time_scale(correlations[0][next_sensor][1]*1000)-time_scale(correlations[0][next_sensor][0]*1000))
-					.height(single_line_chart_height)
+					.width(rect_width)
+					.height(single_line_chart_height / 2 - 3)
+					.bands(2)
+					.mode("mirror")
+					.interpolate("basis")
+					.position("top");
+
+				var pos = [];
+				// var diff_max=0;
+				for (var i = 0; i < interval_data.length; i++) {
+					var temp = [time_scale(interval_data[i].t * 1000), dtw_next.diff_before[i]];
+					// if(Math.abs(dtw.diff[i])>diff_max){
+					// 	diff_max=Math.abs(dtw.diff[i])
+					// }
+					pos.push(temp);
+				}
+
+				current_chart.selectAll(".diff_before").remove();
+
+				var horizon_canvas = current_chart.append("g")
+					.attr("class", "diff_before")
+					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+
+				if (pos.length > 0) {
+					horizon_canvas.data([pos]).call(chart);
+				}
+
+
+				var chart = d3.horizon()
+					.width(time_scale(correlations[0][next_sensor][1] * 1000) - time_scale(correlations[0][next_sensor][0] * 1000))
+					.height(single_line_chart_height / 2-3)
 					.bands(2)
 					.mode("mirror")
 					.interpolate("basis");
@@ -1984,13 +2153,13 @@ vis.correlate = function() {
 
 				next_chart.selectAll(".diff").remove();
 
-			var horizon_canvas = next_chart.append("g")
-				.attr("class", "diff")
-				.attr("transform", "translate(" + time_scale(correlations[0][next_sensor][0]*1000) + ",0)");
+				var horizon_canvas = next_chart.append("g")
+					.attr("class", "diff")
+					.attr("transform", "translate(" + time_scale(correlations[0][next_sensor][0] * 1000) + ",0)");
 
-			if (pos.length > 0) {
-				horizon_canvas.data([pos]).call(chart);
-			}
+				if (pos.length > 0) {
+					horizon_canvas.data([pos]).call(chart);
+				}
 
 
 				// next_chart.append("path")
@@ -2081,6 +2250,8 @@ vis.correlate = function() {
 					.style("stroke-width", 1)
 					.style("fill", "none");
 			}
+		}else{
+			current_chart.selectAll(".diff_before").remove();
 		}
 
 
@@ -2117,7 +2288,8 @@ vis.correlate = function() {
 
 		// }
 
-
+		rect_x = parseFloat(Rect.attr("x"));
+		rect_width = parseFloat(Rect.attr("width"));
 
 		correlations[0][_.name] = [time_scale.invert(rect_x).getTime() / 1000, time_scale.invert(rect_x + rect_width).getTime() / 1000];
 

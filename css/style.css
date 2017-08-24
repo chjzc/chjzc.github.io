@@ -53,6 +53,11 @@ text.click {
     text-shadow: 0 1px 0 #ccc, 0 -1px 0 #756bb1, 1px 0 0 #de2d26, -1px 0 0 #edf8b1;
 }
 
+.limit rect{
+  fill: grey;
+  fill-opacity: 0.3;
+}
+
 #userfilter,
 #levelfilter,
 #mdsslider {
