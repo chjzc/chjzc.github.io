@@ -808,14 +808,14 @@ vis.correlate = function() {
 					// 	.append("text")
 					// 	.text((dtw.score/interval_data.length).toFixed(4));
 
-					current_chart.selectAll(".cover").remove();
-					current_chart.append("rect")
-						.attr("class", "cover")
-						.attr("x", rect_x)
-						.attr("y", 0)
-						.attr("height", single_line_chart_height)
-						.attr("width", rect_width)
-						.style("fill", "white");
+					// current_chart.selectAll(".cover").remove();
+					// current_chart.append("rect")
+					// 	.attr("class", "cover")
+					// 	.attr("x", rect_x)
+					// 	.attr("y", 0)
+					// 	.attr("height", single_line_chart_height)
+					// 	.attr("width", rect_width)
+					// 	.style("fill", "white");
 					var test1 = [];
 
 					for (var k = 0; k < dtw.path.length; k++) {
@@ -831,18 +831,32 @@ vis.correlate = function() {
 						test1.push(temp)
 					}
 
-					for (var k = 0; k < dtw.path.length; k++) {
-						var temp = {};
-						temp.name = interval_data[0].name;
-						temp.t = interval_data[dtw.path[k].col].t;
-						if (kind == 1) {
-							temp.v = main_values[dtw.path[k].row].v
-						} else {
-							temp.v = 50 - main_values[dtw.path[k].row].v;
+					if(pre_sensor!='main'){
+						var test2=[];
+
+						for (var k = 0; k < dtw.path.length; k++) {
+							var temp = {};
+							temp.name = main_values[0].name;
+							temp.t = main_values[dtw.path[k].row].t;
+							if (kind == 1) {
+								temp.v = interval_data[dtw.path[k].col].v
+							} else {
+								temp.v = 50 - interval_data[dtw.path[k].col].v;
+							}
+
+							test2.push(temp)
 						}
 
-						test1.push(temp)
+						var pre_chart = d3.select("#chart_" + pre_sensor);
+						pre_chart.selectAll(".before_data").remove();
+						pre_chart.append("path")
+							.attr("class", "before_data")
+							.attr("d", real_line_gen(test2))
+							.style("stroke", "black")
+							.style("stroke-width", 1)
+							.style("fill", "none");
 					}
+					
 
 					current_chart.append("path")
 						.attr("class", "base_data")
@@ -2026,6 +2040,32 @@ vis.correlate = function() {
 				test1.push(temp)
 			}
 
+			if(pre_sensor!='main'){
+						var test2=[];
+
+						for (var k = 0; k < dtw.path.length; k++) {
+							var temp = {};
+							temp.name = main_values[0].name;
+							temp.t = main_values[dtw.path[k].row].t;
+							if (kind == 1) {
+								temp.v = interval_data[dtw.path[k].col].v
+							} else {
+								temp.v = 50 - interval_data[dtw.path[k].col].v;
+							}
+
+							test2.push(temp)
+						}
+
+						var pre_chart = d3.select("#chart_" + pre_sensor);
+						pre_chart.selectAll(".before_data").remove();
+						pre_chart.append("path")
+							.attr("class", "before_data")
+							.attr("d", real_line_gen(test2))
+							.style("stroke", "black")
+							.style("stroke-width", 1)
+							.style("fill", "none");
+					}
+
 			current_chart.append("path")
 				.attr("class", "base_data")
 				.attr("d", real_line_gen(test1))
@@ -2266,6 +2306,32 @@ vis.correlate = function() {
 
 					test1.push(temp)
 				}
+
+				
+						var test2=[];
+
+						for (var k = 0; k < dtw_next.path.length; k++) {
+							var temp = {};
+							temp.name = interval_data[0].name;
+							temp.t = interval_data[dtw_next.path[k].row].t;
+							if (kind == 1) {
+								temp.v = next_values[dtw_next.path[k].col].v
+							} else {
+								temp.v = 50 - next_values[dtw_next.path[k].col].v;
+							}
+
+							test2.push(temp)
+						}
+
+						
+						current_chart.selectAll(".before_data").remove();
+						current_chart.append("path")
+							.attr("class", "before_data")
+							.attr("d", real_line_gen(test2))
+							.style("stroke", "black")
+							.style("stroke-width", 1)
+							.style("fill", "none");
+					
 
 				next_chart.append("path")
 					.attr("class", "base_data")
