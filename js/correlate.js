@@ -428,6 +428,14 @@ vis.correlate = function() {
 				var current_chart = d3.select(this);
 				draw_single_chart(current_chart, d, data[d.name])
 			})
+
+		var main_brush = brush;
+		main_brush.extent([new Date(truth["main"][0] * 1000), new Date(truth["main"][1] * 1000)]);
+		main_brush(d3.select("#brush-main").transition());
+		
+		chosen_time_interval = truth["main"]
+
+		component.draw_correlation();
 			// svg.append("text")
 			//                   .attr("class", "click")
 			//                   .attr("transform", "translate(" + width / 2 + ", " +  80 + ")")
@@ -449,7 +457,27 @@ vis.correlate = function() {
 	component.draw_correlation = function() {
 		if (chosen_time_interval) {
 			if (iter != 1) {
-				var correlated_time_intervals = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval);
+				var correlated_result = get_correlated_time_interval(sensor.name, sensor.c_sensors, chosen_time_interval)
+				var correlated_time_intervals = correlated_result.time_interval;
+				var temp_array=[]
+				for (var i = 0; i < sensor.c_sensors.length; i++) {
+					temp_array.push({name:sensor.c_sensors[i].name, value:correlated_result.score[sensor.c_sensors[i].name]});
+				}
+				temp_array.sort(function(a,b){
+					return a.value-b.value;
+				})
+				for(var i=0; i<temp_array.length; i++){
+					sensor_location[temp_array[i].name]=i+1;
+				}
+
+				svg.selectAll(".chart")
+							.transition()
+							.duration(1000)
+							.attr("transform", function(d) {
+								return "translate(0," + ((single_line_chart_height + 2 * single_line_chart_paddind) * sensor_location[d.name] + single_line_chart_paddind) + ")";
+							});
+
+
 			} else {
 				var correlated_time_intervals = {}
 				correlated_time_intervals[sensor.name] = chosen_time_interval;
@@ -1133,6 +1161,7 @@ vis.correlate = function() {
 			// if (iter == 1) {
 			container.append("g")
 				.attr("class", "x brush")
+				.attr("id","brush-main")
 				.call(brush)
 				.selectAll("rect")
 				.attr("height", single_line_chart_height);
@@ -1409,6 +1438,7 @@ vis.correlate = function() {
 		var shift_param = 30;
 
 		var correlated_time_intervals = {},
+			correlation_score = {},
 			path = null;
 
 		var start_time = time_interval[0] / 1000 > (chosen_time_interval[0] - time_span) ? (time_interval[0] / 1000) : (chosen_time_interval[0] - time_span);
@@ -1453,6 +1483,7 @@ vis.correlate = function() {
 				if (dtw.cost < dist) {
 					dist = dtw.cost;
 					correlated_time_intervals[c_sen.name] = [start_time + i * shift_param, start_time + i * shift_param + interval];
+					correlation_score[c_sen.name] = dist;
 				}
 			}
 
@@ -1460,7 +1491,7 @@ vis.correlate = function() {
 
 		correlated_time_intervals[sen] = chosen_time_interval;
 
-		return correlated_time_intervals;
+		return {'time_interval':correlated_time_intervals, "score":correlation_score};
 	}
 
 	function DynamicWarping(ts1, ts2, distanceFunction) {
