@@ -766,6 +766,9 @@ vis.correlate = function() {
 						}
 					}
 
+					if(sensor_location[sensors[p].name]==sensors.length-1){
+						current_chart.selectAll(".diff_before").remove();
+					}
 
 					/*----------------------------------------------------------------------------*/
 
@@ -850,13 +853,16 @@ vis.correlate = function() {
 						}
 
 						var pre_chart = d3.select("#chart_" + pre_sensor);
-						pre_chart.selectAll(".before_data").remove();
+						
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
 							.style("stroke", "#1f78b4")
 							.style("stroke-width", 1)
 							.style("fill", "none");
+					}
+					if(sensor_location[sensors[p].name]==sensors.length-1){
+						current_chart.selectAll(".before_data").remove();
 					}
 					
 
@@ -969,7 +975,7 @@ vis.correlate = function() {
 
 			results.order = cnt;
 
-			results.reorder_num=reorder_num；
+			results.reorder_num=reorder_num;
 		}
 		// 	var url_result = "data/results?radio="+ results;
 
