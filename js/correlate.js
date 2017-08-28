@@ -131,6 +131,8 @@ vis.correlate = function() {
 		.x(time_scale)
 		.on("brushend", brushed);
 
+	var reorder_num=0;
+
 	var brush_appen = {};
 
 	var baseline = [];
@@ -852,7 +854,7 @@ vis.correlate = function() {
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "black")
+							.style("stroke", "#1f78b4")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					}
@@ -868,7 +870,7 @@ vis.correlate = function() {
 					current_chart.append("path")
 						.attr("class", "current_data")
 						.attr("d", real_line_gen(interval_data))
-						.style("stroke", "#1f78b4")
+						.style("stroke", "#4daf4a")
 						.style("stroke-width", 1)
 						.style("fill", "none");
 				}
@@ -966,6 +968,8 @@ vis.correlate = function() {
 			results.accu = accuracy;
 
 			results.order = cnt;
+
+			results.reorder_num=reorder_num；
 		}
 		// 	var url_result = "data/results?radio="+ results;
 
@@ -1004,6 +1008,7 @@ vis.correlate = function() {
 		sensors = [];
 		y_scales = {};
 		results = {};
+		reorder_num=0;
 		return component;
 	}
 
@@ -1124,6 +1129,7 @@ vis.correlate = function() {
 					if (sensor_location[d.name] == 0 || sensor_location[d.name] == 1) {
 						alert("already up most");
 					} else {
+						reorder_num=reorder_num+1;
 						var prev_sensor = get_prev_sensor(d.name);
 						sensor_location[d.name] = sensor_location[d.name] - 1;
 						sensor_location[prev_sensor] = sensor_location[prev_sensor] + 1;
@@ -1150,6 +1156,7 @@ vis.correlate = function() {
 					if (sensor_location[d.name] == 0 || sensor_location[d.name] == (sensors.length - 1)) {
 						alert("already bottom most")
 					} else {
+						reorder_num=reorder_num+1;
 						var next_sensor = get_next_sensor(d.name);
 						sensor_location[d.name] = sensor_location[d.name] + 1;
 						sensor_location[next_sensor] = sensor_location[next_sensor] - 1;
@@ -2061,7 +2068,7 @@ vis.correlate = function() {
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "black")
+							.style("stroke", "#1f78b4")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					}
@@ -2076,7 +2083,7 @@ vis.correlate = function() {
 			current_chart.append("path")
 				.attr("class", "current_data")
 				.attr("d", real_line_gen(interval_data))
-				.style("stroke", "#1f78b4")
+				.style("stroke", "#4daf4a")
 				.style("stroke-width", 1)
 				.style("fill", "none");
 		}
@@ -2328,7 +2335,7 @@ vis.correlate = function() {
 						current_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "black")
+							.style("stroke", "#1f78b4")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					
@@ -2343,7 +2350,7 @@ vis.correlate = function() {
 				next_chart.append("path")
 					.attr("class", "current_data")
 					.attr("d", real_line_gen(next_values))
-					.style("stroke", "#1f78b4")
+					.style("stroke", "#4daf4a")
 					.style("stroke-width", 1)
 					.style("fill", "none");
 			}
