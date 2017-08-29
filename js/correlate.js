@@ -623,7 +623,7 @@ vis.correlate = function() {
 
 					var chart = d3.horizon()
 						.width(rect_width)
-						.height(single_line_chart_height / 2 - 3)
+						.height(single_line_chart_height / 2 - 2)
 						.bands(2)
 						.mode("mirror")
 						.interpolate("basis")
@@ -723,13 +723,13 @@ vis.correlate = function() {
 					current_chart.selectAll(".limit").remove();
 
 					current_chart.append("g")
-						.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 3) + ")")
+						.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 2) + ")")
 						.attr("class", "limit")
 						.append("rect")
 						.attr("x", 0)
 						.attr("y", 0)
 						.attr("width", rect_width)
-						.attr("height", 3 * 2);
+						.attr("height", 2 * 2);
 
 					if (pre_sensor != 'main') {
 						rect_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
@@ -737,7 +737,7 @@ vis.correlate = function() {
 
 						var chart = d3.horizon()
 							.width(rect_width)
-							.height(single_line_chart_height / 2 - 3)
+							.height(single_line_chart_height / 2 - 2)
 							.bands(2)
 							.mode("mirror")
 							.interpolate("basis")
@@ -759,7 +759,7 @@ vis.correlate = function() {
 
 						var horizon_canvas = prev_chart.append("g")
 							.attr("class", "diff_before")
-							.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+							.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 2) + ")");
 
 						if (pos.length > 0) {
 							horizon_canvas.data([pos]).call(chart);
@@ -857,7 +857,7 @@ vis.correlate = function() {
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "#1f78b4")
+							.style("stroke", "#2b83ba")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					}
@@ -869,7 +869,7 @@ vis.correlate = function() {
 					current_chart.append("path")
 						.attr("class", "base_data")
 						.attr("d", real_line_gen(test1))
-						.style("stroke", "#ff7f00")
+						.style("stroke", "#fdae61")
 						.style("stroke-width", 1)
 						.style("fill", "none");
 
@@ -1825,7 +1825,7 @@ vis.correlate = function() {
 
 			var chart = d3.horizon()
 				.width(rect_width)
-				.height(single_line_chart_height / 2 - 3)
+				.height(single_line_chart_height / 2 - 2)
 				.bands(2)
 				.mode("mirror")
 				.interpolate("basis");
@@ -1918,13 +1918,13 @@ vis.correlate = function() {
 			current_chart.selectAll(".limit").remove();
 
 			current_chart.append("g")
-				.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 3) + ")")
+				.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 - 2) + ")")
 				.attr("class", "limit")
 				.append("rect")
 				.attr("x", 0)
 				.attr("y", 0)
 				.attr("width", rect_width)
-				.attr("height", 3 * 2);
+				.attr("height", 2 * 2);
 
 			if (pre_sensor != 'main') {
 				rect_width = time_scale(base_time_interval[1] * 1000) - time_scale(base_time_interval[0] * 1000);
@@ -1932,7 +1932,7 @@ vis.correlate = function() {
 
 				var chart = d3.horizon()
 					.width(rect_width)
-					.height(single_line_chart_height / 2 - 3)
+					.height(single_line_chart_height / 2 - 2)
 					.bands(2)
 					.mode("mirror")
 					.interpolate("basis")
@@ -1954,7 +1954,7 @@ vis.correlate = function() {
 
 				var horizon_canvas = prev_chart.append("g")
 					.attr("class", "diff_before")
-					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 2) + ")");
 
 				if (pos.length > 0) {
 					horizon_canvas.data([pos]).call(chart);
@@ -2074,7 +2074,7 @@ vis.correlate = function() {
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "#1f78b4")
+							.style("stroke", "#2b83ba")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					}
@@ -2082,7 +2082,7 @@ vis.correlate = function() {
 			current_chart.append("path")
 				.attr("class", "base_data")
 				.attr("d", real_line_gen(test1))
-				.style("stroke", "#ff7f00")
+				.style("stroke", "#fdae61")
 				.style("stroke-width", 1)
 				.style("fill", "none");
 
@@ -2194,7 +2194,7 @@ vis.correlate = function() {
 
 				var chart = d3.horizon()
 					.width(rect_width)
-					.height(single_line_chart_height / 2 - 3)
+					.height(single_line_chart_height / 2 - 2)
 					.bands(2)
 					.mode("mirror")
 					.interpolate("basis")
@@ -2214,7 +2214,7 @@ vis.correlate = function() {
 
 				var horizon_canvas = current_chart.append("g")
 					.attr("class", "diff_before")
-					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 3) + ")");
+					.attr("transform", "translate(" + rect_x + "," + (single_line_chart_height / 2 + 2) + ")");
 
 				if (pos.length > 0) {
 					horizon_canvas.data([pos]).call(chart);
@@ -2223,7 +2223,7 @@ vis.correlate = function() {
 
 				var chart = d3.horizon()
 					.width(time_scale(correlations[0][next_sensor][1] * 1000) - time_scale(correlations[0][next_sensor][0] * 1000))
-					.height(single_line_chart_height / 2-3)
+					.height(single_line_chart_height / 2-2)
 					.bands(2)
 					.mode("mirror")
 					.interpolate("basis");
@@ -2341,7 +2341,7 @@ vis.correlate = function() {
 						current_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
-							.style("stroke", "#1f78b4")
+							.style("stroke", "#2b83ba")
 							.style("stroke-width", 1)
 							.style("fill", "none");
 					
@@ -2349,7 +2349,7 @@ vis.correlate = function() {
 				next_chart.append("path")
 					.attr("class", "base_data")
 					.attr("d", real_line_gen(test1))
-					.style("stroke", "#ff7f00")
+					.style("stroke", "#fdae61")
 					.style("stroke-width", 1)
 					.style("fill", "none");
 
