@@ -171,7 +171,7 @@ vis.correlate = function() {
 			.append("text")
 			.attr("transform", "translate(" + (width / 2) + ",60)")
 			.attr("font-size", 18)
-			.text("Task " + (num_id) + "/72 ");
+			.text("Task " + (num_id) + "/36 ");
 
 
 		svg = d3.select("#" + container)

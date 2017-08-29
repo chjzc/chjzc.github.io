@@ -8,7 +8,7 @@ var data_num=2;
 var glyph_num=2;
 
 var start_time = new Date(2016, 1, 3, 0, 59, 0).getTime() / 1000;
-var static_time_win = 7*2.5*90;
+var static_time_win = 20*12*7;
 
 // var sensor = {
 // 	name:"FI_3702",
