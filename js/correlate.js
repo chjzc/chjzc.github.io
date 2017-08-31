@@ -853,7 +853,7 @@ vis.correlate = function() {
 						}
 
 						var pre_chart = d3.select("#chart_" + pre_sensor);
-						
+						pre_chart.selectAll(".before_data").remove();
 						pre_chart.append("path")
 							.attr("class", "before_data")
 							.attr("d", real_line_gen(test2))
