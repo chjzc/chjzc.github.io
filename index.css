@@ -1,0 +1,21 @@
+img{
+    width: 100%;
+    height: 100%;
+    border: 2px solid #eee;
+}
+
+#choice{
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+input{
+    width: 20px;
+    height: 20px;
+}
+span{
+    font-size: 20px;
+    margin-bottom: 10px; 
+    width: 1200px;
+    display: inline-block;
+}
